@@ -11,10 +11,12 @@ assignees: ''
 <!-- MainIntroView의 UI 구현 (예시) -->
 <!-- Issue Link: #1 -->
 
-| ⚒️ Title |<!-- Title --> | 
+| ⚒️ Title |LaunchScreen 만들기 | 
 | :--- | :--- |
-| 📜 **Description** | <!-- Description --> |
-| 📌 **Issue Number** |  <!-- Issue Number --> |
+| 📜 **Description** | 앱 시작시 보여질 LauchScreen을 생성합니다|
+| 📌 **Issue Number** |  #1 |
 
 
-## Trouble Shooting
+### Todos
+- [ ] todo1
+- [ ] todo2
