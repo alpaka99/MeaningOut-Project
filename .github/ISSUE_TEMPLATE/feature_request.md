@@ -1,15 +1,20 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: New Issue
+about: Issue를 적어주세요
+title: "[Feat]"
 labels: ''
 assignees: ''
 
 ---
 
-<-- Write Issue Title -->
-## Issue Template Test
+## 개요 및 관련 이슈
+<!-- MainIntroView의 UI 구현 (예시) -->
+<!-- Issue Link: #1 -->
 
-## Todo List
-- [ ] todo1
-- [ ] todo2
+| ⚒️ Title |<!-- Title --> | 
+| :--- | :--- |
+| 📜 **Description** | <!-- Description --> |
+| 📌 **Issue Number** |  <!-- Issue Number --> |
+
+
+## Trouble Shooting
