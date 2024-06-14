@@ -13,7 +13,7 @@ extension String {
                 offsetBy: 1
             )
             let result = String(self[secondIndex...])
-            return self
+            return result
         }
         
         return nil

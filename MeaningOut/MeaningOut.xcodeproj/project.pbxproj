@@ -15,6 +15,10 @@
 		CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB2C2C1CA8D40083E256 /* UIColor+Extension.swift */; };
 		CE0ECB342C1CA8ED0083E256 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB302C1CA8ED0083E256 /* LaunchScreen.swift */; };
 		CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */; };
+		CE0ECB382C1CAA060083E256 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB372C1CAA060083E256 /* BaseView.swift */; };
+		CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */; };
+		CE0ECB3D2C1CB2940083E256 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */; };
+		CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB442C1CBF9F0083E256 /* LogoView.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -30,6 +34,10 @@
 		CE0ECB2C2C1CA8D40083E256 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE0ECB302C1CA8ED0083E256 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		CE0ECB372C1CAA060083E256 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOBaseViewController.swift; sourceTree = "<group>"; };
+		CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		CE0ECB442C1CBF9F0083E256 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,10 +91,45 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB432C1CBF8D0083E256 /* Components */,
+				CE0ECB422C1CBF810083E256 /* Onboarding */,
+				CE0ECB392C1CAA6A0083E256 /* MOBases */,
 				CE0ECB312C1CA8ED0083E256 /* LaunchScreen */,
-				CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CE0ECB362C1CA9FC0083E256 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB372C1CAA060083E256 /* BaseView.swift */,
+				CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE0ECB392C1CAA6A0083E256 /* MOBases */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */,
+			);
+			path = MOBases;
+			sourceTree = "<group>";
+		};
+		CE0ECB422C1CBF810083E256 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CE0ECB432C1CBF8D0083E256 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB442C1CBF9F0083E256 /* LogoView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		CE6151402C1AF69100165CAB = {
@@ -109,6 +152,7 @@
 		CE61514B2C1AF69100165CAB /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB362C1CA9FC0083E256 /* Protocols */,
 				CE61514C2C1AF69100165CAB /* AppDelegate.swift */,
 				CE61514E2C1AF69100165CAB /* SceneDelegate.swift */,
 				CE6151502C1AF69100165CAB /* ViewController.swift */,
@@ -206,11 +250,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE0ECB342C1CA8ED0083E256 /* LaunchScreen.swift in Sources */,
+				CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */,
 				CE6151512C1AF69100165CAB /* ViewController.swift in Sources */,
+				CE0ECB3D2C1CB2940083E256 /* BaseViewController.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
+				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
+				CE0ECB382C1CAA060083E256 /* BaseView.swift in Sources */,
 				CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
 			);
