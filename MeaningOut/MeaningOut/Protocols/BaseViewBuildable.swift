@@ -6,7 +6,7 @@
 //
 import UIKit
 
-protocol BaseView: UIView {
+protocol BaseViewBuildable: UIView {
     init()
     func configureHierarchy()
     func configureLayout()
@@ -14,7 +14,7 @@ protocol BaseView: UIView {
     func configureData()
 }
 
-extension BaseView {
+extension BaseViewBuildable {
     init() {
         self.init(frame: .zero)
         

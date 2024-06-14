@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LogoView: UIView, BaseView {
+final class LogoView: UIView, BaseViewBuildable {
     internal func configureHierarchy() {
         
     }

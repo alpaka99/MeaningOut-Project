@@ -19,7 +19,10 @@ final class LaunchScreenViewController: MOBaseViewController {
         ) { [weak self] in
             self?.view.alpha = 1
         } completion: { [weak self] _ in
-            self?.navigationController?.pushViewController(OnboardingViewController(LogoView()), animated: false)
+            self?.navigationController?.pushViewController(
+                OnboardingViewController(LogoView())
+                , animated: false
+            )
         }
     }
 }

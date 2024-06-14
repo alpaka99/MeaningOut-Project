@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 protocol BaseViewController: UIViewController {
-    var baseView: BaseView { get }
+    var baseView: BaseViewBuildable { get }
     
-    init(_ baseView: BaseView)
+    init(_ baseView: BaseViewBuildable)
 
     func configureLayout()
     func configureUI()

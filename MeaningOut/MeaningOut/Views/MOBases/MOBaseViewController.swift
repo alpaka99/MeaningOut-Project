@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 class MOBaseViewController: UIViewController, BaseViewController {
-    var baseView: BaseView
+    var baseView: BaseViewBuildable
     
-    required init(_ baseView: BaseView) {
+    required init(_ baseView: BaseViewBuildable) {
         self.baseView = baseView
         super.init(nibName: nil, bundle: nil)
         configureUI()
