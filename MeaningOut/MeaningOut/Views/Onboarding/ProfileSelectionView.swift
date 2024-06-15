@@ -14,8 +14,15 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         profileImage: "profile_0",
         subImage: "camera.fill"
     )
+    lazy var profileCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createFlowLayout(
+            numberOfRowsInLine: 4,
+            spacing: 20
+        ))
     
-    lazy var profileCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createFlowLayout(numberOfRowsInLine: 4, spacing: 20))
+    let profileImages = ProfileImage.allCases
+    var selectedImage = ProfileImage.profile_0
     
     weak var delegate: BaseViewBuildableDelegate?
     
@@ -73,6 +80,8 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
     
     func configureUI() {
         self.backgroundColor = .white
+        profileImageView.selectedState = .selected
+        profileImageView.setAsSelectedImage()
         
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
@@ -88,16 +97,26 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
 
 extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return profileImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileSelectionViewCell.identifier, for: indexPath) as? ProfileSelectionViewCell else { return UICollectionViewCell() }
-            
-        cell.configureData("profile_0")
         
+        let data = profileImages[indexPath.row]
+        cell.configureData(data.rawValue)
+        if data == selectedImage {
+            cell.profileImage.selectedState = .selected
+            cell.profileImage.setAsSelectedImage()
+        }
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        selectedImage = profileImages[indexPath.row]
+        profileImageView.setImage(selectedImage.rawValue)
+        
+        collectionView.reloadData()
+    }
 }

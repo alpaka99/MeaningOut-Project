@@ -71,7 +71,7 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
 //        profileImage.delegate = self
 //        completeButton.delegate = self
         
-        profileImage.configureData()
+//        profileImage.configureData()
     }
     
     func configureData() {

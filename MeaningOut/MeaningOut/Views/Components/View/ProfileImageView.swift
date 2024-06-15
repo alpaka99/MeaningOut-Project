@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 final class ProfileImageView: UIView, BaseViewBuildable {
-    
     let profileImageView = UIImageView()
     let subButton = UIImageView()
+    var selectedState = ProfileImageState.normal
     
     weak var delegate: BaseViewBuildableDelegate?
     
@@ -34,7 +34,6 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         configureHierarchy()
         configureLayout()
         configureUI()
-        configureData()
     }
     
     required init?(coder: NSCoder) {
@@ -67,15 +66,19 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     }
     
     func configureUI() {
-        profileImageView.layer.borderWidth = 3
-        profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.borderColor = MOColors.moGray100.color.cgColor
+        profileImageView.alpha = 0.5
         profileImageView.contentMode = .scaleToFill
+        
         
         subButton.contentMode = .scaleAspectFit
         subButton.tintColor = MOColors.moWhite.color
         subButton.backgroundColor = MOColors.moOrange.color
         
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileImageTapped)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        tapGestureRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func roundCorners() {
@@ -84,17 +87,29 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.layer.cornerRadius = subButton.frame.height / 2
     }
     
-    func configureData() {
-        
+    func setImage(_ profileImage: String) {
+        profileImageView.image = UIImage(named: profileImage)
+    }
+    
+    func setAsSelectedImage() {
+        selectedState = .selected
+        profileImageView.layer.borderWidth = 3
+        profileImageView.alpha = 1
+        profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
     }
     
     @objc
     func profileImageTapped() {
-//        delegate?.profileImageViewTapped()
+        
     }
 }
 
 
 protocol ProfileImageViewDelegate: AnyObject {
     func profileImageViewTapped()
+}
+
+enum ProfileImageState {
+    case selected
+    case normal
 }

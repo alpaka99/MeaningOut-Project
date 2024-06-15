@@ -44,4 +44,9 @@ final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     func configureData(_ imageName: String) {
         profileImage.profileImageView.image = UIImage(named: imageName)
     }
+    
+    override func prepareForReuse() {
+        profileImage.selectedState = .normal
+        profileImage.configureUI()
+    }
 }
