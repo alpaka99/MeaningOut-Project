@@ -10,6 +10,15 @@
 		CE0ECB112C1B15900083E256 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CE0ECB102C1B15900083E256 /* Kingfisher */; };
 		CE0ECB142C1B15980083E256 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CE0ECB132C1B15980083E256 /* Alamofire */; };
 		CE0ECB172C1B159F0083E256 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0ECB162C1B159F0083E256 /* SnapKit */; };
+		CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB282C1CA8CF0083E256 /* Constants.swift */; };
+		CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB2B2C1CA8D40083E256 /* String+Extension.swift */; };
+		CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB2C2C1CA8D40083E256 /* UIColor+Extension.swift */; };
+		CE0ECB342C1CA8ED0083E256 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB302C1CA8ED0083E256 /* LaunchScreenViewController.swift */; };
+		CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */; };
+		CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */; };
+		CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */; };
+		CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */; };
+		CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB442C1CBF9F0083E256 /* LogoView.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -20,6 +29,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE0ECB282C1CA8CF0083E256 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE0ECB2B2C1CA8D40083E256 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		CE0ECB2C2C1CA8D40083E256 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		CE0ECB302C1CA8ED0083E256 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewBuildable.swift; sourceTree = "<group>"; };
+		CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOBaseViewController.swift; sourceTree = "<group>"; };
+		CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerBuildable.swift; sourceTree = "<group>"; };
+		CE0ECB442C1CBF9F0083E256 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +63,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0ECB292C1CA8CF0083E256 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB282C1CA8CF0083E256 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		CE0ECB2D2C1CA8D40083E256 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB2B2C1CA8D40083E256 /* String+Extension.swift */,
+				CE0ECB2C2C1CA8D40083E256 /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CE0ECB312C1CA8ED0083E256 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB302C1CA8ED0083E256 /* LaunchScreenViewController.swift */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		CE0ECB332C1CA8ED0083E256 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB432C1CBF8D0083E256 /* Components */,
+				CE0ECB422C1CBF810083E256 /* Onboarding */,
+				CE0ECB392C1CAA6A0083E256 /* MOBases */,
+				CE0ECB312C1CA8ED0083E256 /* LaunchScreen */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CE0ECB362C1CA9FC0083E256 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */,
+				CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE0ECB392C1CAA6A0083E256 /* MOBases */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */,
+			);
+			path = MOBases;
+			sourceTree = "<group>";
+		};
+		CE0ECB422C1CBF810083E256 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CE0ECB432C1CBF8D0083E256 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB442C1CBF9F0083E256 /* LogoView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		CE6151402C1AF69100165CAB = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +152,7 @@
 		CE61514B2C1AF69100165CAB /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB362C1CA9FC0083E256 /* Protocols */,
 				CE61514C2C1AF69100165CAB /* AppDelegate.swift */,
 				CE61514E2C1AF69100165CAB /* SceneDelegate.swift */,
 				CE6151502C1AF69100165CAB /* ViewController.swift */,
@@ -72,6 +160,9 @@
 				CE6151552C1AF69200165CAB /* Assets.xcassets */,
 				CE6151572C1AF69200165CAB /* LaunchScreen.storyboard */,
 				CE61515A2C1AF69200165CAB /* Info.plist */,
+				CE0ECB332C1CA8ED0083E256 /* Views */,
+				CE0ECB2D2C1CA8D40083E256 /* Extensions */,
+				CE0ECB292C1CA8CF0083E256 /* Constants */,
 			);
 			path = MeaningOut;
 			sourceTree = "<group>";
@@ -158,9 +249,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0ECB342C1CA8ED0083E256 /* LaunchScreenViewController.swift in Sources */,
+				CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */,
 				CE6151512C1AF69100165CAB /* ViewController.swift in Sources */,
+				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
+				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
+				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
+				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
+				CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */,
+				CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */,
+				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +416,6 @@
 				INFOPLIST_FILE = MeaningOut/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -349,7 +448,6 @@
 				INFOPLIST_FILE = MeaningOut/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
