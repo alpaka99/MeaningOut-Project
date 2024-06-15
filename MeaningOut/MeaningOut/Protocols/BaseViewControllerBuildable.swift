@@ -29,6 +29,6 @@ extension BaseViewController {
     }
     
     internal func configureData() {
-        baseView.configureData()
+//        baseView.configureData()
     }
 }
