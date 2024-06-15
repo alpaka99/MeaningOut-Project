@@ -8,7 +8,5 @@
 import UIKit
 
 final class OnboardingViewController: MOBaseViewController {
-    override func configureUI() {
-        self.baseView.backgroundColor = UIColor.purple
-    }
+    
 }

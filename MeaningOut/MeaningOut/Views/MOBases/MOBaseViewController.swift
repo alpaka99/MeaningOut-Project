@@ -23,6 +23,7 @@ class MOBaseViewController: UIViewController, BaseViewController {
     
     override func loadView() {
         self.view = baseView
+        
     }
     
     
