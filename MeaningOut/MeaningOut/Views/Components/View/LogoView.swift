@@ -16,6 +16,8 @@ final class LogoView: UIView, BaseViewBuildable {
     let userNameLabel = UILabel()
     let startButton = UIButton()
     
+    weak var delegate: BaseViewBuildableDelegate?
+    
     init(type: LogoViewType) {
         self.type = type
         super.init(frame: .zero)

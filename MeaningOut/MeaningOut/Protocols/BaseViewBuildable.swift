@@ -7,8 +7,16 @@
 import UIKit
 
 protocol BaseViewBuildable: UIView {
+    var delegate: BaseViewBuildableDelegate? { get set }
     func configureHierarchy()
     func configureLayout()
     func configureUI()   
-    func configureData()
+}
+
+protocol BaseViewBuildableDelegate: AnyObject {
+    func baseViewBuildableAction(_ type: BaseViewActionType)
+}
+
+enum BaseViewActionType {
+    case test
 }
