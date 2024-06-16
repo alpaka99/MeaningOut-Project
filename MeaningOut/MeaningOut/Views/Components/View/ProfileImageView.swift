@@ -14,12 +14,11 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     let subButton = UIImageView()
     var selectedState = ProfileImageState.normal
     
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     init(
         profileImage: String,
-        subImage: String? = nil,
-        action: (()->())? = nil
+        subImage: String? = nil
     ) {
         self.profileImageView.image = UIImage(named: profileImage)
         if let subImage = subImage {
@@ -87,12 +86,11 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.layer.cornerRadius = subButton.frame.height / 2
     }
     
-    func setImage(_ profileImage: String) {
-        profileImageView.image = UIImage(named: profileImage)
+    func setImage(_ image: ProfileImage) {
+        profileImageView.image = UIImage(named: image.rawValue)
     }
     
     func setAsSelectedImage() {
-        selectedState = .selected
         profileImageView.layer.borderWidth = 3
         profileImageView.alpha = 1
         profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
@@ -100,13 +98,8 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     
     @objc
     func profileImageTapped() {
-        
+        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
-}
-
-
-protocol ProfileImageViewDelegate: AnyObject {
-    func profileImageViewTapped()
 }
 
 enum ProfileImageState {

@@ -8,7 +8,7 @@
 import UIKit
 
 final class MOTextField: UIView, BaseViewBuildable {
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     let textField = UITextField()
     let divider = UIView()

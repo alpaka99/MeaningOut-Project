@@ -10,10 +10,7 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
-    let profileImageView = ProfileImageView(
-        profileImage: "profile_0",
-        subImage: "camera.fill"
-    )
+    let selectedImageView: ProfileImageView
     lazy var profileCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout(
@@ -22,12 +19,13 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         ))
     
     let profileImages = ProfileImage.allCases
-    var selectedImage = ProfileImage.profile_0
+    var selectedImage: ProfileImage
     
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
-    init() {
-        
+    init(selectedImage: ProfileImage) {
+        self.selectedImageView = ProfileImageView(profileImage: selectedImage.rawValue)
+        self.selectedImage = selectedImage
         super.init(frame: .zero)
         
         configureHierarchy()
@@ -41,23 +39,23 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
     }
     
     func configureHierarchy() {
-        self.addSubview(profileImageView)
+        self.addSubview(selectedImageView)
         self.addSubview(profileCollectionView)
     }
     
     func configureLayout() {
-        profileImageView.snp.makeConstraints {
+        selectedImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
                 .offset(16)
             $0.centerX.equalTo(self.snp.centerX)
             $0.width.equalTo(self.snp.width)
                 .multipliedBy(0.2)
-            $0.height.equalTo(profileImageView.snp.width)
+            $0.height.equalTo(selectedImageView.snp.width)
                 .multipliedBy(1)
         }
         
         profileCollectionView.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom)
+            $0.top.equalTo(selectedImageView.snp.bottom)
                 .offset(40)
             $0.horizontalEdges.bottom.equalTo(self.safeAreaLayoutGuide)
         }
@@ -65,8 +63,9 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
     
     func configureUI() {
         self.backgroundColor = .white
-        profileImageView.selectedState = .selected
-        profileImageView.setAsSelectedImage()
+        
+        selectedImageView.selectedState = .selected
+        selectedImageView.setAsSelectedImage()
         
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
@@ -114,10 +113,11 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
         selectedImage = profileImages[indexPath.row]
-        profileImageView.setImage(selectedImage.rawValue)
+        selectedImageView.setImage(selectedImage)
         
         collectionView.reloadData()
+        
+        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
     }
 }

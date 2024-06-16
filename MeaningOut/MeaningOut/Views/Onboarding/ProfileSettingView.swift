@@ -10,7 +10,11 @@ import UIKit
 import SnapKit
 
 final class ProfileSettingView: UIView, BaseViewBuildable {
-    let profileImage = ProfileImageView(profileImage: "profile_0", subImage: "camera.fill")
+    let profileImage = ProfileImageView(
+        profileImage: "profile_0",
+        subImage: "camera.fill"
+    )
+    
     let textField = MOTextField()
     let completeButton = RoundCornerButton(
         type: .plain,
@@ -18,10 +22,10 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         color: MOColors.moOrange.color
     )
     
-//    weak var delegate: ProfileSettingViewDelegate?
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
+        
         super.init(frame: .zero)
         
         configureHierarchy()
@@ -68,32 +72,41 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
         
-//        profileImage.delegate = self
-//        completeButton.delegate = self
-        
-//        profileImage.configureData()
+        profileImage.delegate = self
+        profileImage.selectedState = .selected
+        profileImage.setAsSelectedImage()
     }
     
-    func configureData() {
-        
+    
+    func setImage(_ image: ProfileImage) {
+        profileImage.setImage(image)
     }
     
 }
 
-extension ProfileSettingView: ProfileImageViewDelegate {
-    func profileImageViewTapped() {
-//        delegate?.toProfileSelectionViewController()
+extension ProfileSettingView: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text.isEmpty == false {
+            
+        }
     }
 }
 
-extension ProfileSettingView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped() {
-//        delegate?.toNextViewController()
+
+extension ProfileSettingView: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .profileImageAction(let action):
+            switch action {
+            case .profileImageTapped:
+                profileImageTapped()
+            }
+        default:
+            break
+        }
+    }
+    
+    func profileImageTapped() {
+        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
 }
-
-protocol ProfileSettingViewDelegate: NSObject {
-    func toNextViewController()
-    func toProfileSelectionViewController()
-}
-

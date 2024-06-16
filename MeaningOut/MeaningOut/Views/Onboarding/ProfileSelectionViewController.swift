@@ -10,5 +10,34 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionViewController: MOBaseViewController {
+    weak var delegate: ProfileSelectionViewControllerDelegate?
     
+    override func configureUI() {
+        baseView.delegate = self
+    }
+}
+
+
+extension ProfileSelectionViewController: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .profileSelectionAction(let detailAction):
+            switch detailAction {
+            case .profileImageCellTapped(let image):
+                profileImageCellTapped(image)
+            }
+        default:
+            break
+        }
+    }
+    
+    func profileImageCellTapped(_ image: ProfileImage) {
+        // MARK: send selected profile image to ProfileSettingViewController
+        delegate?.profileImageSelected(image)
+        
+    }
+}
+
+protocol ProfileSelectionViewControllerDelegate: AnyObject {
+    func profileImageSelected(_ image: ProfileImage)
 }

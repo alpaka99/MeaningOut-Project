@@ -54,6 +54,13 @@ enum ProfileImage: String, CaseIterable {
     case profile_9
     case profile_10
     case profile_11
+    
+    static var randomProfileImage: ProfileImage {
+        if let randomProfileImage = Self.allCases.randomElement() {
+            return randomProfileImage
+        }
+        return .profile_0
+    }
 }
 
 

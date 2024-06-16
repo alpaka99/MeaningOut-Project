@@ -36,7 +36,6 @@ final class RoundCornerButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.layer.cornerRadius = self.frame.height / 2
     }
     
@@ -44,6 +43,7 @@ final class RoundCornerButton: UIButton {
         var config = UIButton.Configuration.plain()
         
         config.background.backgroundColor = color
+        config.cornerStyle = .capsule
         
         switch type {
         case .plain:

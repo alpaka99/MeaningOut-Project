@@ -20,15 +20,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-        let rootViewController = DetailSearchViewController(DetailSearchView())
-        rootViewController.configureData(ShoppingItem(
-            title: "test title",
-            image: "",
-            mallName: "",
-            lprice: "",
-            link: "https://smartstore.naver.com/main/products/10380692993"
-        ))
-        let navigationController = UINavigationController(rootViewController: rootViewController)
+//        let rootViewController = DetailSearchViewController(DetailSearchView())
+//        rootViewController.configureData(ShoppingItem(
+//            title: "test title",
+//            image: "",
+//            mallName: "",
+//            lprice: "",
+//            link: "https://smartstore.naver.com/main/products/10380692993"
+//        ))
+        
+        let navigationController = UINavigationController(rootViewController: OnboardingViewController(LogoView(type: .oboarding)))
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

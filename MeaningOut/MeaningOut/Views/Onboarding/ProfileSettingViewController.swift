@@ -7,28 +7,39 @@
 
 import UIKit
 
-final class ProfileSettingViewController: MOBaseViewController {    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        baseView.configureUI()
-    }
-}
-
-
-extension ProfileSettingViewController: ProfileSettingViewDelegate {
-    func toProfileSelectionViewController() {
-        print(#function)
-        let nextViewController = ProfileSelectionViewController(ProfileSelectionView())
-        
-        navigationController?.pushViewController(nextViewController, animated: true)
-    }
+final class ProfileSettingViewController: MOBaseViewController {
     
-    func toNextViewController() {
-        print(#function)
-        let nextViewController = MainViewController(MainView())
-        
-        navigationController?.pushViewController(nextViewController, animated: true)
+    var selectedImage: ProfileImage = ProfileImage.randomProfileImage
+    
+    override func configureUI() {
+        baseView.delegate = self
+        if let baseView = baseView as? ProfileSettingView {
+            baseView.setImage(selectedImage)
+        }
     }
 }
 
+extension ProfileSettingViewController: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .profileImageAction(let detailAction):
+            switch detailAction {
+            case .profileImageTapped:
+                let profileSelectionViewController = ProfileSelectionViewController(ProfileSelectionView(selectedImage: selectedImage))
+                profileSelectionViewController.delegate = self
+                navigationController?.pushViewController(profileSelectionViewController, animated: true)
+            }
+        default:
+            break
+        }
+    }
+}
+
+extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
+    func profileImageSelected(_ image: ProfileImage) {
+        self.selectedImage = image
+        if let baseView = baseView as? ProfileSettingView {
+            baseView.setImage(image)
+        }
+    }
+}
