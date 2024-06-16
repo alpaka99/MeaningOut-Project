@@ -68,10 +68,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
         
-//        profileImage.delegate = self
-//        completeButton.delegate = self
-        
-//        profileImage.configureData()
     }
     
     func configureData() {
