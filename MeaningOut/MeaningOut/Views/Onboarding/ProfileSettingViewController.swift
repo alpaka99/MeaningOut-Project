@@ -7,15 +7,15 @@
 
 import UIKit
 
-final class ProfileSettingViewController: MOBaseViewController {    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        baseView.configureUI()
-    }
+final class ProfileSettingViewController: MOBaseViewController {
+    
+    var selectedImage: ProfileImage = ProfileImage.randomProfileImage
     
     override func configureUI() {
         baseView.delegate = self
+        if let baseView = baseView as? ProfileSettingView {
+            baseView.setImage(selectedImage)
+        }
     }
 }
 
@@ -25,7 +25,7 @@ extension ProfileSettingViewController: BaseViewDelegate {
         case .profileImageAction(let detailAction):
             switch detailAction {
             case .profileImageTapped:
-                let profileSelectionViewController = ProfileSelectionViewController(ProfileSelectionView())
+                let profileSelectionViewController = ProfileSelectionViewController(ProfileSelectionView(selectedImage: selectedImage))
                 profileSelectionViewController.delegate = self
                 navigationController?.pushViewController(profileSelectionViewController, animated: true)
             }
@@ -36,10 +36,10 @@ extension ProfileSettingViewController: BaseViewDelegate {
 }
 
 extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
-    func profileImageSelected(_ imageName: String) {
-        print(#function)
+    func profileImageSelected(_ image: ProfileImage) {
+        self.selectedImage = image
         if let baseView = baseView as? ProfileSettingView {
-            baseView.setImage(imageName)
+            baseView.setImage(image)
         }
     }
 }

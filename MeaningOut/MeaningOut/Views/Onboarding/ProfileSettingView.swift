@@ -25,6 +25,7 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
+        
         super.init(frame: .zero)
         
         configureHierarchy()
@@ -77,8 +78,8 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
     
     
-    func setImage(_ imageName: String) {
-        profileImage.setImage(imageName)
+    func setImage(_ image: ProfileImage) {
+        profileImage.setImage(image)
     }
     
 }

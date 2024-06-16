@@ -23,22 +23,21 @@ extension ProfileSelectionViewController: BaseViewDelegate {
         switch type {
         case .profileSelectionAction(let detailAction):
             switch detailAction {
-            case .profileImageCellTapped(let imageName):
-                profileImageCellTapped(imageName)
+            case .profileImageCellTapped(let image):
+                profileImageCellTapped(image)
             }
         default:
             break
         }
     }
     
-    func profileImageCellTapped(_ imageName: String) {
+    func profileImageCellTapped(_ image: ProfileImage) {
         // MARK: send selected profile image to ProfileSettingViewController
-        print(#function, imageName)
-        delegate?.profileImageSelected(imageName)
+        delegate?.profileImageSelected(image)
         
     }
 }
 
 protocol ProfileSelectionViewControllerDelegate: AnyObject {
-    func profileImageSelected(_ imageName: String)
+    func profileImageSelected(_ image: ProfileImage)
 }

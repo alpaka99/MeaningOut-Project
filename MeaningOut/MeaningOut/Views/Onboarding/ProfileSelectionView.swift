@@ -10,10 +10,7 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
-    let selectedImageView = ProfileImageView(
-        profileImage: "profile_0",
-        subImage: "camera.fill"
-    )
+    let selectedImageView: ProfileImageView
     lazy var profileCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout(
@@ -22,12 +19,13 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         ))
     
     let profileImages = ProfileImage.allCases
-    var selectedImage = ProfileImage.profile_0
+    var selectedImage: ProfileImage
     
     weak var delegate: BaseViewDelegate?
     
-    init() {
-        
+    init(selectedImage: ProfileImage) {
+        self.selectedImageView = ProfileImageView(profileImage: selectedImage.rawValue)
+        self.selectedImage = selectedImage
         super.init(frame: .zero)
         
         configureHierarchy()
@@ -116,10 +114,10 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedImage = profileImages[indexPath.row]
-        selectedImageView.setImage(selectedImage.rawValue)
+        selectedImageView.setImage(selectedImage)
         
         collectionView.reloadData()
         
-        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage.rawValue)))
+        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
     }
 }

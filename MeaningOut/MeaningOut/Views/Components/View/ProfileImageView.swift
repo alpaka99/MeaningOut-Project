@@ -86,8 +86,8 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.layer.cornerRadius = subButton.frame.height / 2
     }
     
-    func setImage(_ imageName: String) {
-        profileImageView.image = UIImage(named: imageName)
+    func setImage(_ image: ProfileImage) {
+        profileImageView.image = UIImage(named: image.rawValue)
     }
     
     func setAsSelectedImage() {

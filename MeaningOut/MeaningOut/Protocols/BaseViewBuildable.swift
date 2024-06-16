@@ -35,5 +35,5 @@ enum ProfileImageAction {
 }
 
 enum ProfileSelectionAction {
-    case profileImageCellTapped(String)
+    case profileImageCellTapped(ProfileImage)
 }
