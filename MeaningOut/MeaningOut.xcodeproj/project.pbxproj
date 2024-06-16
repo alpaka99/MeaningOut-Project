@@ -25,8 +25,8 @@
 		CE0ECB532C1DCE540083E256 /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */; };
 		CE0ECB552C1DD1CA0083E256 /* MOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB542C1DD1CA0083E256 /* MOTextField.swift */; };
 		CE0ECB572C1DD7850083E256 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB562C1DD7850083E256 /* UIImage+Extension.swift */; };
-		CE0ECB5A2C1DE8CA0083E256 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB592C1DE8CA0083E256 /* HomeViewController.swift */; };
-		CE0ECB5C2C1DE94A0083E256 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB5B2C1DE94A0083E256 /* HomeView.swift */; };
+		CE0ECB5A2C1DE8CA0083E256 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB592C1DE8CA0083E256 /* MainViewController.swift */; };
+		CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB5B2C1DE94A0083E256 /* MainView.swift */; };
 		CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */; };
 		CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */; };
 		CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB612C1DFB960083E256 /* Reusable.swift */; };
@@ -57,8 +57,8 @@
 		CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		CE0ECB542C1DD1CA0083E256 /* MOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTextField.swift; sourceTree = "<group>"; };
 		CE0ECB562C1DD7850083E256 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		CE0ECB592C1DE8CA0083E256 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		CE0ECB5B2C1DE94A0083E256 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		CE0ECB592C1DE8CA0083E256 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CE0ECB5B2C1DE94A0083E256 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionViewController.swift; sourceTree = "<group>"; };
 		CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionView.swift; sourceTree = "<group>"; };
 		CE0ECB612C1DFB960083E256 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CE0ECB582C1DE8BA0083E256 /* HomeView */,
+				CE0ECB582C1DE8BA0083E256 /* MainView */,
 				CE0ECB432C1CBF8D0083E256 /* Components */,
 				CE0ECB422C1CBF810083E256 /* Onboarding */,
 				CE0ECB392C1CAA6A0083E256 /* MOBases */,
@@ -186,13 +186,13 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		CE0ECB582C1DE8BA0083E256 /* HomeView */ = {
+		CE0ECB582C1DE8BA0083E256 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				CE0ECB592C1DE8CA0083E256 /* HomeViewController.swift */,
-				CE0ECB5B2C1DE94A0083E256 /* HomeView.swift */,
+				CE0ECB592C1DE8CA0083E256 /* MainViewController.swift */,
+				CE0ECB5B2C1DE94A0083E256 /* MainView.swift */,
 			);
-			path = HomeView;
+			path = MainView;
 			sourceTree = "<group>";
 		};
 		CE6151402C1AF69100165CAB = {
@@ -320,7 +320,7 @@
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
-				CE0ECB5A2C1DE8CA0083E256 /* HomeViewController.swift in Sources */,
+				CE0ECB5A2C1DE8CA0083E256 /* MainViewController.swift in Sources */,
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
@@ -329,7 +329,7 @@
 				CE0ECB512C1DBD910083E256 /* RoundCornerButton.swift in Sources */,
 				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
 				CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */,
-				CE0ECB5C2C1DE94A0083E256 /* HomeView.swift in Sources */,
+				CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
 				CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */,
 				CE0ECB572C1DD7850083E256 /* UIImage+Extension.swift in Sources */,

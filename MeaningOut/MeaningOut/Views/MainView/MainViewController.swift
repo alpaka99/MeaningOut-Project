@@ -7,6 +7,6 @@
 
 import UIKit
 
-final class HomeViewController: MOBaseViewController {
+final class MainViewController: MOBaseViewController {
     
 }

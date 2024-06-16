@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class HomeView: UIView, BaseViewBuildable {
+final class MainView: UIView, BaseViewBuildable {
     let searchBar = UISearchBar()
     let emptyView = UIImageView()
     let emptyLabel = UILabel()
@@ -116,7 +116,7 @@ final class HomeView: UIView, BaseViewBuildable {
     
 }
 
-extension HomeView: UITableViewDelegate, UITableViewDataSource {
+extension MainView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recentSearch.count
@@ -145,7 +145,7 @@ extension HomeView: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension HomeView: UISearchBarDelegate {
+extension MainView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text, text.isEmpty == false {
             recentSearch.append(text)
