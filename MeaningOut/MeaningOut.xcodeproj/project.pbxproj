@@ -38,6 +38,12 @@
 		CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */; };
 		CE0ECB742C1ECE6F0083E256 /* DetailSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB732C1ECE6F0083E256 /* DetailSearchViewController.swift */; };
 		CE0ECB762C1ECE9F0083E256 /* DetailSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB752C1ECE9F0083E256 /* DetailSearchView.swift */; };
+		CE0ECB792C1F36700083E256 /* BaseViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB782C1F36700083E256 /* BaseViewDelegate.swift */; };
+		CE0ECB7B2C1F369D0083E256 /* BaseViewActionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7A2C1F369D0083E256 /* BaseViewActionTypes.swift */; };
+		CE0ECB7D2C1F3DFB0083E256 /* BaseViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */; };
+		CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */; };
+		CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */; };
+		CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -76,6 +82,12 @@
 		CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE0ECB732C1ECE6F0083E256 /* DetailSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSearchViewController.swift; sourceTree = "<group>"; };
 		CE0ECB752C1ECE9F0083E256 /* DetailSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSearchView.swift; sourceTree = "<group>"; };
+		CE0ECB782C1F36700083E256 /* BaseViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewDelegate.swift; sourceTree = "<group>"; };
+		CE0ECB7A2C1F369D0083E256 /* BaseViewActionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewActionTypes.swift; sourceTree = "<group>"; };
+		CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewStates.swift; sourceTree = "<group>"; };
+		CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabelData.swift; sourceTree = "<group>"; };
+		CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabel.swift; sourceTree = "<group>"; };
+		CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverShoppingResponse.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				CE0ECB282C1CA8CF0083E256 /* Constants.swift */,
+				CE0ECB7A2C1F369D0083E256 /* BaseViewActionTypes.swift */,
+				CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -147,6 +161,7 @@
 				CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */,
 				CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */,
 				CE0ECB612C1DFB960083E256 /* Reusable.swift */,
+				CE0ECB782C1F36700083E256 /* BaseViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -196,6 +211,7 @@
 				CE0ECB502C1DBD910083E256 /* RoundCornerButton.swift */,
 				CE0ECB542C1DD1CA0083E256 /* MOTextField.swift */,
 				CE0ECB662C1E95340083E256 /* MOTableViewCell.swift */,
+				CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -236,6 +252,15 @@
 			path = DetailSearch;
 			sourceTree = "<group>";
 		};
+		CE0ECB7E2C1F48E90083E256 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */,
+				CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CE6151402C1AF69100165CAB = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +281,7 @@
 		CE61514B2C1AF69100165CAB /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB7E2C1F48E90083E256 /* Models */,
 				CE0ECB6D2C1EA9F90083E256 /* APIKeys */,
 				CE0ECB362C1CA9FC0083E256 /* Protocols */,
 				CE61514C2C1AF69100165CAB /* AppDelegate.swift */,
@@ -356,8 +382,12 @@
 			files = (
 				CE0ECB672C1E95340083E256 /* MOTableViewCell.swift in Sources */,
 				CE0ECB342C1CA8ED0083E256 /* LaunchScreenViewController.swift in Sources */,
+				CE0ECB792C1F36700083E256 /* BaseViewDelegate.swift in Sources */,
+				CE0ECB7D2C1F3DFB0083E256 /* BaseViewStates.swift in Sources */,
 				CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */,
 				CE6151512C1AF69100165CAB /* ViewController.swift in Sources */,
+				CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */,
+				CE0ECB7B2C1F369D0083E256 /* BaseViewActionTypes.swift in Sources */,
 				CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */,
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
@@ -367,7 +397,9 @@
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
 				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
+				CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
+				CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
 				CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */,
 				CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */,

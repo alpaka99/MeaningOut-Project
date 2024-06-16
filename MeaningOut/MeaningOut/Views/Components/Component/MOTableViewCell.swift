@@ -14,8 +14,20 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     
     let leadingIcon = UIImageView()
     let leadingText = UILabel()
-    let trailingIcon = UIImageView()
+    let trailingButton = RoundCornerButton(type: .image, image: UIImage(systemName: "xmark"), color: .clear)
     let trailingText = UILabel()
+    
+    var moCellData = MOButtonLabelData(
+        leadingIconName: "",
+        leadingText: "",
+        trailingButtonName: "", 
+        trailingButtonType: .image,
+        trailingText: ""
+    ) {
+        didSet {
+            configureUI()
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,7 +43,7 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     func configureHierarchy() {
         contentView.addSubview(leadingIcon)
         contentView.addSubview(leadingText)
-        contentView.addSubview(trailingIcon)
+        contentView.addSubview(trailingButton)
         contentView.addSubview(trailingText)
     }
     
@@ -52,35 +64,35 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
             $0.verticalEdges.equalTo(contentView)
         }
         
-        trailingIcon.snp.makeConstraints {
+        trailingButton.snp.makeConstraints {
             $0.trailing.equalTo(trailingText.snp.leading)
                 .offset(-8)
             $0.verticalEdges.equalTo(contentView)
-                .inset(8)
         }
     }
     
     func configureUI() {
-        
-    }
-    
-    
-    func configureData(_ data: MOCellData) {
-        leadingIcon.image = UIImage(systemName: data.leadingIconName)
+        leadingIcon.image = UIImage(systemName: moCellData.leadingIconName)
         leadingIcon.tintColor = .black
         
-        leadingText.text = data.leadingText
+        leadingText.text = moCellData.leadingText
         
-        trailingIcon.image = UIImage(systemName: data.trailingIconName)
-        trailingIcon.tintColor = .black
+        trailingButton.tintColor = .black
+        trailingButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         
-        trailingText.text = data.trailingText
+        
+        trailingText.text = moCellData.trailingText
     }
-}
-
-struct MOCellData {
-    let leadingIconName: String
-    let leadingText: String
-    let trailingIconName: String
-    let trailingText: String
+    
+    func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? MOButtonLabelData {
+            self.moCellData = state
+        }
+    }
+    
+    @objc
+    func deleteButtonTapped() {
+        print(#function)
+        delegate?.baseViewAction(.moButtonLabelAction(.deleteButtonTapped(moCellData)))
+    }
 }

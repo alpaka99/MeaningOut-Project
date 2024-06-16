@@ -45,6 +45,15 @@ final class DetailSearchView: UIView, BaseViewBuildable {
         if let url = URL(string: data.link), let request = try? URLRequest(url: url, method: .get) {
             webView.load(request)
         }
-        
+    }
+    
+    func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? DetailSearchViewControllerState {
+            if let url = URL(string: state.link),
+                let request = try? URLRequest(url: url) {
+                print(#function)
+                webView.load(request)
+            }
+        }
     }
 }

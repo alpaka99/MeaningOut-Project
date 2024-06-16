@@ -18,6 +18,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         frame: .zero,
         collectionViewLayout: createFlowLayout(numberOfRowsInLine: 2, spacing: 20)
     )
+    
     var searchResult: [ShoppingItem] = [] {
         didSet {
             resultCollectionView.reloadData()
@@ -95,9 +96,10 @@ final class SearchResultView: UIView, BaseViewBuildable {
         resultCollectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
     }
     
-    func configureData(_ data: NaverShoppingResponse) {
-        totalResultLabel.text = "\(data.total.formatted())개의 검색 결과"
-        searchResult = data.items
+    func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? SearchResultViewControllerState {
+            searchResult = state.searchResult.items
+        }
     }
     
 }
@@ -124,7 +126,10 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SearchResultCollectionViewCell.identifier,
+            for: indexPath
+        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         
         let data = searchResult[indexPath.row]
         cell.configureData(data)
@@ -135,9 +140,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = searchResult[indexPath.row]
         
-        //MARK: send data up to ViewController
-        
-        
+        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
     
 }

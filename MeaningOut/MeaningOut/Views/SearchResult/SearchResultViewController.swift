@@ -9,20 +9,21 @@ import UIKit
 
 import Alamofire
 
-final class SearchResultViewController: MOBaseViewController {
+final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
+    struct State: SearchResultViewControllerState {
+        var searchResult: NaverShoppingResponse
+    }
     
-    var searchResult = NaverShoppingResponse(start: 1, total: 0, items: []) {
+    var state: State = State(searchResult: NaverShoppingResponse(start: 1, total: 0, items: [])) {
         didSet {
-            if let baseView = baseView as? SearchResultView {
-                baseView.configureData(searchResult)
-            }
+            configureData(state)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchSearchResult("기계식 키보드", filterOption: .simularity)
+        baseView.delegate = self
     }
     
     
@@ -53,32 +54,32 @@ final class SearchResultViewController: MOBaseViewController {
         .responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
             switch response.result {
             case .success(let value):
-                self?.searchResult = value
+                self?.state.searchResult = value
             case .failure(let error):
                 print(error)
             }
         }
-//        .responseString { response in
-//            switch response.result {
-//            case .success(let value):
-//                print(value)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
 }
 
-struct NaverShoppingResponse: Codable {
-    let start: Int
-    let total: Int
-    let items: [ShoppingItem]
-}
 
-struct ShoppingItem: Codable {
-    let title: String
-    let image: String
-    let mallName: String
-    let lprice: String
-    let link: String
+extension SearchResultViewController: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .searchResultViewAction(let detailAction):
+            switch detailAction {
+            case .resultCellTapped(let shoppingItem):
+                moveToDetailSearchViewController(shoppingItem)
+            }
+        default:
+            break
+        }
+    }
+    
+    func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
+        let detailSearchViewController = DetailSearchViewController(DetailSearchView())
+        detailSearchViewController.fetchShoppingItem(shoppingItem)
+        
+        navigationController?.pushViewController(detailSearchViewController, animated: true)
+    }
 }

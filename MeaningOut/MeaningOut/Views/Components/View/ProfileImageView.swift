@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 final class ProfileImageView: UIView, BaseViewBuildable {
+    
     let profileImageView = UIImageView()
     let subButton = UIImageView()
     var selectedState = ProfileImageState.normal
@@ -78,6 +79,10 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func configureData(_ state: any BaseViewControllerState) {
+        
     }
     
     func roundCorners() {

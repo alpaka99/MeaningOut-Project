@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
+    
+    
     let selectedImageView: ProfileImageView
     lazy var profileCollectionView = UICollectionView(
         frame: .zero,
@@ -31,7 +33,6 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         configureHierarchy()
         configureLayout()
         configureUI()
-        configureData()
     }
     
     required init?(coder: NSCoder) {
@@ -74,7 +75,7 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         profileCollectionView.register(ProfileSelectionViewCell.self, forCellWithReuseIdentifier: ProfileSelectionViewCell.identifier)
     }
     
-    func configureData() {
+    func configureData(_ state: any BaseViewControllerState) {
         
     }
 }

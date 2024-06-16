@@ -7,15 +7,18 @@
 
 import UIKit
 
-final class DetailSearchViewController: MOBaseViewController {
+final class DetailSearchViewController: MOBaseViewController, CommunicatableBaseViewController {
     
-    func configureData(_ data: ShoppingItem) {
-        self.navigationItem.title = data.title
-        
-        if let baseView = baseView as? DetailSearchView {
-            baseView.configureData(data)
+    struct State: DetailSearchViewControllerState {
+        var link = ""
+    }
+    
+    var state: State = State() {
+        didSet {
+            baseView.configureData(state)
         }
     }
+    
     
     override func configureUI() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -24,6 +27,10 @@ final class DetailSearchViewController: MOBaseViewController {
             target: self,
             action: #selector(likeButtonTapped)
         )
+    }
+    
+    func fetchShoppingItem(_ shoppingItem: ShoppingItem) {
+        state.link = shoppingItem.link
     }
     
     @objc
