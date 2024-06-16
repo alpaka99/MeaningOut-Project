@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-//        let navigationController = UINavigationController(rootViewController: ProfileSettingViewController(ProfileSettingView()))
-        let navigationController = UINavigationController(rootViewController: ProfileSelectionViewController(ProfileSelectionView()))
+        let navigationController = UINavigationController(rootViewController: HomeViewController(HomeView()))
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

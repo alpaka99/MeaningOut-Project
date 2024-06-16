@@ -20,3 +20,7 @@ extension Reusable {
 extension UICollectionViewCell: Reusable {
     
 }
+
+extension UITableViewCell: Reusable {
+    
+}
