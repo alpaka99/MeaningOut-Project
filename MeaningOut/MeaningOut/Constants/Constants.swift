@@ -55,3 +55,26 @@ enum ProfileImage: String, CaseIterable {
     case profile_10
     case profile_11
 }
+
+
+enum FilterOption: String, CaseIterable {
+    case simularity = "sim"
+    case date = "date"
+    case ascendingPrice = "asc"
+    case descendingPrice = "dsc"
+    
+    var buttonTitle: String {
+        switch self {
+        case .simularity:
+            return "정확도"
+        case .date:
+            return "날짜순"
+        case .ascendingPrice:
+            return "가격높은순"
+        case .descendingPrice:
+            return "가격낮은순"
+        }
+    }
+}
+
+
