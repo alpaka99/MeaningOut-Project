@@ -36,6 +36,8 @@
 		CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB6B2C1EA7840083E256 /* SearchResultViewController.swift */; };
 		CE0ECB6F2C1EAA050083E256 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB6E2C1EAA050083E256 /* APIKey.swift */; };
 		CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */; };
+		CE0ECB742C1ECE6F0083E256 /* DetailSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB732C1ECE6F0083E256 /* DetailSearchViewController.swift */; };
+		CE0ECB762C1ECE9F0083E256 /* DetailSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB752C1ECE9F0083E256 /* DetailSearchView.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -72,6 +74,8 @@
 		CE0ECB6B2C1EA7840083E256 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		CE0ECB6E2C1EAA050083E256 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE0ECB732C1ECE6F0083E256 /* DetailSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSearchViewController.swift; sourceTree = "<group>"; };
+		CE0ECB752C1ECE9F0083E256 /* DetailSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSearchView.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB722C1ECE5C0083E256 /* DetailSearch */,
 				CE0ECB6A2C1EA7760083E256 /* SearchResult */,
 				CE0ECB582C1DE8BA0083E256 /* MainView */,
 				CE0ECB432C1CBF8D0083E256 /* Components */,
@@ -220,6 +225,15 @@
 				CE0ECB6E2C1EAA050083E256 /* APIKey.swift */,
 			);
 			path = APIKeys;
+			sourceTree = "<group>";
+		};
+		CE0ECB722C1ECE5C0083E256 /* DetailSearch */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB732C1ECE6F0083E256 /* DetailSearchViewController.swift */,
+				CE0ECB752C1ECE9F0083E256 /* DetailSearchView.swift */,
+			);
+			path = DetailSearch;
 			sourceTree = "<group>";
 		};
 		CE6151402C1AF69100165CAB = {
@@ -348,6 +362,7 @@
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
+				CE0ECB762C1ECE9F0083E256 /* DetailSearchView.swift in Sources */,
 				CE0ECB5A2C1DE8CA0083E256 /* MainViewController.swift in Sources */,
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
@@ -356,6 +371,7 @@
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
 				CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */,
 				CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */,
+				CE0ECB742C1ECE6F0083E256 /* DetailSearchViewController.swift in Sources */,
 				CE0ECB552C1DD1CA0083E256 /* MOTextField.swift in Sources */,
 				CE0ECB512C1DBD910083E256 /* RoundCornerButton.swift in Sources */,
 				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
@@ -522,6 +538,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -554,6 +571,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

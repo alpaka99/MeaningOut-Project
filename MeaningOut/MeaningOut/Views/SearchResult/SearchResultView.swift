@@ -132,6 +132,13 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = searchResult[indexPath.row]
+        
+        //MARK: send data up to ViewController
+        
+        
+    }
     
 }
 
