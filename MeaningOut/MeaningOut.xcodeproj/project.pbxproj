@@ -43,6 +43,7 @@
 		CE0ECB7D2C1F3DFB0083E256 /* BaseViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */; };
 		CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */; };
 		CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */; };
+		CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -86,6 +87,7 @@
 		CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewStates.swift; sourceTree = "<group>"; };
 		CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabelData.swift; sourceTree = "<group>"; };
 		CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabel.swift; sourceTree = "<group>"; };
+		CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverShoppingResponse.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */,
+				CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
 				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
+				CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
 				CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,

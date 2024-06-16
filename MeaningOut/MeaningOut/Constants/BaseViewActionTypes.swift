@@ -13,6 +13,7 @@ enum BaseViewActionType {
     case profileSelectionAction(ProfileSelectionViewAction)
     case mainViewAction(MainViewAction)
     case moButtonLabelAction(MOButtonLabelAction)
+    case searchResultViewAction(SearchResultViewAction)
 }
 
 
@@ -37,4 +38,8 @@ enum MainViewAction {
 enum MOButtonLabelAction {
     case deleteButtonTapped(MOButtonLabelData)
     case eraseAllHistoryButtonTapped
+}
+
+enum SearchResultViewAction {
+    case resultCellTapped(ShoppingItem)
 }

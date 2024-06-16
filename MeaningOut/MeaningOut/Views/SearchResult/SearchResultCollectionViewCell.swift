@@ -109,6 +109,5 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     
     func configureData(_ state: any BaseViewControllerState) {
         
-    }
-    
+    }   
 }

@@ -21,3 +21,8 @@ protocol MOButtonLabelState: BaseViewControllerState {
     var trailingButtonName: String { get set }
     var trailingText: String { get set }
 }
+
+
+protocol DetailSearchViewControllerState: BaseViewControllerState {
+    var link: String { get set }
+}

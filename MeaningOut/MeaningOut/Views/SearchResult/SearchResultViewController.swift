@@ -22,6 +22,8 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        baseView.delegate = self
     }
     
     
@@ -60,16 +62,24 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
 }
 
-struct NaverShoppingResponse: Codable {
-    let start: Int
-    let total: Int
-    let items: [ShoppingItem]
-}
 
-struct ShoppingItem: Codable {
-    let title: String
-    let image: String
-    let mallName: String
-    let lprice: String
-    let link: String
+extension SearchResultViewController: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .searchResultViewAction(let detailAction):
+            switch detailAction {
+            case .resultCellTapped(let shoppingItem):
+                moveToDetailSearchViewController(shoppingItem)
+            }
+        default:
+            break
+        }
+    }
+    
+    func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
+        let detailSearchViewController = DetailSearchViewController(DetailSearchView())
+        detailSearchViewController.fetchShoppingItem(shoppingItem)
+        
+        navigationController?.pushViewController(detailSearchViewController, animated: true)
+    }
 }

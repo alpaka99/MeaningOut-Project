@@ -140,9 +140,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = searchResult[indexPath.row]
         
-        //MARK: send data up to ViewController
-        
-        
+        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
     
 }
