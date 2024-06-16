@@ -34,15 +34,23 @@ final class RoundCornerButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.layer.cornerRadius = self.frame.height / 2
+    }
+    
     func configureUI() {
         var config = UIButton.Configuration.plain()
         
         config.background.backgroundColor = color
-        config.cornerStyle = .capsule
         
         switch type {
         case .plain:
-            config.title = title
+            if let title = title {
+                let attributeContainer = AttributeContainer()
+                config.attributedTitle = AttributedString(title, attributes: attributeContainer)
+            }
         case .image:
             config.image = image
         }
@@ -53,6 +61,24 @@ final class RoundCornerButton: UIButton {
         self.contentHorizontalAlignment = .fill
         
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+    }
+    
+    func setBorderLine(color: UIColor, width: CGFloat) {
+        self.layer.borderColor = color.cgColor
+        self.layer.borderWidth = width
+    }
+    
+    func setStringAttribute(_ attributes: AttributeContainer) {
+        if let title = self.title {
+            var config = self.configuration
+            config?.attributedTitle = AttributedString(
+                title,
+                attributes: attributes
+            )
+            
+            self.configuration = config
+        }
         
     }
     

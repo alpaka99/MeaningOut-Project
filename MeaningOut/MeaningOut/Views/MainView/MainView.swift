@@ -149,6 +149,8 @@ extension MainView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text, text.isEmpty == false {
             recentSearch.append(text)
+            
+            
         }
     }
 }

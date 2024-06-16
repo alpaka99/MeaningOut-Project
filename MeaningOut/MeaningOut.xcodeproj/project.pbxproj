@@ -32,6 +32,10 @@
 		CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB612C1DFB960083E256 /* Reusable.swift */; };
 		CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB632C1DFCDD0083E256 /* ProfileSelectionViewCell.swift */; };
 		CE0ECB672C1E95340083E256 /* MOTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB662C1E95340083E256 /* MOTableViewCell.swift */; };
+		CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB682C1EA76C0083E256 /* SearchResultView.swift */; };
+		CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB6B2C1EA7840083E256 /* SearchResultViewController.swift */; };
+		CE0ECB6F2C1EAA050083E256 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB6E2C1EAA050083E256 /* APIKey.swift */; };
+		CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -64,6 +68,10 @@
 		CE0ECB612C1DFB960083E256 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		CE0ECB632C1DFCDD0083E256 /* ProfileSelectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionViewCell.swift; sourceTree = "<group>"; };
 		CE0ECB662C1E95340083E256 /* MOTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTableViewCell.swift; sourceTree = "<group>"; };
+		CE0ECB682C1EA76C0083E256 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		CE0ECB6B2C1EA7840083E256 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		CE0ECB6E2C1EAA050083E256 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +126,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB6A2C1EA7760083E256 /* SearchResult */,
 				CE0ECB582C1DE8BA0083E256 /* MainView */,
 				CE0ECB432C1CBF8D0083E256 /* Components */,
 				CE0ECB422C1CBF810083E256 /* Onboarding */,
@@ -195,6 +204,24 @@
 			path = MainView;
 			sourceTree = "<group>";
 		};
+		CE0ECB6A2C1EA7760083E256 /* SearchResult */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB682C1EA76C0083E256 /* SearchResultView.swift */,
+				CE0ECB6B2C1EA7840083E256 /* SearchResultViewController.swift */,
+				CE0ECB702C1EB6E10083E256 /* SearchResultCollectionViewCell.swift */,
+			);
+			path = SearchResult;
+			sourceTree = "<group>";
+		};
+		CE0ECB6D2C1EA9F90083E256 /* APIKeys */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB6E2C1EAA050083E256 /* APIKey.swift */,
+			);
+			path = APIKeys;
+			sourceTree = "<group>";
+		};
 		CE6151402C1AF69100165CAB = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +242,7 @@
 		CE61514B2C1AF69100165CAB /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB6D2C1EA9F90083E256 /* APIKeys */,
 				CE0ECB362C1CA9FC0083E256 /* Protocols */,
 				CE61514C2C1AF69100165CAB /* AppDelegate.swift */,
 				CE61514E2C1AF69100165CAB /* SceneDelegate.swift */,
@@ -322,9 +350,12 @@
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
 				CE0ECB5A2C1DE8CA0083E256 /* MainViewController.swift in Sources */,
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
+				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
+				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
 				CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */,
+				CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */,
 				CE0ECB552C1DD1CA0083E256 /* MOTextField.swift in Sources */,
 				CE0ECB512C1DBD910083E256 /* RoundCornerButton.swift in Sources */,
 				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
@@ -332,6 +363,7 @@
 				CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
 				CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */,
+				CE0ECB6F2C1EAA050083E256 /* APIKey.swift in Sources */,
 				CE0ECB572C1DD7850083E256 /* UIImage+Extension.swift in Sources */,
 				CE0ECB532C1DCE540083E256 /* ProfileSettingView.swift in Sources */,
 				CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */,
