@@ -26,7 +26,7 @@ extension ProfileSettingViewController: ProfileSettingViewDelegate {
     
     func toNextViewController() {
         print(#function)
-        let nextViewController = HomeViewController(HomeView())
+        let nextViewController = MainViewController(MainView())
         
         navigationController?.pushViewController(nextViewController, animated: true)
     }
