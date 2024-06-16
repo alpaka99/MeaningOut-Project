@@ -75,21 +75,3 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
     
 }
-
-extension ProfileSettingView: ProfileImageViewDelegate {
-    func profileImageViewTapped() {
-//        delegate?.toProfileSelectionViewController()
-    }
-}
-
-extension ProfileSettingView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped() {
-//        delegate?.toNextViewController()
-    }
-}
-
-protocol ProfileSettingViewDelegate: NSObject {
-    func toNextViewController()
-    func toProfileSelectionViewController()
-}
-

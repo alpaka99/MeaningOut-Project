@@ -27,7 +27,7 @@ extension OnboardingViewController: BaseViewBuildableDelegate {
     }
     
     func moveToProfileSettingView() {
-        let vc = ProfileSettingViewController(ProfileSettingView())
-        navigationController?.pushViewController(vc, animated: true)
+        let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
+        navigationController?.pushViewController(profileSettingViewController, animated: true)
     }
 }
