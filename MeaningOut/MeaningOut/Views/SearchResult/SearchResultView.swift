@@ -91,6 +91,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         
         resultCollectionView.delegate = self
         resultCollectionView.dataSource = self
+        resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
     }
     
@@ -132,4 +133,15 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     
+}
+
+extension SearchResultView: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if let lastItem = indexPaths.last {
+            if lastItem.row >= searchResult.count - 6 {
+                // MARK: Prefetch Data from ViewController
+//                delegate.prefetch()
+            }
+        }
+    }
 }
