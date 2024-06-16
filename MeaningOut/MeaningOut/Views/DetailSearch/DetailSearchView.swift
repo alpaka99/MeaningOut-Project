@@ -13,7 +13,7 @@ import SnapKit
 final class DetailSearchView: UIView, BaseViewBuildable {
     let webView = WKWebView()
     
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -7,13 +7,13 @@
 import UIKit
 
 protocol BaseViewBuildable: UIView {
-    var delegate: BaseViewBuildableDelegate? { get set }
+    var delegate: BaseViewDelegate? { get set }
     func configureHierarchy()
     func configureLayout()
     func configureUI()   
 }
 
-protocol BaseViewBuildableDelegate: AnyObject {
+protocol BaseViewDelegate: AnyObject {
     func baseViewAction(_ type: BaseViewActionType)
 }
 
@@ -21,9 +21,19 @@ protocol BaseViewBuildableDelegate: AnyObject {
 
 enum BaseViewActionType {
     case logoViewAction(LogoViewAction)
+    case profileImageAction(ProfileImageAction)
+    case profileSelectionAction(ProfileSelectionAction)
 }
 
 
 enum LogoViewAction {
     case startButtonTapped
+}
+
+enum ProfileImageAction {
+    case profileImageTapped
+}
+
+enum ProfileSelectionAction {
+    case profileImageCellTapped(String)
 }

@@ -13,7 +13,7 @@ final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     
     let profileImage = ProfileImageView(profileImage: "profile_0")
     
-    var delegate: BaseViewBuildableDelegate?
+    var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

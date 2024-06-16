@@ -15,7 +15,7 @@ final class OnboardingViewController: MOBaseViewController {
 }
 
 
-extension OnboardingViewController: BaseViewBuildableDelegate {
+extension OnboardingViewController: BaseViewDelegate {
     func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .logoViewAction(let action):
@@ -23,6 +23,8 @@ extension OnboardingViewController: BaseViewBuildableDelegate {
             case .startButtonTapped:
                 moveToProfileSettingView()
             }
+        default:
+            break
         }
     }
     

@@ -17,7 +17,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     let title = UILabel()
     let price = UILabel()
     
-    var delegate: (any BaseViewBuildableDelegate)?
+    var delegate: (any BaseViewDelegate)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

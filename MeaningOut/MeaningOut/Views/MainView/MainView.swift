@@ -21,7 +21,7 @@ final class MainView: UIView, BaseViewBuildable {
         }
     }
     
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -99,7 +99,6 @@ final class MainView: UIView, BaseViewBuildable {
     }
     
     func recentSearchChanged() {
-        print(#function, recentSearch)
         if recentSearch.isEmpty {
             tableView.alpha = 0
             
@@ -149,8 +148,6 @@ extension MainView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text, text.isEmpty == false {
             recentSearch.append(text)
-            
-            
         }
     }
 }

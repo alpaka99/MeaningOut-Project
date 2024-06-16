@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
-    var delegate: BaseViewBuildableDelegate?
+    var delegate: BaseViewDelegate?
     
     let leadingIcon = UIImageView()
     let leadingText = UILabel()

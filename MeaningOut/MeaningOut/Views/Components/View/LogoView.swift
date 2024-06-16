@@ -20,7 +20,7 @@ final class LogoView: UIView, BaseViewBuildable {
         color: MOColors.moOrange.color
     )
     
-    weak var delegate: BaseViewBuildableDelegate?
+    weak var delegate: BaseViewDelegate?
     
     init(type: LogoViewType) {
         self.type = type

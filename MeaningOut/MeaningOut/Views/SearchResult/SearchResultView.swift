@@ -24,7 +24,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    var delegate: BaseViewBuildableDelegate?
+    var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
