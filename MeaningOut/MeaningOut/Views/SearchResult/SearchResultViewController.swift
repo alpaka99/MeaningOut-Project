@@ -11,6 +11,14 @@ import Alamofire
 
 final class SearchResultViewController: MOBaseViewController {
     
+    var searchResult = NaverShoppingResponse(start: 1, total: 0, items: []) {
+        didSet {
+            if let baseView = baseView as? SearchResultView {
+                baseView.configureData(searchResult)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,9 +53,7 @@ final class SearchResultViewController: MOBaseViewController {
         .responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
             switch response.result {
             case .success(let value):
-                if let baseView = self?.baseView as? SearchResultView {
-                    baseView.configureData(value)
-                }
+                self?.searchResult = value
             case .failure(let error):
                 print(error)
             }
