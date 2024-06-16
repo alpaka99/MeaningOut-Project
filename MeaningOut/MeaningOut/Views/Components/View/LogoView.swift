@@ -14,7 +14,11 @@ final class LogoView: UIView, BaseViewBuildable {
     let logoTitle = UILabel()
     let logoImage = UIImageView()
     let userNameLabel = UILabel()
-    let startButton = UIButton()
+    let startButton = RoundCornerButton(
+        type: .plain,
+        title: "시작하기",
+        color: MOColors.moOrange.color
+    )
     
     weak var delegate: BaseViewBuildableDelegate?
     
@@ -85,10 +89,10 @@ final class LogoView: UIView, BaseViewBuildable {
         userNameLabel.font = .systemFont(ofSize: 20, weight: .bold)
         userNameLabel.textColor = MOColors.moOrange.color
         
+        startButton.delegate = self
         startButton.setTitle("시작하기", for: .normal)
         startButton.setTitleColor(.white, for: .normal)
         startButton.backgroundColor = MOColors.moOrange.color
-        startButton.layer.cornerRadius = 16
         
         switch type {
         case .launching:
@@ -107,4 +111,10 @@ final class LogoView: UIView, BaseViewBuildable {
 enum LogoViewType {
     case launching
     case oboarding
+}
+
+extension LogoView: RoundCornerButtonDelegate {
+    func roundCornerButtonTapped() {
+        delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
+    }
 }

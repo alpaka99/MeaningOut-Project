@@ -9,4 +9,25 @@ import UIKit
 
 final class OnboardingViewController: MOBaseViewController {
     
+    override func configureUI() {
+        baseView.delegate = self
+    }
+}
+
+
+extension OnboardingViewController: BaseViewBuildableDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .logoViewAction(let action):
+            switch action {
+            case .startButtonTapped:
+                moveToProfileSettingView()
+            }
+        }
+    }
+    
+    func moveToProfileSettingView() {
+        let vc = ProfileSettingViewController(ProfileSettingView())
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

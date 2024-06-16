@@ -14,9 +14,16 @@ protocol BaseViewBuildable: UIView {
 }
 
 protocol BaseViewBuildableDelegate: AnyObject {
-    func baseViewBuildableAction(_ type: BaseViewActionType)
+    func baseViewAction(_ type: BaseViewActionType)
 }
 
+
+
 enum BaseViewActionType {
-    case test
+    case logoViewAction(LogoViewAction)
+}
+
+
+enum LogoViewAction {
+    case startButtonTapped
 }
