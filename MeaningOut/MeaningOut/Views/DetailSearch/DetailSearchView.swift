@@ -11,6 +11,8 @@ import WebKit
 import SnapKit
 
 final class DetailSearchView: UIView, BaseViewBuildable {
+    
+    
     let webView = WKWebView()
     
     weak var delegate: BaseViewDelegate?
@@ -45,6 +47,9 @@ final class DetailSearchView: UIView, BaseViewBuildable {
         if let url = URL(string: data.link), let request = try? URLRequest(url: url, method: .get) {
             webView.load(request)
         }
+    }
+    
+    func configureData(_ state: any BaseViewControllerState) {
         
     }
 }

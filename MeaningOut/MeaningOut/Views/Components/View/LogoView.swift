@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 final class LogoView: UIView, BaseViewBuildable {
+    
     let type: LogoViewType
     let logoTitle = UILabel()
     let logoImage = UIImageView()
@@ -30,7 +31,6 @@ final class LogoView: UIView, BaseViewBuildable {
         configureHierarchy()
         configureLayout()
         configureUI()
-        configureData()
     }
     
     required init?(coder: NSCoder) {
@@ -102,7 +102,7 @@ final class LogoView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureData() {
+    func configureData(_ state: any BaseViewControllerState) {
         
     }
 }

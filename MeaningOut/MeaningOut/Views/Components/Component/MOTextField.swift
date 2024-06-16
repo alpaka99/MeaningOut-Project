@@ -8,6 +8,7 @@
 import UIKit
 
 final class MOTextField: UIView, BaseViewBuildable {
+    
     weak var delegate: BaseViewDelegate?
     
     let textField = UITextField()
@@ -61,7 +62,7 @@ final class MOTextField: UIView, BaseViewBuildable {
         checkLabel.textColor = MOColors.moOrange.color
     }
     
-    func configureData() {
+    func configureData(_ state: any BaseViewControllerState) {
         
     }
 }

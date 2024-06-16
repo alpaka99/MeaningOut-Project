@@ -11,6 +11,7 @@ import SnapKit
 
 final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     
+    
     let profileImage = ProfileImageView(profileImage: "profile_0")
     
     var delegate: BaseViewDelegate?
@@ -43,6 +44,10 @@ final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     
     func configureData(_ imageName: String) {
         profileImage.profileImageView.image = UIImage(named: imageName)
+    }
+    
+    func configureData(_ state: any BaseViewControllerState) {
+        
     }
     
     override func prepareForReuse() {

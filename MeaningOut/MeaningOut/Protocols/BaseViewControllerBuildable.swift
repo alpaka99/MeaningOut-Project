@@ -19,6 +19,7 @@ protocol BaseViewController: UIViewController {
     func configureData()
 }
 
+
 extension BaseViewController {
     internal func configureLayout() {
         
@@ -29,6 +30,22 @@ extension BaseViewController {
     }
     
     internal func configureData() {
-//        baseView.configureData()
+        
+    }
+}
+
+protocol BaseViewControllerState {
+    
+}
+
+protocol CommunicatableBaseViewController: MOBaseViewController {
+    associatedtype State: BaseViewControllerState
+    var state: State { get }
+    func configureData(_ data: State)
+}
+
+extension CommunicatableBaseViewController {
+    func configureData(_ data: State) {
+        baseView.configureData(state)
     }
 }

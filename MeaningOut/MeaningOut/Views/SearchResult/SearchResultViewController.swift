@@ -9,20 +9,19 @@ import UIKit
 
 import Alamofire
 
-final class SearchResultViewController: MOBaseViewController {
+final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
+    struct State: SearchResultViewControllerState {
+        var searchResult: NaverShoppingResponse
+    }
     
-    var searchResult = NaverShoppingResponse(start: 1, total: 0, items: []) {
+    var state: State = State(searchResult: NaverShoppingResponse(start: 1, total: 0, items: [])) {
         didSet {
-            if let baseView = baseView as? SearchResultView {
-                baseView.configureData(searchResult)
-            }
+            configureData(state)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        fetchSearchResult("기계식 키보드", filterOption: .simularity)
     }
     
     
@@ -53,19 +52,11 @@ final class SearchResultViewController: MOBaseViewController {
         .responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
             switch response.result {
             case .success(let value):
-                self?.searchResult = value
+                self?.state.searchResult = value
             case .failure(let error):
                 print(error)
             }
         }
-//        .responseString { response in
-//            switch response.result {
-//            case .success(let value):
-//                print(value)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
 }
 

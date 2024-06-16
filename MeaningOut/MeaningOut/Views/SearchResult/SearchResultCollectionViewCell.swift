@@ -107,4 +107,8 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         price.text = formattedPrice + "원"
     }
     
+    func configureData(_ state: any BaseViewControllerState) {
+        
+    }
+    
 }
