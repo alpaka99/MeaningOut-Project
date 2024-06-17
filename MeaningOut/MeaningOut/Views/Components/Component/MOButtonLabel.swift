@@ -13,11 +13,11 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
     var delegate: (any BaseViewDelegate)?
     
     var moButtonLabelData: MOButtonLabelData = MOButtonLabelData(
-        leadingIconName: "",
-        leadingText: "최근 기록",
-        trailingButtonName: "전체 삭제",
+        leadingIconName: nil,
+        leadingText: nil,
+        trailingButtonName: nil,
         trailingButtonType: .plain,
-        trailingText: ""
+        trailingText: nil
     ) {
         didSet {
             configureUI()
@@ -38,6 +38,33 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         configureHierarchy()
         configureLayout()
         configureUI()
+    }
+    
+    convenience init(leadingText: String, trailingButtonName: String, trailingText: String, buttonType: MOButtonLabelTrailingButtonType) {
+        self.init(frame: .zero)
+        moButtonLabelData.leadingText = leadingText
+        moButtonLabelData.trailingButtonName = trailingButtonName
+        moButtonLabelData.trailingText = trailingText
+        moButtonLabelData.trailingButtonType = buttonType
+    }
+    
+    convenience init(leadingText: String) {
+        self.init(frame: .zero)
+        moButtonLabelData.leadingText = leadingText
+    }
+    
+    convenience init(leadingText: String, trailingText: String) {
+        self.init(frame: .zero)
+        moButtonLabelData.leadingText = leadingText
+        moButtonLabelData.trailingText = trailingText
+    }
+    
+    convenience init(leadingIconName: String, leadingText: String, trailingButtonName: String, buttonType: MOButtonLabelTrailingButtonType) {
+        self.init(frame: .zero)
+        moButtonLabelData.leadingIconName = leadingIconName
+        moButtonLabelData.leadingText = leadingText
+        moButtonLabelData.trailingButtonName = trailingButtonName
+        moButtonLabelData.trailingButtonType = buttonType
     }
     
     required init?(coder: NSCoder) {
@@ -77,7 +104,9 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
     }
     
     func configureUI() {
-        leadingIcon.image = UIImage(systemName: moButtonLabelData.leadingIconName)
+        if let leadingIconName = moButtonLabelData.leadingIconName {
+            leadingIcon.image = UIImage(systemName: leadingIconName)
+        }
         leadingIcon.tintColor = .black
         
         leadingText.text = moButtonLabelData.leadingText

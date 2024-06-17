@@ -91,11 +91,11 @@ final class MainView: UIView, BaseViewBuildable {
         emptyLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         
         headerView.configureData(MOButtonLabelData(
-            leadingIconName: "",
+            leadingIconName: nil,
             leadingText: "최근 기록",
-            trailingButtonName: "",
+            trailingButtonName: nil,
             trailingButtonType: .plain,
-            trailingText: ""
+            trailingText: nil
         ))
         headerView.alpha = 0
         headerView.delegate = self
@@ -158,8 +158,8 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
             leadingIconName: "clock",
             leadingText: data,
             trailingButtonName: "xmark",
-            trailingButtonType: .image,
-            trailingText: ""
+            trailingButtonType: .systemImage,
+            trailingText: nil
         )
         cell.configureData(cellData)
         cell.delegate = self
@@ -188,7 +188,7 @@ extension MainView: BaseViewDelegate {
         switch type {
         case .moButtonLabelAction(let detailAction):
             switch detailAction {
-            case .deleteButtonTapped(let moCellData):
+            case .trailingButtonTapped(let moCellData):
                 deleteButtonTapped(moCellData)
             case .eraseAllHistoryButtonTapped:
                 eraseAllButtonTapped()

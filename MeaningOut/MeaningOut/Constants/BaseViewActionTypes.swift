@@ -14,6 +14,7 @@ enum BaseViewActionType {
     case mainViewAction(MainViewAction)
     case moButtonLabelAction(MOButtonLabelAction)
     case searchResultViewAction(SearchResultViewAction)
+    case settingViewAction(SettingViewAction)
 }
 
 
@@ -36,10 +37,16 @@ enum MainViewAction {
 }
 
 enum MOButtonLabelAction {
-    case deleteButtonTapped(MOButtonLabelData)
+    case trailingButtonTapped(MOButtonLabelData)
     case eraseAllHistoryButtonTapped
 }
 
 enum SearchResultViewAction {
     case resultCellTapped(ShoppingItem)
+}
+
+enum SettingViewAction {
+    case headerViewTapped
+    case likedItemsCellTapped
+    case quitCellTapped
 }

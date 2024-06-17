@@ -84,4 +84,43 @@ enum FilterOption: String, CaseIterable {
     }
 }
 
-
+enum SettingOptions: CaseIterable {
+    case liked
+    case qna
+    case oneOnOneQuestion
+    case notification
+    case quit
+    
+    var trailingImageName: String? {
+        switch self {
+        case .liked:
+            return "like_selected"
+        default:
+            return nil
+        }
+    }
+    
+    var leadingTitle: String? {
+        switch self {
+        case .liked:
+            return "나의 장바구니 목록"
+        case .qna:
+            return "자주 묻는 질문"
+        case .oneOnOneQuestion:
+            return "1:1 문의"
+        case .notification:
+            return "알림 설정"
+        case .quit:
+            return "탈퇴하기"
+        }
+    }
+    
+    func getTrailingText(_ count: Int) -> String? {
+        switch self {
+        case .liked:
+            return "\(count)개의 상품"
+        default:
+            return nil
+        }
+    }
+}

@@ -7,14 +7,15 @@
 import UIKit
 
 struct MOButtonLabelData: MOButtonLabelState {
-    var leadingIconName: String
-    var leadingText: String
-    var trailingButtonName: String
+    var leadingIconName: String?
+    var leadingText: String?
+    var trailingButtonName: String?
     var trailingButtonType: MOButtonLabelTrailingButtonType
-    var trailingText: String
+    var trailingText: String?
 }
 
 enum MOButtonLabelTrailingButtonType {
-    case image
+    case systemImage
+    case assetImage
     case plain
 }
