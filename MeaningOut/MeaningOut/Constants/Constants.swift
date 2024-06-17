@@ -41,7 +41,7 @@ struct ScreenSize {
 }
 
 
-enum ProfileImage: String, CaseIterable {
+enum ProfileImage: String, CaseIterable, Codable {
     case profile_0
     case profile_1
     case profile_2
@@ -123,4 +123,10 @@ enum SettingOptions: CaseIterable {
             return nil
         }
     }
+}
+
+
+struct JSONHelper {
+    static let jsonEncoder = JSONEncoder()
+    static let jsonDecoder = JSONDecoder()
 }

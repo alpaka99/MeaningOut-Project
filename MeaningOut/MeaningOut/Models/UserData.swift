@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserData: Codable {
+struct UserData: Codable, BaseViewControllerState {
     var userName: String
     var profileImage: ProfileImage
     var signUpDate: Date

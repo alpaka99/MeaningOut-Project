@@ -69,7 +69,17 @@ final class MOTextField: UIView, BaseViewBuildable {
     
     func setAsSettingType() {
         checkLabel.textColor = MOColors.moBlack.color
-        
+    }
+    
+    func setTextFieldText(_ text: String) {
+        textField.text = text
+    }
+    
+    func fetchTextFieldText() -> String? {
+        if let text = textField.text, text.isEmpty == false {
+            return text
+        }
+        return nil
     }
     
     func configureData(_ state: any BaseViewControllerState) {

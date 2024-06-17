@@ -14,7 +14,11 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         var searchResult: NaverShoppingResponse
     }
     
-    var state: State = State(searchResult: NaverShoppingResponse(start: 1, total: 0, items: [])) {
+    var state: State = State(searchResult: NaverShoppingResponse(
+        start: 1,
+        total: 0,
+        items: []
+    )) {
         didSet {
             configureData(state)
         }

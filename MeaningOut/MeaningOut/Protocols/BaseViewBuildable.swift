@@ -12,4 +12,11 @@ protocol BaseViewBuildable: UIView {
     func configureLayout()
     func configureUI()   
     func configureData(_ state: BaseViewControllerState)
+    func triggerAction()
+}
+
+extension BaseViewBuildable {
+    func triggerAction() {
+        
+    }
 }

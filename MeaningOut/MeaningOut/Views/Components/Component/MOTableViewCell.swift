@@ -44,6 +44,13 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        leadingIcon.image = nil
+        leadingText.text = ""
+        trailingText.text = ""
+        trailingButton.setImage(nil, for: .normal)
+    }
+    
     func configureHierarchy() {
         contentView.addSubview(leadingIcon)
         contentView.addSubview(leadingText)
@@ -112,7 +119,6 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     
     @objc
     func trailingButtonTapped() {
-        print(#function)
         delegate?.baseViewAction(.moButtonLabelAction(.trailingButtonTapped(moCellData)))
     }
 }

@@ -9,11 +9,10 @@ import UIKit
 
 final class SettingViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SettingViewControllerState {
-        var settingHeaderViewData = SettingHeaderViewData(
-            userName: "",
-            signUpDate: Date.now
-        )
-        var likedItems: [ShoppingItem] = []
+        var userName = ""
+        var profileImage = ProfileImage.randomProfileImage
+        var signUpDate = Date.now
+        var likedItems:[ShoppingItem] = []
     }
     
     var state = State() {
@@ -22,8 +21,23 @@ final class SettingViewController: MOBaseViewController, CommunicatableBaseViewC
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            state.userName = userData.userName
+            state.profileImage = userData.profileImage
+            state.signUpDate = userData.signUpDate
+            state.likedItems = userData.likedItems
+            configureUI()
+        }
+        
+    }
+    
     override func configureUI() {
         baseView.delegate = self
+        
+        baseView.configureData(state)
     }
 }
 
@@ -46,8 +60,12 @@ extension SettingViewController: BaseViewDelegate {
     }
     
     func headerViewTapped() {
-        //MARK: 현재 profile 데이터 넣어주기
         let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
+        
+        profileSettingViewController.setUserData(
+            userName: state.userName,
+            profileImage: state.profileImage
+        )
         profileSettingViewController.setProfileSettingViewType(.setting)
         
         navigationController?.pushViewController(profileSettingViewController, animated: true)
@@ -59,6 +77,21 @@ extension SettingViewController: BaseViewDelegate {
     }
     
     func quitCellTapped() {
-        // MARK: Erase user data and Move to Launch Screen
+        print(#function)
+        UserDefaults.standard.resetData(of: UserData.self)
+        
+        moveToLaunchScreen()
+    }
+    
+    func moveToLaunchScreen() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let launchScreen = LaunchScreenViewController(LogoView(type: .launching))
+        
+        
+        sceneDelegate?.window?.rootViewController = launchScreen
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
 }

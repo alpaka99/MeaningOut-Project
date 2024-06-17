@@ -17,4 +17,5 @@ struct ShoppingItem: Codable {
     let mallName: String
     let lprice: String
     let link: String
+    let productId: String
 }

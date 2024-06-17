@@ -53,5 +53,6 @@ enum SettingViewAction {
 }
 
 enum ProfileSettingViewAction {
-    case completeButtonTapped
+    case completeButtonTapped(String)
+    case saveButtonTapped(String)
 }
