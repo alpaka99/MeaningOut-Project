@@ -10,13 +10,10 @@ import UIKit
 import SnapKit
 
 final class ProfileSettingView: UIView, BaseViewBuildable {
-    
-    
     let profileImage = ProfileImageView(
         profileImage: "profile_0",
         subImage: "camera.fill"
     )
-    
     let textField = MOTextField()
     let completeButton = RoundCornerButton(
         type: .plain,
@@ -80,12 +77,26 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
     
     
-    func setImage(_ image: ProfileImage) {
-        profileImage.setImage(image)
+    func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? ProfileSettingViewControllerState {
+            profileImage.setImage(state.selectedImage)
+            
+            switch state.profileSettingViewType {
+            case .onBoarding:
+                setAsOnBoardingType()
+            case .setting:
+                setAsSettingType()
+            }
+        }
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
-        
+    func setAsOnBoardingType() {
+        textField.setAsOnboardingType()
+    }
+    
+    func setAsSettingType() {
+        textField.setAsSettingType()
+        completeButton.alpha = 0
     }
     
 }
@@ -115,4 +126,10 @@ extension ProfileSettingView: BaseViewDelegate {
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
+}
+
+
+enum ProfileSettingViewType {
+    case onBoarding
+    case setting
 }

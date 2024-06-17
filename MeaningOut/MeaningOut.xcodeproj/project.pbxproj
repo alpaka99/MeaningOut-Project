@@ -44,6 +44,10 @@
 		CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */; };
 		CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */; };
 		CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */; };
+		CE0ECBB12C1FFF3B0083E256 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB02C1FFF3B0083E256 /* SettingViewController.swift */; };
+		CE0ECBB32C1FFF8F0083E256 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB22C1FFF8F0083E256 /* SettingView.swift */; };
+		CE0ECBB52C2000B20083E256 /* SettingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */; };
+		CE0ECBB72C2035C80083E256 /* SettingHeaderViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB62C2035C80083E256 /* SettingHeaderViewData.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -88,6 +92,10 @@
 		CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabelData.swift; sourceTree = "<group>"; };
 		CE0ECB812C1F54AC0083E256 /* MOButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOButtonLabel.swift; sourceTree = "<group>"; };
 		CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverShoppingResponse.swift; sourceTree = "<group>"; };
+		CE0ECBB02C1FFF3B0083E256 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		CE0ECBB22C1FFF8F0083E256 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderCell.swift; sourceTree = "<group>"; };
+		CE0ECBB62C2035C80083E256 /* SettingHeaderViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderViewData.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECBAF2C1FFF310083E256 /* Settings */,
 				CE0ECB722C1ECE5C0083E256 /* DetailSearch */,
 				CE0ECB6A2C1EA7760083E256 /* SearchResult */,
 				CE0ECB582C1DE8BA0083E256 /* MainView */,
@@ -257,8 +266,19 @@
 			children = (
 				CE0ECB7F2C1F48F00083E256 /* MOButtonLabelData.swift */,
 				CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */,
+				CE0ECBB62C2035C80083E256 /* SettingHeaderViewData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CE0ECBAF2C1FFF310083E256 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECBB02C1FFF3B0083E256 /* SettingViewController.swift */,
+				CE0ECBB22C1FFF8F0083E256 /* SettingView.swift */,
+				CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		CE6151402C1AF69100165CAB = {
@@ -388,6 +408,7 @@
 				CE6151512C1AF69100165CAB /* ViewController.swift in Sources */,
 				CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */,
 				CE0ECB7B2C1F369D0083E256 /* BaseViewActionTypes.swift in Sources */,
+				CE0ECBB72C2035C80083E256 /* SettingHeaderViewData.swift in Sources */,
 				CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */,
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
@@ -397,10 +418,12 @@
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
 				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
+				CE0ECBB52C2000B20083E256 /* SettingHeaderCell.swift in Sources */,
 				CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
 				CE0ECB802C1F48F00083E256 /* MOButtonLabelData.swift in Sources */,
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
+				CE0ECBB32C1FFF8F0083E256 /* SettingView.swift in Sources */,
 				CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */,
 				CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */,
 				CE0ECB742C1ECE6F0083E256 /* DetailSearchViewController.swift in Sources */,
@@ -415,6 +438,7 @@
 				CE0ECB572C1DD7850083E256 /* UIImage+Extension.swift in Sources */,
 				CE0ECB532C1DCE540083E256 /* ProfileSettingView.swift in Sources */,
 				CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */,
+				CE0ECBB12C1FFF3B0083E256 /* SettingViewController.swift in Sources */,
 				CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
 			);

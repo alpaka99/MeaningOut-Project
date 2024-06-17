@@ -14,15 +14,19 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     
     let leadingIcon = UIImageView()
     let leadingText = UILabel()
-    let trailingButton = RoundCornerButton(type: .image, image: UIImage(systemName: "xmark"), color: .clear)
+    let trailingButton = RoundCornerButton(
+        type: .image,
+        image: UIImage(systemName: ""),
+        color: .clear
+    )
     let trailingText = UILabel()
     
     var moCellData = MOButtonLabelData(
-        leadingIconName: "",
-        leadingText: "",
-        trailingButtonName: "", 
-        trailingButtonType: .image,
-        trailingText: ""
+        leadingIconName: nil,
+        leadingText:  nil,
+        trailingButtonName: nil,
+        trailingButtonType: .systemImage,
+        trailingText: nil
     ) {
         didSet {
             configureUI()
@@ -61,24 +65,40 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         
         trailingText.snp.makeConstraints {
             $0.trailing.equalTo(contentView)
+                .offset(-8)
             $0.verticalEdges.equalTo(contentView)
         }
         
         trailingButton.snp.makeConstraints {
             $0.trailing.equalTo(trailingText.snp.leading)
-                .offset(-8)
             $0.verticalEdges.equalTo(contentView)
         }
     }
     
     func configureUI() {
-        leadingIcon.image = UIImage(systemName: moCellData.leadingIconName)
+        if let leadingIconName = moCellData.leadingIconName {
+            leadingIcon.image = UIImage(systemName: leadingIconName)
+            }
         leadingIcon.tintColor = .black
         
         leadingText.text = moCellData.leadingText
         
+        
+        if let trailingButtonName = moCellData.trailingButtonName {
+            switch moCellData.trailingButtonType {
+            case .systemImage:
+                trailingButton.setImage(UIImage(systemName: trailingButtonName), for: .normal)
+            case .assetImage:
+                trailingButton.setImage(UIImage(named: trailingButtonName), for: .normal)
+                
+            case .plain:
+                break
+            }
+        }
+         
+            
         trailingButton.tintColor = .black
-        trailingButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        trailingButton.addTarget(self, action: #selector(trailingButtonTapped), for: .touchUpInside)
         
         
         trailingText.text = moCellData.trailingText
@@ -91,8 +111,8 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     }
     
     @objc
-    func deleteButtonTapped() {
+    func trailingButtonTapped() {
         print(#function)
-        delegate?.baseViewAction(.moButtonLabelAction(.deleteButtonTapped(moCellData)))
+        delegate?.baseViewAction(.moButtonLabelAction(.trailingButtonTapped(moCellData)))
     }
 }

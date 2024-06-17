@@ -16,13 +16,24 @@ protocol SearchResultViewControllerState: BaseViewControllerState {
 }
 
 protocol MOButtonLabelState: BaseViewControllerState {
-    var leadingIconName: String { get set }
-    var leadingText: String { get set }
-    var trailingButtonName: String { get set }
-    var trailingText: String { get set }
+    var leadingIconName: String? { get set }
+    var leadingText: String? { get set }
+    var trailingButtonName: String? { get set }
+    var trailingText: String? { get set }
 }
 
 
 protocol DetailSearchViewControllerState: BaseViewControllerState {
     var link: String { get set }
+}
+
+
+protocol SettingViewControllerState: BaseViewControllerState {
+    var settingHeaderViewData: SettingHeaderViewData { get set }
+    var likedItems: [ShoppingItem] { get set }
+}
+
+protocol ProfileSettingViewControllerState: BaseViewControllerState {
+    var selectedImage: ProfileImage { get set }
+    var profileSettingViewType: ProfileSettingViewType { get set }
 }

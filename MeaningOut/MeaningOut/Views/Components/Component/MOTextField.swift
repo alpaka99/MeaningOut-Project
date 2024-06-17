@@ -59,7 +59,17 @@ final class MOTextField: UIView, BaseViewBuildable {
         divider.backgroundColor = MOColors.moGray300.color
         
         checkLabel.text = "닉네임에 @는 포함할 수 없어요"
+        
+        setAsOnboardingType()
+    }
+    
+    func setAsOnboardingType() {
         checkLabel.textColor = MOColors.moOrange.color
+    }
+    
+    func setAsSettingType() {
+        checkLabel.textColor = MOColors.moBlack.color
+        
     }
     
     func configureData(_ state: any BaseViewControllerState) {
