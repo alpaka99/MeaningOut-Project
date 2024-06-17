@@ -12,10 +12,7 @@ import Alamofire
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
-//        var userName: String
-//        var profileImage: ProfileImage
-//        var signUpDate: Date
-//        var likedItems: [ShoppingItem]
+
         var userData: UserData
     }
     
@@ -25,10 +22,6 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
             total: 0,
             items: []
         ),
-//        userName: "",
-//        profileImage: ProfileImage.randomProfileImage,
-//        signUpDate: Date.now,
-//        likedItems: []
         userData: UserData(userName: "", profileImage: .randomProfileImage, signUpDate: Date.now, likedItems: [])
     ) {
         didSet {
