@@ -12,8 +12,9 @@ import Alamofire
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
-
         var userData: UserData
+        var keyword: String
+        var filterOption: FilterOption
     }
     
     var state: State = State(
@@ -22,7 +23,13 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
             total: 0,
             items: []
         ),
-        userData: UserData(userName: "", profileImage: .randomProfileImage, signUpDate: Date.now, likedItems: [])
+        userData: UserData(
+            userName: "",
+            profileImage: .randomProfileImage,
+            signUpDate: Date.now,
+            likedItems: []),
+        keyword: "",
+        filterOption: FilterOption.simularity
     ) {
         didSet {
             configureData(state)
@@ -48,6 +55,8 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         _ keyword: String,
         filterOption: FilterOption
     ) {
+        state.keyword = keyword
+        
         let url = APIKey.Naver.shoppingURL
         
         let parameters: Parameters = [
@@ -57,15 +66,10 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
             "sort" : filterOption.rawValue
         ]
         
-        let headers: HTTPHeaders = [
-            "X-Naver-Client-Id" : APIKey.Naver.clientID,
-            "X-Naver-Client-Secret" : APIKey.Naver.ClientSecret
-        ]
-        
         AF.request(
             url,
             parameters: parameters,
-            headers: headers
+            headers: APIKey.Naver.headers
         )
         .responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
             switch response.result {
@@ -95,6 +99,8 @@ extension SearchResultViewController: BaseViewDelegate {
                 addToLikedItems(shoppingItem)
             case .cancelLikeShoppingItem(let shoppingItem):
                 removeFromLikedItems(shoppingItem)
+            case .prefetchItems:
+                prefetchData()
             }
         default:
             break
@@ -130,11 +136,36 @@ extension SearchResultViewController: BaseViewDelegate {
     }
     
     func syncData() {
-        print(#function)
         let newUserData = state.userData
         
         if let syncedData = UserDefaults.standard.syncData(newUserData) {
             setStateWithUserData(syncedData)
+        }
+    }
+    
+    func prefetchData() {
+        if state.searchResult.start + 30 <= state.searchResult.total {
+            let parameters: Parameters = [
+                "query" : state.keyword,
+                "display" : 30,
+                "start" : state.searchResult.start + 30,
+                "sort" : state.filterOption.rawValue
+            ]
+            
+            let url = APIKey.Naver.shoppingURL
+            
+            AF.request(
+                url,
+                parameters: parameters,
+                headers: APIKey.Naver.headers
+            ).responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
+                switch response.result {
+                case .success(let value):
+                    self?.state.searchResult.items.append(contentsOf: value.items)
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
     }
 }

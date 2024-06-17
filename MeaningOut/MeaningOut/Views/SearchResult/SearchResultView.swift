@@ -164,7 +164,7 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
         if let lastItem = indexPaths.last {
             if lastItem.row >= searchResult.count - 6 {
                 // MARK: Prefetch Data from ViewController
-//                delegate.prefetch()
+                delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }
     }
