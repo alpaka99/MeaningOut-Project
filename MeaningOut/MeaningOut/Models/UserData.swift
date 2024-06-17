@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct SettingHeaderViewData {
+struct UserData: Codable {
     var userName: String
+    var profileImage: ProfileImage
     var signUpDate: Date
+    var likedItems: [ShoppingItem]
 }
