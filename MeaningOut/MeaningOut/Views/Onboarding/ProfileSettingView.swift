@@ -74,6 +74,8 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         profileImage.delegate = self
         profileImage.selectedState = .selected
         profileImage.setAsSelectedImage()
+        
+        completeButton.delegate = self
     }
     
     
@@ -125,6 +127,12 @@ extension ProfileSettingView: BaseViewDelegate {
     
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
+    }
+}
+
+extension ProfileSettingView: RoundCornerButtonDelegate {
+    func roundCornerButtonTapped() {
+        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped))
     }
 }
 

@@ -84,7 +84,7 @@ final class LogoView: UIView, BaseViewBuildable {
         logoImage.image = UIImage(named: "launch")
         logoImage.contentMode = .scaleAspectFill
         
-        userNameLabel.text = "김새싹"
+        userNameLabel.text = "고석환"
         userNameLabel.textAlignment = .center
         userNameLabel.font = .systemFont(ofSize: 20, weight: .bold)
         userNameLabel.textColor = MOColors.moOrange.color
@@ -97,7 +97,7 @@ final class LogoView: UIView, BaseViewBuildable {
         switch type {
         case .launching:
             self.startButton.isHidden = true
-        case .oboarding:
+        case .onBoarding:
             self.userNameLabel.isHidden = true
         }
     }
@@ -110,11 +110,12 @@ final class LogoView: UIView, BaseViewBuildable {
 
 enum LogoViewType {
     case launching
-    case oboarding
+    case onBoarding
 }
 
 extension LogoView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped() {
+        print(#function)
         delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
     }
 }
