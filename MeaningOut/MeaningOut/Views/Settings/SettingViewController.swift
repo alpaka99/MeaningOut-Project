@@ -77,7 +77,6 @@ extension SettingViewController: BaseViewDelegate {
     }
     
     func quitCellTapped() {
-        print(#function)
         UserDefaults.standard.resetData(of: UserData.self)
         
         moveToLaunchScreen()

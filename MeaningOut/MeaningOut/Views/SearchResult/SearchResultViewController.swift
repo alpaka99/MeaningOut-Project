@@ -12,13 +12,23 @@ import Alamofire
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
+        var userName: String
+        var profileImage: ProfileImage
+        var signUpDate: Date
+        var likedItems: [ShoppingItem]
     }
     
-    var state: State = State(searchResult: NaverShoppingResponse(
-        start: 1,
-        total: 0,
-        items: []
-    )) {
+    var state: State = State(
+        searchResult: NaverShoppingResponse(
+            start: 1,
+            total: 0,
+            items: []
+        ),
+        userName: "",
+        profileImage: ProfileImage.randomProfileImage,
+        signUpDate: Date.now,
+        likedItems: []
+    ) {
         didSet {
             configureData(state)
         }
@@ -28,6 +38,17 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         super.viewDidLoad()
         
         baseView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            self.state.userName = userData.userName
+            self.state.profileImage = userData.profileImage
+            self.state.signUpDate = userData.signUpDate
+            self.state.likedItems = userData.likedItems
+        }
     }
     
     

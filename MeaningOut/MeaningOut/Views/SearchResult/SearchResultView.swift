@@ -25,6 +25,13 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
+    var userData = UserData(
+        userName: "",
+        profileImage: ProfileImage.randomProfileImage,
+        signUpDate: Date.now,
+        likedItems: []
+    )
+    
     var delegate: BaseViewDelegate?
     
     init() {
@@ -99,9 +106,17 @@ final class SearchResultView: UIView, BaseViewBuildable {
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SearchResultViewControllerState {
             searchResult = state.searchResult.items
+            let userData = UserData(
+                userName: state.userName,
+                profileImage: state.profileImage,
+                signUpDate: state.signUpDate,
+                likedItems: state.likedItems
+            )
+            self.userData = userData
+        } else {
+            print("Conversion Failed")
         }
     }
-    
 }
 
 extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -133,6 +148,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         let data = searchResult[indexPath.row]
         cell.configureData(data)
+        cell.delegate = self
         
         return cell
     }
@@ -153,5 +169,12 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
 //                delegate.prefetch()
             }
         }
+    }
+}
+
+
+extension SearchResultView: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        
     }
 }

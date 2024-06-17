@@ -54,7 +54,6 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     @objc
     func saveButtonTapped(_ sender: UIBarButtonItem) {
         // MARK: ViewController에서 어떻게 baseView의 action을 trigger 하지? 새롭게 프로토콜에 만들어야하나
-        print(#function)
         baseView.triggerAction()
     }
 }
