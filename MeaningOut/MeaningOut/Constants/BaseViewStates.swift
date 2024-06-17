@@ -14,10 +14,11 @@ protocol MainViewControllerState: BaseViewControllerState {
 
 protocol SearchResultViewControllerState: BaseViewControllerState {
     var searchResult: NaverShoppingResponse { get set }
-    var userName: String { get set }
-    var profileImage: ProfileImage { get set }
-    var signUpDate: Date { get set }
-    var likedItems: [ShoppingItem] { get set }
+//    var userName: String { get set }
+//    var profileImage: ProfileImage { get set }
+//    var signUpDate: Date { get set }
+//    var likedItems: [ShoppingItem] { get set }
+    var userData: UserData { get set }
 }
 
 protocol MOButtonLabelState: BaseViewControllerState {
@@ -29,7 +30,9 @@ protocol MOButtonLabelState: BaseViewControllerState {
 
 
 protocol DetailSearchViewControllerState: BaseViewControllerState {
-    var link: String { get set }
+//    var link: String { get set }
+    var shoppingItem: ShoppingItem { get set }
+    var userData: UserData { get set }
 }
 
 

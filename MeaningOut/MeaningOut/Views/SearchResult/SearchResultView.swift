@@ -106,12 +106,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SearchResultViewControllerState {
             searchResult = state.searchResult.items
-            let userData = UserData(
-                userName: state.userName,
-                profileImage: state.profileImage,
-                signUpDate: state.signUpDate,
-                likedItems: state.likedItems
-            )
+            let userData = state.userData
             self.userData = userData
         }
     }

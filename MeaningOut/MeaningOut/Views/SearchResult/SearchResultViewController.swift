@@ -12,10 +12,11 @@ import Alamofire
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
-        var userName: String
-        var profileImage: ProfileImage
-        var signUpDate: Date
-        var likedItems: [ShoppingItem]
+//        var userName: String
+//        var profileImage: ProfileImage
+//        var signUpDate: Date
+//        var likedItems: [ShoppingItem]
+        var userData: UserData
     }
     
     var state: State = State(
@@ -24,10 +25,11 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
             total: 0,
             items: []
         ),
-        userName: "",
-        profileImage: ProfileImage.randomProfileImage,
-        signUpDate: Date.now,
-        likedItems: []
+//        userName: "",
+//        profileImage: ProfileImage.randomProfileImage,
+//        signUpDate: Date.now,
+//        likedItems: []
+        userData: UserData(userName: "", profileImage: .randomProfileImage, signUpDate: Date.now, likedItems: [])
     ) {
         didSet {
             configureData(state)
@@ -42,7 +44,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print(#function)
         if let userData = UserDefaults.standard.loadData(of: UserData.self) {
             setStateWithUserData(userData)
         }
@@ -84,10 +86,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
     
     func setStateWithUserData(_ userData: UserData) {
-        self.state.userName = userData.userName
-        self.state.profileImage = userData.profileImage
-        self.state.signUpDate = userData.signUpDate
-        self.state.likedItems = userData.likedItems
+        self.state.userData = userData
     }
 }
 
@@ -100,9 +99,9 @@ extension SearchResultViewController: BaseViewDelegate {
             case .resultCellTapped(let shoppingItem):
                 moveToDetailSearchViewController(shoppingItem)
             case .likeShoppingItem(let shoppingItem):
-                likeShoppingItem(shoppingItem)
+                addToLikedItems(shoppingItem)
             case .cancelLikeShoppingItem(let shoppingItem):
-                cancelLikeShoppingItem(shoppingItem)
+                removeFromLikedItems(shoppingItem)
             }
         default:
             break
@@ -110,24 +109,27 @@ extension SearchResultViewController: BaseViewDelegate {
     }
     
     func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
-        let detailSearchViewController = DetailSearchViewController(DetailSearchView())
-        detailSearchViewController.fetchShoppingItem(shoppingItem)
+        let detailSearchViewController = DetailSearchViewController(
+            DetailSearchView(),
+            shoppingItem: shoppingItem,
+            userData: state.userData
+        )
         
         navigationController?.pushViewController(detailSearchViewController, animated: true)
     }
     
-    private func likeShoppingItem(_ shoppingItem: ShoppingItem) {
-        if state.likedItems.contains(where: { $0.productId == shoppingItem.productId }) == false {
-            state.likedItems.append(shoppingItem)
+    private func addToLikedItems(_ shoppingItem: ShoppingItem) {
+        if state.userData.likedItems.contains(where: { $0.productId == shoppingItem.productId }) == false {
+            state.userData.likedItems.append(shoppingItem)
             syncData()
         }
     }
     
-    private func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
-        for i in 0..<state.likedItems.count {
-            let likedItem = state.likedItems[i]
+    private func removeFromLikedItems(_ shoppingItem: ShoppingItem) {
+        for i in 0..<state.userData.likedItems.count {
+            let likedItem = state.userData.likedItems[i]
             if likedItem.productId == shoppingItem.productId {
-                state.likedItems.remove(at: i)
+                state.userData.likedItems.remove(at: i)
                 syncData()
                 return
             }
@@ -136,12 +138,7 @@ extension SearchResultViewController: BaseViewDelegate {
     
     func syncData() {
         print(#function)
-        let newUserData = UserData(
-            userName: state.userName,
-            profileImage: state.profileImage,
-            signUpDate: state.signUpDate,
-            likedItems: state.likedItems
-        )
+        let newUserData = state.userData
         
         if let syncedData = UserDefaults.standard.syncData(newUserData) {
             setStateWithUserData(syncedData)
