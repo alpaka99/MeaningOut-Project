@@ -45,10 +45,13 @@ enum MOButtonLabelAction {
 
 enum SearchResultViewAction {
     case resultCellTapped(ShoppingItem)
+    case likeShoppingItem(ShoppingItem)
+    case cancelLikeShoppingItem(ShoppingItem)
 }
 
 enum SearchCollectionViewCellAction {
-    case likeButtonTapped(ShoppingItem)
+    case likeShoppingItem(ShoppingItem)
+    case cancelLikeShoppingItem(ShoppingItem)
 }
 
 enum SettingViewAction {

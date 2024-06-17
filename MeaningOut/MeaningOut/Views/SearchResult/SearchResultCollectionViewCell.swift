@@ -20,6 +20,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     let mallName = UILabel()
     let title = UILabel()
     let price = UILabel()
+    var isLiked = false
     
     var shoppingItem = ShoppingItem(
         title: "",
@@ -44,6 +45,9 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+    }
     
     func configureHierarchy() {
         contentView.addSubview(itemImage)
@@ -91,7 +95,9 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         itemImage.layer.cornerRadius = 8
         itemImage.clipsToBounds = true
         
-        likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+        if isLiked == false {
+            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+        }
         likeButton.backgroundColor = MOColors.moGray300.color.withAlphaComponent(0.5)
         likeButton.tintColor = .white
         likeButton.layer.cornerRadius = 8
@@ -121,32 +127,40 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             
             let formattedPrice = Int(state.lprice)?.formatted() ?? "0"
             price.text = formattedPrice + "원"
+            
+            isLiked = false
         }
     }
     
-//    func configureData(_ item: ShoppingItem) {
-//        if let url = URL(string: item.image) {
-//            itemImage.kf.setImage(with: url)
-//        }
-//        
-//        mallName.text = item.mallName
-//        
-//        title.text = item.title
-//        
-//        let formattedPrice = Int(item.lprice)?.formatted() ?? "0"
-//        price.text = formattedPrice + "원"
-//    }
-    
-    @objc
-    func likeButtonTapped(_ sender: UIButton) {
-        print(#function)
+    func likeShoppingItem() {
+        delegate?.baseViewAction(.searchCollectionViewCellAction(.likeShoppingItem(shoppingItem)))
     }
     
-      
+    func changeLikeButtonUI() {
+        if isLiked {
+            likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+            likeShoppingItem()
+        } else {
+            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            cancelLikeShoppingItem()
+        }
+    }
+    
+    func setAsLikeItem() {
+        isLiked = true
+        changeLikeButtonUI()
+    }
+    
+    func cancelLikeShoppingItem() {
+        
+        delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
+    }
 }
 
 extension SearchResultCollectionViewCell: RoundCornerButtonDelegate {
     func roundCornerButtonTapped() {
-        delegate?.baseViewAction(.searchCollectionViewCellAction(.likeButtonTapped(shoppingItem)))
+        isLiked.toggle()
+        
+        changeLikeButtonUI()
     }
 }

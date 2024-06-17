@@ -32,23 +32,3 @@ final class LaunchScreenViewController: MOBaseViewController {
         }
     }
 }
-
-
-extension UINavigationController {
-    func removeBackBarButtonTitle() {
-        let backButtonAppearance = UIBarButtonItemAppearance(style: .plain)
-        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor : UIColor.clear]
-        backButtonAppearance.normal.backgroundImage?.withTintColor(.black)
-        
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.backButtonAppearance = backButtonAppearance
-        self.navigationBar.standardAppearance = navigationBarAppearance
-    }
-    
-    func setTintColor(with color: UIColor) {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = color
-        
-        self.navigationBar.standardAppearance = appearance
-    }
-}

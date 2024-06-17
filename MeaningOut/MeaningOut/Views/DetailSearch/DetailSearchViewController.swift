@@ -10,6 +10,7 @@ import UIKit
 final class DetailSearchViewController: MOBaseViewController, CommunicatableBaseViewController {
     
     struct State: DetailSearchViewControllerState {
+        var title = ""
         var link = ""
     }
     
@@ -20,17 +21,21 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     
-    override func configureUI() {
+    func fetchShoppingItem(_ shoppingItem: ShoppingItem) {
+        state.title = shoppingItem.title
+        state.link = shoppingItem.link
+        
+        configureNavigationItem()
+    }
+    
+    func configureNavigationItem() {
+        navigationItem.title = state.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "cart"),
             style: .plain,
             target: self,
             action: #selector(likeButtonTapped)
         )
-    }
-    
-    func fetchShoppingItem(_ shoppingItem: ShoppingItem) {
-        state.link = shoppingItem.link
     }
     
     @objc

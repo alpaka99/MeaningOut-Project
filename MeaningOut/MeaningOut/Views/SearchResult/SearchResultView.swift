@@ -113,8 +113,6 @@ final class SearchResultView: UIView, BaseViewBuildable {
                 likedItems: state.likedItems
             )
             self.userData = userData
-        } else {
-            print("Conversion Failed")
         }
     }
 }
@@ -148,6 +146,11 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         let data = searchResult[indexPath.row]
         cell.configureData(data)
+        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
+            cell.isLiked = true
+            cell.setAsLikeItem()
+        }
+        
         cell.delegate = self
         
         return cell
@@ -175,6 +178,24 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
 
 extension SearchResultView: BaseViewDelegate {
     func baseViewAction(_ type: BaseViewActionType) {
-        
+        switch type {
+        case .searchCollectionViewCellAction(let detailAction):
+            switch detailAction {
+            case .likeShoppingItem(let shoppingItem):
+                likeShoppingItem(shoppingItem)
+            case .cancelLikeShoppingItem(let shoppingItem):
+                cancelLikeShoppingItem(shoppingItem)
+        }
+        default:
+            break
+        }
+    }
+    
+    func likeShoppingItem(_ shoppingItem: ShoppingItem) {
+        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
+    }
+    
+    func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
+        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }

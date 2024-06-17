@@ -26,4 +26,11 @@ extension UserDefaults {
     func resetData<T: Codable>(of: T.Type) {
         UserDefaults.standard.setValue(nil, forKey: String(describing: T.self))
     }
+    
+    // UserDefault는 ThreadSafe하다
+    func syncData<T: Codable>(_ data: T) -> T? {
+        self.saveData(data)
+        let data = self.loadData(of: T.self)
+        return data
+    }
 }

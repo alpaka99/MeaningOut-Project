@@ -28,12 +28,6 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
         }
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        loadUserData()
-//    }
-    
     // tab을 넘어갔다가 와도 데이터를 업데이트 해주기 위해서
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -89,8 +89,6 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
             profileImage.setImage(state.profileImage)
             userNameLabel.text = state.userName
             signUpDateLabel.text = state.signUpDate.formatted()
-        } else {
-            print("Conversion failed")
         }
     }
 }
