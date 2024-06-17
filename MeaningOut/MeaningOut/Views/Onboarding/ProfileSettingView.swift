@@ -10,8 +10,6 @@ import UIKit
 import SnapKit
 
 final class ProfileSettingView: UIView, BaseViewBuildable {
-    
-    
     let profileImage = ProfileImageView(
         profileImage: "profile_0",
         subImage: "camera.fill"
@@ -80,12 +78,13 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
     
     
-    func setImage(_ image: ProfileImage) {
-        profileImage.setImage(image)
-    }
-    
     func configureData(_ state: any BaseViewControllerState) {
-        
+        if let state = state as? ProfileSettingViewControllerState {
+            profileImage.setImage(state.selectedImage)
+        } else {
+            print("conversion failed")
+            print(state)
+        }
     }
     
 }

@@ -32,3 +32,7 @@ protocol SettingViewControllerState: BaseViewControllerState {
     var settingHeaderViewData: SettingHeaderViewData { get set }
     var likedItems: [ShoppingItem] { get set }
 }
+
+protocol ProfileSettingViewControllerState: BaseViewControllerState {
+    var selectedImage: ProfileImage { get set }
+}
