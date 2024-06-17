@@ -4,15 +4,21 @@
 //
 //  Created by user on 6/17/24.
 //
-
+import Foundation
 
 protocol MainViewControllerState: BaseViewControllerState {
     var searchHistory: [String] { get set }
+    var userData: UserData { get set }
 }
 
 
 protocol SearchResultViewControllerState: BaseViewControllerState {
     var searchResult: NaverShoppingResponse { get set }
+//    var userName: String { get set }
+//    var profileImage: ProfileImage { get set }
+//    var signUpDate: Date { get set }
+//    var likedItems: [ShoppingItem] { get set }
+    var userData: UserData { get set }
 }
 
 protocol MOButtonLabelState: BaseViewControllerState {
@@ -24,16 +30,21 @@ protocol MOButtonLabelState: BaseViewControllerState {
 
 
 protocol DetailSearchViewControllerState: BaseViewControllerState {
-    var link: String { get set }
+//    var link: String { get set }
+    var shoppingItem: ShoppingItem { get set }
+    var userData: UserData { get set }
 }
 
 
 protocol SettingViewControllerState: BaseViewControllerState {
-    var settingHeaderViewData: SettingHeaderViewData { get set }
+    var userName: String { get set }
+    var profileImage: ProfileImage { get set }
+    var signUpDate: Date { get set }
     var likedItems: [ShoppingItem] { get set }
 }
 
 protocol ProfileSettingViewControllerState: BaseViewControllerState {
     var selectedImage: ProfileImage { get set }
+    var userName: String { get set }
     var profileSettingViewType: ProfileSettingViewType { get set }
 }

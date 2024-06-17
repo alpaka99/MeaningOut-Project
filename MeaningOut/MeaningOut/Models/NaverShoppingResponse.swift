@@ -11,10 +11,11 @@ struct NaverShoppingResponse: Codable {
     let items: [ShoppingItem]
 }
 
-struct ShoppingItem: Codable {
+struct ShoppingItem: Codable, BaseViewControllerState {
     let title: String
     let image: String
     let mallName: String
     let lprice: String
     let link: String
+    let productId: String
 }

@@ -10,7 +10,8 @@ import UIKit
 final class ProfileSettingViewController: MOBaseViewController, CommunicatableBaseViewController {
     
     struct State: ProfileSettingViewControllerState {
-        var selectedImage: ProfileImage = ProfileImage.randomProfileImage
+        var selectedImage = ProfileImage.randomProfileImage
+        var userName = ""
         var profileSettingViewType = ProfileSettingViewType.onBoarding
     }
     var state = State() {
@@ -35,14 +36,25 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
         self.state.profileSettingViewType = type
     }
     
+    func setUserData(userName: String, profileImage: ProfileImage) {
+        self.state.userName = userName
+        self.state.selectedImage = profileImage
+    }
+    
     func setRightBarButtonItem() {
-        let rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let rightBarButtonItem = UIBarButtonItem(
+            title: "저장",
+            style: .plain,
+            target: self,
+            action: #selector(saveButtonTapped)
+        )
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     @objc
     func saveButtonTapped(_ sender: UIBarButtonItem) {
-        print(#function)
+        // MARK: ViewController에서 어떻게 baseView의 action을 trigger 하지? 새롭게 프로토콜에 만들어야하나
+        baseView.triggerAction()
     }
 }
 
@@ -57,23 +69,53 @@ extension ProfileSettingViewController: BaseViewDelegate {
                 navigationController?.pushViewController(profileSelectionViewController, animated: true)
             }
         case .profileSettingViewAction(let detailAction):
-            moveToMainView()
+            switch detailAction {
+            case .completeButtonTapped(let userName):
+                saveUserData(userName: userName)
+            case .saveButtonTapped(let userName):
+                updateUserData(userName: userName)
+            }
         default:
             break
         }
     }
     
+    func saveUserData(userName: String) {
+        let userData = UserData(
+            userName: userName, 
+            profileImage: state.selectedImage,
+            signUpDate: Date.now,
+            likedItems: []
+        )
+        
+        UserDefaults.standard.saveData(userData)
+        
+        moveToMainView()
+    }
+    
+    func updateUserData(userName: String) {
+        let userData = UserData(
+            userName: userName,
+            profileImage: state.selectedImage,
+            signUpDate: Date.now,
+            likedItems: []
+        )
+        
+        UserDefaults.standard.saveData(userData)
+    }
+    
     func moveToMainView() {
-        
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        
-        let tabBarController = TabBarController()
-        
- 
-        sceneDelegate?.window?.rootViewController = tabBarController
-        sceneDelegate?.window?.makeKeyAndVisible()
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            
+            let tabBarController = TabBarController(userData: userData)
+            
+            
+            sceneDelegate?.window?.rootViewController = tabBarController
+            sceneDelegate?.window?.makeKeyAndVisible()
+        }
     }
 }
 

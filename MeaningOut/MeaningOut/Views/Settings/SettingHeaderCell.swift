@@ -42,7 +42,7 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         profileImage.snp.makeConstraints {
             $0.width.equalTo(contentView.snp.width)
                 .multipliedBy(0.2)
-            $0.height.equalTo(profileImage.snp.width)
+            $0.height.lessThanOrEqualTo(profileImage.snp.width)
             $0.leading.equalTo(contentView.snp.leading)
                 .offset(8)
             $0.verticalEdges.equalTo(contentView.snp.verticalEdges)
@@ -79,9 +79,16 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         userNameLabel.text = "옹골찬 고래밥"
         signUpDateLabel.text = Date.now.formatted()
         trailingIcon.image = UIImage(systemName: "chevron.right")
+        trailingIcon.tintColor = .black
+        
     }
     
     func configureData(_ state: any BaseViewControllerState) {
-        
+        if let state = state as? UserData {
+            
+            profileImage.setImage(state.profileImage)
+            userNameLabel.text = state.userName
+            signUpDateLabel.text = state.signUpDate.formatted()
+        }
     }
 }

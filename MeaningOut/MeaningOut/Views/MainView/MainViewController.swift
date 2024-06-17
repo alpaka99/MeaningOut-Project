@@ -10,17 +10,41 @@ import UIKit
 
 final class MainViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: MainViewControllerState {
+        var userData: UserData
         var searchHistory: [String]
     }
     
-    var state: State = State(searchHistory: []) {
+    var state: State = State(
+        userData: UserData(
+            userName: "",
+            profileImage: ProfileImage.randomProfileImage,
+            signUpDate: Date.now,
+            likedItems: []) ,
+        searchHistory: []
+    ) {
         didSet {
+            configureUI()
             configureData(state)
         }
     }
     
+    // tab을 넘어갔다가 와도 데이터를 업데이트 해주기 위해서
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadUserData()
+    }
+    
     override func configureUI() {
         baseView.delegate = self
+        
+        navigationItem.title = "\(state.userData.userName)님의 MeaningOut"
+    }
+    
+    func loadUserData() {
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            state.userData = userData
+        }
     }
 }
 

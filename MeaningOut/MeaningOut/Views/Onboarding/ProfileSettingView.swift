@@ -83,6 +83,8 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         if let state = state as? ProfileSettingViewControllerState {
             profileImage.setImage(state.selectedImage)
             
+            textField.setTextFieldText(state.userName)
+            
             switch state.profileSettingViewType {
             case .onBoarding:
                 setAsOnBoardingType()
@@ -101,6 +103,11 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         completeButton.alpha = 0
     }
     
+    func triggerAction() {
+        if let userName = textField.fetchTextFieldText() {
+            baseViewAction(.profileSettingViewAction(.saveButtonTapped(userName)))
+        }
+    }
 }
 
 extension ProfileSettingView: UITextFieldDelegate {
@@ -120,6 +127,8 @@ extension ProfileSettingView: BaseViewDelegate {
             case .profileImageTapped:
                 profileImageTapped()
             }
+        case .profileSettingViewAction(.saveButtonTapped(let userName)):
+            saveButtonTapped(userName)
         default:
             break
         }
@@ -128,11 +137,19 @@ extension ProfileSettingView: BaseViewDelegate {
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
+    
+    func saveButtonTapped(_ userName: String) {
+        delegate?.baseViewAction(.profileSettingViewAction(.saveButtonTapped(userName)))
+    }
 }
 
 extension ProfileSettingView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped() {
-        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped))
+        let userName = textField.fetchTextFieldText()
+        
+        if let userName = userName {
+            delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
+        }
     }
 }
 

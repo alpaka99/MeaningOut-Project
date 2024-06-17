@@ -25,6 +25,13 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
+    var userData = UserData(
+        userName: "",
+        profileImage: ProfileImage.randomProfileImage,
+        signUpDate: Date.now,
+        likedItems: []
+    )
+    
     var delegate: BaseViewDelegate?
     
     init() {
@@ -99,9 +106,10 @@ final class SearchResultView: UIView, BaseViewBuildable {
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SearchResultViewControllerState {
             searchResult = state.searchResult.items
+            let userData = state.userData
+            self.userData = userData
         }
     }
-    
 }
 
 extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -133,6 +141,12 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         let data = searchResult[indexPath.row]
         cell.configureData(data)
+        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
+            cell.isLiked = true
+            cell.setAsLikeItem()
+        }
+        
+        cell.delegate = self
         
         return cell
     }
@@ -153,5 +167,30 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
 //                delegate.prefetch()
             }
         }
+    }
+}
+
+
+extension SearchResultView: BaseViewDelegate {
+    func baseViewAction(_ type: BaseViewActionType) {
+        switch type {
+        case .searchCollectionViewCellAction(let detailAction):
+            switch detailAction {
+            case .likeShoppingItem(let shoppingItem):
+                likeShoppingItem(shoppingItem)
+            case .cancelLikeShoppingItem(let shoppingItem):
+                cancelLikeShoppingItem(shoppingItem)
+        }
+        default:
+            break
+        }
+    }
+    
+    func likeShoppingItem(_ shoppingItem: ShoppingItem) {
+        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
+    }
+    
+    func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
+        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }

@@ -12,10 +12,24 @@ import SnapKit
 
 final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuildable {
     let itemImage = UIImageView()
-    let likeButton = UIButton()
+    let likeButton = RoundCornerButton(
+        type: .image,
+        image: UIImage(named: "like_unselected"),
+        color: MOColors.moGray100.color.withAlphaComponent(0.3)
+    )
     let mallName = UILabel()
     let title = UILabel()
     let price = UILabel()
+    var isLiked = false
+    
+    var shoppingItem = ShoppingItem(
+        title: "",
+        image: "",
+        mallName: "",
+        lprice: "",
+        link: "",
+        productId: ""
+    )
     
     var delegate: (any BaseViewDelegate)?
     
@@ -31,10 +45,13 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+    }
     
     func configureHierarchy() {
         contentView.addSubview(itemImage)
-        itemImage.addSubview(likeButton)
+        contentView.addSubview(likeButton)
         contentView.addSubview(mallName)
         contentView.addSubview(title)
         contentView.addSubview(price)
@@ -78,10 +95,13 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         itemImage.layer.cornerRadius = 8
         itemImage.clipsToBounds = true
         
-        likeButton.setImage(UIImage(systemName: "cart"), for: .normal)
+        if isLiked == false {
+            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+        }
         likeButton.backgroundColor = MOColors.moGray300.color.withAlphaComponent(0.5)
         likeButton.tintColor = .white
         likeButton.layer.cornerRadius = 8
+        likeButton.delegate = self
         
         mallName.textColor = MOColors.moGray300.color
         mallName.font = .systemFont(ofSize: 12, weight: .regular)
@@ -93,21 +113,54 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         title.font = .systemFont(ofSize: 16, weight: .heavy)
     }
     
-    func configureData(_ item: ShoppingItem) {
-        if let url = URL(string: item.image) {
-            itemImage.kf.setImage(with: url)
+    func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? ShoppingItem {
+            self.shoppingItem = state
+            
+            if let url = URL(string: state.image) {
+                itemImage.kf.setImage(with: url)
+            }
+            
+            mallName.text = state.mallName
+            
+            title.text = state.title
+            
+            let formattedPrice = Int(state.lprice)?.formatted() ?? "0"
+            price.text = formattedPrice + "원"
+            
+            isLiked = false
         }
-        
-        
-        mallName.text = item.mallName
-        
-        title.text = item.title
-        
-        let formattedPrice = Int(item.lprice)?.formatted() ?? "0"
-        price.text = formattedPrice + "원"
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    func likeShoppingItem() {
+        delegate?.baseViewAction(.searchCollectionViewCellAction(.likeShoppingItem(shoppingItem)))
+    }
+    
+    func changeLikeButtonUI() {
+        if isLiked {
+            likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+            likeShoppingItem()
+        } else {
+            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            cancelLikeShoppingItem()
+        }
+    }
+    
+    func setAsLikeItem() {
+        isLiked = true
+        changeLikeButtonUI()
+    }
+    
+    func cancelLikeShoppingItem() {
         
-    }   
+        delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
+    }
+}
+
+extension SearchResultCollectionViewCell: RoundCornerButtonDelegate {
+    func roundCornerButtonTapped() {
+        isLiked.toggle()
+        
+        changeLikeButtonUI()
+    }
 }
