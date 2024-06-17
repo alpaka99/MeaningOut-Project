@@ -56,9 +56,24 @@ extension ProfileSettingViewController: BaseViewDelegate {
                 profileSelectionViewController.delegate = self
                 navigationController?.pushViewController(profileSelectionViewController, animated: true)
             }
+        case .profileSettingViewAction(let detailAction):
+            moveToMainView()
         default:
             break
         }
+    }
+    
+    func moveToMainView() {
+        
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let tabBarController = TabBarController()
+        
+ 
+        sceneDelegate?.window?.rootViewController = tabBarController
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
 }
 

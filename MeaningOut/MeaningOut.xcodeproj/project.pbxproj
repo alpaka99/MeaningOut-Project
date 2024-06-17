@@ -48,6 +48,7 @@
 		CE0ECBB32C1FFF8F0083E256 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB22C1FFF8F0083E256 /* SettingView.swift */; };
 		CE0ECBB52C2000B20083E256 /* SettingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */; };
 		CE0ECBB72C2035C80083E256 /* SettingHeaderViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB62C2035C80083E256 /* SettingHeaderViewData.swift */; };
+		CE0ECBBA2C2064D20083E256 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBB92C2064D20083E256 /* TabBarController.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
 		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
@@ -96,6 +97,7 @@
 		CE0ECBB22C1FFF8F0083E256 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderCell.swift; sourceTree = "<group>"; };
 		CE0ECBB62C2035C80083E256 /* SettingHeaderViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderViewData.swift; sourceTree = "<group>"; };
+		CE0ECBB92C2064D20083E256 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECBB82C2064C30083E256 /* TabBar */,
 				CE0ECBAF2C1FFF310083E256 /* Settings */,
 				CE0ECB722C1ECE5C0083E256 /* DetailSearch */,
 				CE0ECB6A2C1EA7760083E256 /* SearchResult */,
@@ -279,6 +282,14 @@
 				CE0ECBB42C2000B20083E256 /* SettingHeaderCell.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		CE0ECBB82C2064C30083E256 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECBB92C2064D20083E256 /* TabBarController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		CE6151402C1AF69100165CAB = {
@@ -439,6 +450,7 @@
 				CE0ECB532C1DCE540083E256 /* ProfileSettingView.swift in Sources */,
 				CE0ECB2E2C1CA8D40083E256 /* String+Extension.swift in Sources */,
 				CE0ECBB12C1FFF3B0083E256 /* SettingViewController.swift in Sources */,
+				CE0ECBBA2C2064D20083E256 /* TabBarController.swift in Sources */,
 				CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
 			);

@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
 
-        let rootViewController = SettingViewController(SettingView())
+        let rootViewController = LaunchScreenViewController(LogoView(type: .launching))
         let navigationController = UINavigationController(rootViewController: rootViewController)
         
         window?.rootViewController = navigationController
