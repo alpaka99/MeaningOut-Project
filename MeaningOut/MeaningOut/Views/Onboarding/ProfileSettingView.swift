@@ -14,7 +14,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         profileImage: "profile_0",
         subImage: "camera.fill"
     )
-    
     let textField = MOTextField()
     let completeButton = RoundCornerButton(
         type: .plain,
@@ -81,10 +80,23 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ProfileSettingViewControllerState {
             profileImage.setImage(state.selectedImage)
-        } else {
-            print("conversion failed")
-            print(state)
+            
+            switch state.profileSettingViewType {
+            case .onBoarding:
+                setAsOnBoardingType()
+            case .setting:
+                setAsSettingType()
+            }
         }
+    }
+    
+    func setAsOnBoardingType() {
+        textField.setAsOnboardingType()
+    }
+    
+    func setAsSettingType() {
+        textField.setAsSettingType()
+        completeButton.alpha = 0
     }
     
 }
@@ -114,4 +126,10 @@ extension ProfileSettingView: BaseViewDelegate {
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
+}
+
+
+enum ProfileSettingViewType {
+    case onBoarding
+    case setting
 }

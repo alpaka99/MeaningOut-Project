@@ -48,6 +48,7 @@ extension SettingViewController: BaseViewDelegate {
     func headerViewTapped() {
         //MARK: 현재 profile 데이터 넣어주기
         let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
+        profileSettingViewController.setProfileSettingViewType(.setting)
         
         navigationController?.pushViewController(profileSettingViewController, animated: true)
     }

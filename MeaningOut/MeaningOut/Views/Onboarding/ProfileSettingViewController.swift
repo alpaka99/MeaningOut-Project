@@ -11,15 +11,38 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     struct State: ProfileSettingViewControllerState {
         var selectedImage: ProfileImage = ProfileImage.randomProfileImage
+        var profileSettingViewType = ProfileSettingViewType.onBoarding
     }
     var state = State() {
         didSet {
             baseView.configureData(state)
+            configureUI()
         }
     }
     
     override func configureUI() {
         baseView.delegate = self
+        
+        switch state.profileSettingViewType {
+        case .onBoarding:
+            break
+        case .setting:
+            setRightBarButtonItem()
+        }
+    }
+    
+    func setProfileSettingViewType(_ type: ProfileSettingViewType) {
+        self.state.profileSettingViewType = type
+    }
+    
+    func setRightBarButtonItem() {
+        let rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc
+    func saveButtonTapped(_ sender: UIBarButtonItem) {
+        print(#function)
     }
 }
 

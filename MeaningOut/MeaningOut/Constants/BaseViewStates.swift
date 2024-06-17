@@ -35,4 +35,5 @@ protocol SettingViewControllerState: BaseViewControllerState {
 
 protocol ProfileSettingViewControllerState: BaseViewControllerState {
     var selectedImage: ProfileImage { get set }
+    var profileSettingViewType: ProfileSettingViewType { get set }
 }
