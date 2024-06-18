@@ -86,7 +86,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
             profileImage.setImage(state.selectedImage)
             
             textField.configureData(state)
-//            textField.setTextFieldText(state.userName)
             
             switch state.profileSettingViewType {
             case .onBoarding:
@@ -126,6 +125,7 @@ extension ProfileSettingView: BaseViewDelegate {
                 delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
             case .textFieldTextChanged(let isEnabled):
                 completeButton.isEnabled = isEnabled
+                delegate?.baseViewAction(.profileSettingViewAction(.textFieldTextChanged(isEnabled)))
             }
         default:
             break

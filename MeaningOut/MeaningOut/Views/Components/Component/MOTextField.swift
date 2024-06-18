@@ -73,7 +73,6 @@ final class MOTextField: UIView, BaseViewBuildable {
     
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ProfileSettingViewControllerState {
-            print(state)
             textField.text = state.userName
         }
     }

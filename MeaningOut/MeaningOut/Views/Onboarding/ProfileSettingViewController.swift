@@ -74,6 +74,8 @@ extension ProfileSettingViewController: BaseViewDelegate {
                 saveUserData(userName: userName)
             case .saveButtonTapped(let userName):
                 updateUserData(userName: userName)
+            case .textFieldTextChanged(let isEnabled):
+                setSaveButtonEnabledState(isEnabled)
             }
         default:
             break
@@ -116,6 +118,10 @@ extension ProfileSettingViewController: BaseViewDelegate {
             sceneDelegate?.window?.rootViewController = tabBarController
             sceneDelegate?.window?.makeKeyAndVisible()
         }
+    }
+    
+    func setSaveButtonEnabledState(_ isEnabled: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = isEnabled
     }
 }
 

@@ -77,7 +77,6 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
     
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ProfileSelectionViewControllerState {
-            print(#function, state)
             selectedImage = state.selectedImage
             selectedImageView.setImage(state.selectedImage)
         }
