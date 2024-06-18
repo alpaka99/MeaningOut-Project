@@ -48,6 +48,7 @@ enum SearchResultViewAction {
     case likeShoppingItem(ShoppingItem)
     case cancelLikeShoppingItem(ShoppingItem)
     case prefetchItems
+    case filterOptionButtonTapped(FilterOption)
 }
 
 enum SearchCollectionViewCellAction {

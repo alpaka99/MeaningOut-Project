@@ -53,6 +53,8 @@ final class RoundCornerButton: UIButton {
             }
         case .image:
             config.image = image
+        case .filter(let filterOption):
+            break
         }
         
         self.configuration = config
@@ -79,20 +81,31 @@ final class RoundCornerButton: UIButton {
             
             self.configuration = config
         }
-        
+    }
+    
+    func setAsFilterOption() {
+        self.tintColor = .white
+        setBackgroundColor(with: MOColors.moGray100.color)
+    }
+    
+    func setBackgroundColor(with color: UIColor) {
+        var config = self.configuration
+        config?.background.backgroundColor = color
+        self.configuration = config
     }
     
     @objc func buttonTapped() {
-        delegate?.roundCornerButtonTapped()
+        delegate?.roundCornerButtonTapped(type)
     }
 }
 
 enum RoundCornerButtonType {
     case plain
     case image
+    case filter(FilterOption)
 }
 
 
 protocol RoundCornerButtonDelegate: AnyObject {
-    func roundCornerButtonTapped()
+    func roundCornerButtonTapped(_ type: RoundCornerButtonType)
 }

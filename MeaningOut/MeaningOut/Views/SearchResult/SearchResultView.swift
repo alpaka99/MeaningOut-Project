@@ -13,7 +13,31 @@ final class SearchResultView: UIView, BaseViewBuildable {
     let totalResultLabel = UILabel()
     let filterOptions: [FilterOption] = FilterOption.allCases
     var selectedButton = FilterOption.simularity
-    let horizontalButtonStack = UIStackView()
+    
+    
+    lazy var simularityFilterButton = RoundCornerButton(
+        type: .filter(.simularity),
+        color: MOColors.moWhite.color
+    )
+    lazy var dateFilterButton = RoundCornerButton(
+        type: .filter(.date),
+        color: MOColors.moWhite.color
+    )
+    lazy var ascendingFilterButton = RoundCornerButton(
+        type: .filter(.ascendingPrice),
+        color: MOColors.moWhite.color
+    )
+    lazy var descendingFilterButton = RoundCornerButton(
+        type: .filter(.descendingPrice),
+        color: MOColors.moWhite.color
+    )
+    lazy var buttons: [UIButton] = [
+        simularityFilterButton,
+        dateFilterButton,
+        ascendingFilterButton,
+        descendingFilterButton
+    ]
+    lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
     lazy var resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout(numberOfRowsInLine: 2, spacing: 20)
@@ -49,20 +73,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     func configureHierarchy() {
         self.addSubview(totalResultLabel)
         
-        filterOptions.forEach { option in
-            let roundCornerButton = RoundCornerButton(
-                type: .plain,
-                title: option.buttonTitle,
-                color: .white
-            )
-            roundCornerButton.tintColor = .black
-            roundCornerButton.setBorderLine(color: MOColors.moGray100.color, width: 1)
-            var attributes = AttributeContainer()
-            attributes.font = UIFont.boldSystemFont(ofSize: 12)
-            roundCornerButton.setStringAttribute(attributes)
-            
-            horizontalButtonStack.addArrangedSubview(roundCornerButton)
-        }
+        configureButtons()
         
         self.addSubview(horizontalButtonStack)
         self.addSubview(resultCollectionView)
@@ -101,6 +112,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         resultCollectionView.dataSource = self
         resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        resultCollectionView.showsVerticalScrollIndicator = false
     }
     
     func configureData(_ state: any BaseViewControllerState) {
@@ -109,6 +121,65 @@ final class SearchResultView: UIView, BaseViewBuildable {
             let userData = state.userData
             self.userData = userData
         }
+    }
+    
+    //MARK: TargetButton 안쓰면 오류없이 가능할지도..?
+    func configureButtons(_ filterOption: FilterOption = .simularity) {
+        for option in filterOptions {
+            switch option {
+            case .simularity:
+                setInitialButtonState(simularityFilterButton, option: option)
+                simularityFilterButton.delegate = self
+            case .date:
+                setInitialButtonState(dateFilterButton, option: option)
+                dateFilterButton.delegate = self
+            case .ascendingPrice:
+                setInitialButtonState(ascendingFilterButton, option: option)
+                ascendingFilterButton.delegate = self
+            case .descendingPrice:
+                setInitialButtonState(descendingFilterButton, option: option)
+                descendingFilterButton.delegate = self
+            }
+        }
+        
+        switch filterOption {
+        case .simularity:
+            simularityFilterButton.setAsFilterOption()
+        case .date:
+            dateFilterButton.setAsFilterOption()
+        case .ascendingPrice:
+            ascendingFilterButton.setAsFilterOption()
+        case .descendingPrice:
+            descendingFilterButton.setAsFilterOption()
+        }
+        
+        horizontalButtonStack.arrangedSubviews.forEach { subView in
+            horizontalButtonStack.removeArrangedSubview(subView)
+        }
+        
+        buttons = [
+            simularityFilterButton,
+            dateFilterButton,
+            ascendingFilterButton,
+            descendingFilterButton
+        ]
+        
+        buttons.forEach { button in
+            horizontalButtonStack.addArrangedSubview(button)
+        }
+    }
+    
+    func setInitialButtonState(_ button: RoundCornerButton, option: FilterOption) {
+        button.tintColor = .black
+        button.setBackgroundColor(with: MOColors.moWhite.color)
+        button.setBorderLine(color: MOColors.moGray100.color, width: 1)
+        var attributes = AttributeContainer()
+        attributes.font = UIFont.boldSystemFont(ofSize: 12)
+        button.setStringAttribute(attributes)
+        button.setTitle(
+            option.buttonTitle,
+            for: .normal
+        )
     }
 }
 
@@ -127,7 +198,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         return flowLayout
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResult.count
@@ -163,7 +234,6 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
             if lastItem.row >= searchResult.count - 6 {
-                // MARK: Prefetch Data from ViewController
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }
@@ -180,7 +250,7 @@ extension SearchResultView: BaseViewDelegate {
                 likeShoppingItem(shoppingItem)
             case .cancelLikeShoppingItem(let shoppingItem):
                 cancelLikeShoppingItem(shoppingItem)
-        }
+            }
         default:
             break
         }
@@ -192,5 +262,18 @@ extension SearchResultView: BaseViewDelegate {
     
     func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
         delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
+    }
+}
+
+
+extension SearchResultView: RoundCornerButtonDelegate {
+    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
+        switch type {
+        case .filter(let option):
+            configureButtons(option)
+            delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
+        default:
+            break
+        }
     }
 }

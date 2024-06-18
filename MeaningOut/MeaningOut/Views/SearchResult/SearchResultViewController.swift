@@ -44,12 +44,10 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(#function)
         if let userData = UserDefaults.standard.loadData(of: UserData.self) {
             setStateWithUserData(userData)
         }
     }
-    
     
     func fetchSearchResult(
         _ keyword: String,
@@ -101,6 +99,8 @@ extension SearchResultViewController: BaseViewDelegate {
                 removeFromLikedItems(shoppingItem)
             case .prefetchItems:
                 prefetchData()
+            case .filterOptionButtonTapped(let filterOption):
+                fetchSearchResult(state.keyword, filterOption: filterOption)
             }
         default:
             break

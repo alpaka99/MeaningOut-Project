@@ -144,7 +144,7 @@ extension ProfileSettingView: BaseViewDelegate {
 }
 
 extension ProfileSettingView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped() {
+    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         let userName = textField.fetchTextFieldText()
         
         if let userName = userName {
