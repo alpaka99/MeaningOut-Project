@@ -16,7 +16,7 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     let leadingText = UILabel()
     let trailingButton = RoundCornerButton(
         type: .image,
-        image: UIImage(systemName: ""),
+        image: nil,
         color: .clear
     )
     let trailingText = UILabel()
@@ -46,9 +46,12 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
     
     override func prepareForReuse() {
         leadingIcon.image = nil
-        leadingText.text = ""
-        trailingText.text = ""
-        trailingButton.setImage(nil, for: .normal)
+        leadingText.text = String.emptyString
+        trailingText.text = String.emptyString
+        trailingButton.setImage(
+            nil,
+            for: .normal
+        )
     }
     
     func configureHierarchy() {
@@ -94,10 +97,15 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         if let trailingButtonName = moCellData.trailingButtonName {
             switch moCellData.trailingButtonType {
             case .systemImage:
-                trailingButton.setImage(UIImage(systemName: trailingButtonName), for: .normal)
+                trailingButton.setImage(
+                    UIImage(systemName: trailingButtonName),
+                    for: .normal
+                )
             case .assetImage:
-                trailingButton.setImage(UIImage(named: trailingButtonName), for: .normal)
-                
+                trailingButton.setImage(
+                    UIImage(named: trailingButtonName),
+                    for: .normal
+                )
             case .plain:
                 break
             }
@@ -105,8 +113,11 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
          
             
         trailingButton.tintColor = .black
-        trailingButton.addTarget(self, action: #selector(trailingButtonTapped), for: .touchUpInside)
-        
+        trailingButton.addTarget(
+            self,
+            action: #selector(trailingButtonTapped),
+            for: .touchUpInside
+        )
         
         trailingText.text = moCellData.trailingText
     }

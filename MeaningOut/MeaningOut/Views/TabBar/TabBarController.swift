@@ -9,7 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    var userData: UserData
+    private var userData: UserData
     
     init(userData: UserData) {
         self.userData = userData
@@ -28,16 +28,14 @@ final class TabBarController: UITabBarController {
         let mainViewController = MainViewController(MainView())
         let mainViewNavigationController = UINavigationController(rootViewController: mainViewController)
         mainViewNavigationController.removeBackBarButtonTitle()
-        mainViewNavigationController.tabBarItem.image = UIImage(systemName: "magnifyingglass")
-        mainViewNavigationController.tabBarItem.title = "검색"
-        
+        mainViewNavigationController.tabBarItem.image = UIImage(systemName: TabBarItemProperty.mainView.systemName)
+        mainViewNavigationController.tabBarItem.title = TabBarItemProperty.mainView.title
         
         let settingViewController = SettingViewController(SettingView())
         let settingViewNavigationController = UINavigationController(rootViewController: settingViewController)
         settingViewNavigationController.removeBackBarButtonTitle()
-        settingViewController.tabBarItem.image = UIImage(systemName: "person")
-        settingViewController.tabBarItem.title = "설정"
-        
+        settingViewController.tabBarItem.image = UIImage(systemName: TabBarItemProperty.settingView.systemName)
+        settingViewController.tabBarItem.title = TabBarItemProperty.settingView.title
         
         setViewControllers(
             [mainViewNavigationController, settingViewNavigationController],

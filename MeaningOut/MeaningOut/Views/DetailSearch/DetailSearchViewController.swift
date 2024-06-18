@@ -16,20 +16,8 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     struct State: DetailSearchViewControllerState {
-        var shoppingItem: ShoppingItem = ShoppingItem(
-            title: "",
-            image: "",
-            mallName: "",
-            lprice: "",
-            link: "",
-            productId: ""
-        )
-        var userData: UserData = UserData(
-            userName: "",
-            profileImage: .randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []
-        )
+        var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
+        var userData: UserData = UserData.dummyUserData()
     }
     
     var state: State = State() {
@@ -52,9 +40,16 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     func configureNavigationItem() {
-        navigationItem.title = state.shoppingItem.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "")
+        navigationItem.title = state.shoppingItem.title.replacingOccurrences(
+            of: ReplaceStringConstants.boldHTMLOpenTag,
+            with: String.emptyString
+        ).replacingOccurrences(
+            of: ReplaceStringConstants.boldHTMLCloseTag,
+            with: String.emptyString
+        )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: isLiked ? "like_selected" : "like_unselected")?.withRenderingMode(.alwaysOriginal),
+            image: UIImage(named: isLiked ? ImageName.selectedLikeButtonImage : ImageName.unSelecteLikeButtonImage)?
+                .withRenderingMode(.alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(likeButtonTapped)

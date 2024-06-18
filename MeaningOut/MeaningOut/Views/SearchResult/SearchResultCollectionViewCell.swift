@@ -14,7 +14,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     let itemImage = UIImageView()
     let likeButton = RoundCornerButton(
         type: .image,
-        image: UIImage(named: "like_unselected"),
+        image: UIImage(named: ImageName.unSelecteLikeButtonImage),
         color: MOColors.moGray100.color.withAlphaComponent(0.3)
     )
     let mallName = UILabel()
@@ -22,14 +22,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     let price = UILabel()
     var isLiked = false
     
-    var shoppingItem = ShoppingItem(
-        title: "",
-        image: "",
-        mallName: "",
-        lprice: "",
-        link: "",
-        productId: ""
-    )
+    var shoppingItem = ShoppingItem.dummyShoppingItem()
     
     var delegate: (any BaseViewDelegate)?
     
@@ -46,7 +39,10 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     }
     
     override func prepareForReuse() {
-        likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+        likeButton.setImage(UIImage(
+            named: ImageName.unSelecteLikeButtonImage),
+                            for: .normal
+        )
     }
     
     func configureHierarchy() {
@@ -96,7 +92,9 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         itemImage.clipsToBounds = true
         
         if isLiked == false {
-            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            likeButton.setImage(
+                UIImage(named: ImageName.unSelecteLikeButtonImage),
+                for: .normal)
         }
         likeButton.backgroundColor = MOColors.moGray300.color.withAlphaComponent(0.5)
         likeButton.tintColor = .white
@@ -124,10 +122,16 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             
             mallName.text = state.mallName
             
-            title.text = state.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "")
+            title.text = state.title.replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLOpenTag,
+                with: String.emptyString
+            ).replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLCloseTag,
+                with: String.emptyString
+            )
             
-            let formattedPrice = Int(state.lprice)?.formatted() ?? "0"
-            price.text = formattedPrice + "원"
+            let formattedPrice = Int(state.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+            price.text = formattedPrice + SearchResultConstants.won
             
             isLiked = false
         }
@@ -139,10 +143,16 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     
     func changeLikeButtonUI() {
         if isLiked {
-            likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+            likeButton.setImage(UIImage(
+                named: ImageName.selectedLikeButtonImage),
+                                for: .normal
+            )
             likeShoppingItem()
         } else {
-            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            likeButton.setImage(UIImage(
+                named: ImageName.unSelecteLikeButtonImage),
+                                for: .normal
+            )
             cancelLikeShoppingItem()
         }
     }
@@ -153,7 +163,6 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     }
     
     func cancelLikeShoppingItem() {
-        
         delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }

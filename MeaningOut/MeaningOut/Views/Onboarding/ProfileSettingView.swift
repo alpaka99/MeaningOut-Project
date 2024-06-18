@@ -12,12 +12,12 @@ import SnapKit
 final class ProfileSettingView: UIView, BaseViewBuildable {
     let profileImage = ProfileImageView(
         profileImage: ProfileImage.randomProfileImage.rawValue,
-        subImage: "camera.fill"
+        subImage: ImageName.cameraFilled
     )
     let textField = MOTextField()
     let completeButton = RoundCornerButton(
         type: .plain,
-        title: "완료",
+        title: ProfileSettingViewConstants.completeButtonTitle,
         color: MOColors.moOrange.color
     )
     
@@ -145,10 +145,4 @@ extension ProfileSettingView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         triggerAction()
     }
-}
-
-
-enum ProfileSettingViewType {
-    case onBoarding
-    case setting
 }

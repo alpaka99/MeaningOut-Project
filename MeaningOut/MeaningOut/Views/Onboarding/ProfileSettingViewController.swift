@@ -11,7 +11,7 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     struct State: ProfileSettingViewControllerState {
         var selectedImage = ProfileImage.randomProfileImage
-        var userName = ""
+        var userName = String.emptyString
         var profileSettingViewType = ProfileSettingViewType.onBoarding
     }
     var state = State() {
@@ -44,7 +44,7 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     func setRightBarButtonItem() {
         let rightBarButtonItem = UIBarButtonItem(
-            title: "저장",
+            title: ProfileSettingViewConstants.saveButtonTitle,
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
@@ -54,7 +54,6 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     @objc
     func saveButtonTapped(_ sender: UIBarButtonItem) {
-        // MARK: ViewController에서 어떻게 baseView의 action을 trigger 하지? 새롭게 프로토콜에 만들어야하나
         baseView.triggerAction()
     }
 }
@@ -70,7 +69,10 @@ extension ProfileSettingViewController: BaseViewDelegate {
                     selectedImage: state.selectedImage
                 )
                 profileSelectionViewController.delegate = self
-                navigationController?.pushViewController(profileSelectionViewController, animated: true)
+                navigationController?.pushViewController(
+                    profileSelectionViewController,
+                    animated: true
+                )
             }
         case .profileSettingViewAction(let detailAction):
             switch detailAction {

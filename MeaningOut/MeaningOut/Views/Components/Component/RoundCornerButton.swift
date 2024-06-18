@@ -49,7 +49,10 @@ final class RoundCornerButton: UIButton {
         case .plain:
             if let title = title {
                 let attributeContainer = AttributeContainer()
-                config.attributedTitle = AttributedString(title, attributes: attributeContainer)
+                config.attributedTitle = AttributedString(
+                    title,
+                    attributes: attributeContainer
+                )
             }
         case .image:
             config.image = image
@@ -62,8 +65,11 @@ final class RoundCornerButton: UIButton {
         self.contentVerticalAlignment = .fill
         self.contentHorizontalAlignment = .fill
         
-        self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
+        self.addTarget(
+            self,
+            action: #selector(buttonTapped),
+            for: .touchUpInside
+        )
     }
     
     func setBorderLine(color: UIColor, width: CGFloat) {
@@ -97,15 +103,4 @@ final class RoundCornerButton: UIButton {
     @objc func buttonTapped() {
         delegate?.roundCornerButtonTapped(type)
     }
-}
-
-enum RoundCornerButtonType {
-    case plain
-    case image
-    case sort(SortOptions)
-}
-
-
-protocol RoundCornerButtonDelegate: AnyObject {
-    func roundCornerButtonTapped(_ type: RoundCornerButtonType)
 }

@@ -15,11 +15,7 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
     }
     
     var state: State = State(
-        userData: UserData(
-            userName: "",
-            profileImage: ProfileImage.randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []) ,
+        userData: UserData.dummyUserData() ,
         searchHistory: []
     ) {
         didSet {
@@ -38,7 +34,7 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
     override func configureUI() {
         baseView.delegate = self
         
-        navigationItem.title = "\(state.userData.userName)님의 MeaningOut"
+        navigationItem.title = "\(state.userData.userName)" + MainViewConstants.navigationTitleSufix
     }
     
     func loadUserData() {
@@ -72,9 +68,15 @@ extension MainViewController: BaseViewDelegate {
         }
         
         let searchResultViewController = SearchResultViewController(SearchResultView())
-        searchResultViewController.fetchSearchResult(keyword, filterOption: .simularity)
+        searchResultViewController.fetchSearchResult(
+            keyword,
+            filterOption: .simularity
+        )
         
-        navigationController?.pushViewController(searchResultViewController, animated: true)
+        navigationController?.pushViewController(
+            searchResultViewController,
+            animated: true
+        )
     }
     
     func eraseAllHistoryButtonTapped() {

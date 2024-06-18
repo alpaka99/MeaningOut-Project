@@ -135,3 +135,138 @@ struct DateHelper {
     static let dateFormatter = DateFormatter()
     static let settingHeaederCellDateFormat = "yyyy.MM.dd 가입"
 }
+
+enum TabBarItemProperty {
+    case mainView
+    case settingView
+    
+    var systemName: String {
+        switch self {
+        case .mainView:
+            return "magnifyingglass"
+        case .settingView:
+            return "person"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .mainView:
+            return "검색"
+        case .settingView:
+            return "설정"
+        }
+    }
+}
+
+struct SettingViewConstants {
+    // SettingViewController Constants
+    static let alertControllerTitle = "탈퇴하기"
+    static let alertControllerMessage = "탈퇴를 하면 테이터가 모두 초기화 됩니다. 탈퇴 하시겠습니까?"
+    static let cancelButtonTitle = "취소"
+    static let conformButtonTitle = "확인"
+    
+    // SettingView Constants
+    static let numberOfSection: Int = 2
+    static let numberOfHeaderCell: Int = 1
+    static let settingCellHeight: CGFloat = 44
+    
+}
+
+struct ReplaceStringConstants {
+    // DetailSearchViewController Constants
+    static let boldHTMLOpenTag = "<b>"
+    static let boldHTMLCloseTag = "</b>"
+}
+
+struct SearchResult {
+    static let totalResultLabelText = "개의 검색결과"
+}
+
+struct ImageName {
+    static let chevronRight = "chevron.right"
+    static let selectedLikeButtonImage = "like_selected"
+    static let unSelecteLikeButtonImage = "like_unselected"
+    static let empty = "empty"
+    
+    static let clock = "clock"
+    static let xmark = "xmark"
+    static let lauch = "launch"
+    static let cameraFilled = "camera.fill"
+}
+
+struct ParameterKey {
+    static let query = "query"
+    static let display = "display"
+    static let start = "start"
+    static let sort = "sort"
+}
+
+
+struct PageNationConstants {
+    static let start: Int = 1
+    static let pageAmount: Int = 30
+}
+
+
+struct SearchResultConstants {
+    static let defaultPrice = "0"
+    static let won = "원"
+}
+
+
+struct MainViewConstants {
+    // MainViewController Constants
+    static let navigationTitleSufix = "님의 MeaningOut"
+    
+    // MainView Constants
+    static let searchBarPlaceholder = "브랜드, 상품 등을 입력하세요"
+    
+    static let emptyLabelText = "최근 검색어가 없어요"
+    static let headerViewLeadingText = "최근 기록"
+}
+
+struct MOTextFieldConstants {
+    static let placeholder = "닉네임을 입력해주세요 :)"
+}
+
+struct StringValidationConstants {
+    static let lengthError = "2글자 이상 10글자 미만으로 설정해주세요"
+    static let containsNumericError = "닉네임에 숫자는 포함할 수 없어요"
+    static let containsSpecialLetterError = "닉네임에 @, #, $, %는 포함할 수 없어요"
+    static let unHandledError = "Unhandled error occured"
+    static let avaliableNickname = "사용할 수 있는 닉네임이에요"
+}
+
+enum SpecialLetterConstants:Character, CaseIterable {
+    case at = "@"
+    case sharp = "#"
+    case dollar = "$"
+    case percent = "%"
+    
+    static var allStringCases: [Character] {
+        var allRawValue: [Character] = []
+        Self.allCases.forEach { specialString in
+            allRawValue.append(specialString.rawValue)
+        }
+        
+        return allRawValue
+    }
+}
+
+struct MOButtonLabelConstants {
+    static let eraseAllTitle = "전체 삭제"
+}
+
+
+struct LogoViewConstants {
+    static let startButtonTitle = "시작하기"
+    static let logoTitle = "MeaningOut"
+    static let creatorName = "고석환"
+}
+
+
+struct ProfileSettingViewConstants {
+    static let saveButtonTitle = "저장"
+    static let completeButtonTitle = "완료"
+}

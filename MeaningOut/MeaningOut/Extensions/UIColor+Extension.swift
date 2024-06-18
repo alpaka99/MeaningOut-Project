@@ -21,7 +21,6 @@ extension UIColor {
                 g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255
                 b = CGFloat((hexNumber & 0x0000FF)) / 255
                 
-                
                 return UIColor(red: r, green: g, blue: b, alpha: 1)
             }
         }

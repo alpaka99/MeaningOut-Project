@@ -71,8 +71,14 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
         
-        profileCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: UICollectionViewCell.identifier)
-        profileCollectionView.register(ProfileSelectionViewCell.self, forCellWithReuseIdentifier: ProfileSelectionViewCell.identifier)
+        profileCollectionView.register(
+            UICollectionViewCell.self,
+            forCellWithReuseIdentifier: UICollectionViewCell.identifier
+        )
+        profileCollectionView.register(
+            ProfileSelectionViewCell.self,
+            forCellWithReuseIdentifier: ProfileSelectionViewCell.identifier
+        )
     }
     
     func configureData(_ state: any BaseViewControllerState) {
@@ -105,7 +111,10 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileSelectionViewCell.identifier, for: indexPath) as? ProfileSelectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ProfileSelectionViewCell.identifier,
+            for: indexPath
+        ) as? ProfileSelectionViewCell else { return UICollectionViewCell() }
         
         let data = profileImages[indexPath.row]
         cell.configureData(data.rawValue)

@@ -15,7 +15,10 @@ extension String {
             let result = String(self[secondIndex...])
             return result
         }
-        
         return nil
+    }
+    
+    static var emptyString: String {
+        return ""
     }
 }

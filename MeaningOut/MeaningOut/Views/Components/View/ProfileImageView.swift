@@ -13,7 +13,7 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     
     let profileImageView = UIImageView()
     let subButton = UIImageView()
-    var selectedState = ProfileImageState.normal
+    var selectedState = ProfileImageType.normal
     
     weak var delegate: BaseViewDelegate?
     
@@ -76,7 +76,10 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.tintColor = MOColors.moWhite.color
         subButton.backgroundColor = MOColors.moOrange.color
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(profileImageTapped)
+        )
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -105,9 +108,4 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
-}
-
-enum ProfileImageState {
-    case selected
-    case normal
 }

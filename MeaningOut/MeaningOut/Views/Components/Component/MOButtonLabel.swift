@@ -28,7 +28,7 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
     let leadingText = UILabel()
     let trailingButton = RoundCornerButton(
         type: .plain,
-        title: "전체 삭제",
+        title: MOButtonLabelConstants.eraseAllTitle,
         color: .clear
     )
     let trailingText = UILabel()
@@ -112,7 +112,11 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         leadingText.text = moButtonLabelData.leadingText
         
         trailingButton.tintColor = .black
-        trailingButton.addTarget(self, action: #selector(eraseAllButtonTapped), for: .touchUpInside)
+        trailingButton.addTarget(
+            self,
+            action: #selector(eraseAllButtonTapped),
+            for: .touchUpInside
+        )
         
         trailingText.text = moButtonLabelData.trailingText
     }

@@ -14,20 +14,19 @@ final class SearchResultView: UIView, BaseViewBuildable {
     let sortOptions: [SortOptions] = SortOptions.allCases
     var selectedButton = SortOptions.simularity
     
-    
-    lazy var simularityFilterButton = RoundCornerButton(
+    let simularityFilterButton = RoundCornerButton(
         type: .sort(.simularity),
         color: MOColors.moWhite.color
     )
-    lazy var dateFilterButton = RoundCornerButton(
+    let dateFilterButton = RoundCornerButton(
         type: .sort(.date),
         color: MOColors.moWhite.color
     )
-    lazy var ascendingFilterButton = RoundCornerButton(
+    let ascendingFilterButton = RoundCornerButton(
         type: .sort(.ascendingPrice),
         color: MOColors.moWhite.color
     )
-    lazy var descendingFilterButton = RoundCornerButton(
+    let descendingFilterButton = RoundCornerButton(
         type: .sort(.descendingPrice),
         color: MOColors.moWhite.color
     )
@@ -40,17 +39,20 @@ final class SearchResultView: UIView, BaseViewBuildable {
     lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
     lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: createFlowLayout(numberOfRowsInLine: 2, spacing: 20)
+        collectionViewLayout: createFlowLayout(
+            numberOfRowsInLine: 2,
+            spacing: 20
+        )
     )
     
-    var searchResult: NaverShoppingResponse = NaverShoppingResponse(start: 1, total: 0, items: []) {
+    var searchResult: NaverShoppingResponse = NaverShoppingResponse.dummyNaverShoppingResponse() {
         didSet {
             searchResultChanged()
         }
     }
     
     var userData = UserData(
-        userName: "",
+        userName: String.emptyString,
         profileImage: ProfileImage.randomProfileImage,
         signUpDate: Date.now,
         likedItems: []
@@ -102,7 +104,10 @@ final class SearchResultView: UIView, BaseViewBuildable {
         self.backgroundColor = .white
         
         totalResultLabel.textColor = MOColors.moOrange.color
-        totalResultLabel.font = .systemFont(ofSize: 12, weight: .bold)
+        totalResultLabel.font = .systemFont(
+            ofSize: 12,
+            weight: .bold
+        )
         
         horizontalButtonStack.axis = .horizontal
         horizontalButtonStack.spacing = 8
@@ -125,7 +130,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
     
     func searchResultChanged() {
-        totalResultLabel.text = "\(searchResult.total.formatted())개의 검색결과"
+        totalResultLabel.text = "\(searchResult.total.formatted())" + SearchResult.totalResultLabelText
         resultCollectionView.reloadData()
     }
     
@@ -133,16 +138,28 @@ final class SearchResultView: UIView, BaseViewBuildable {
         for option in sortOptions {
             switch option {
             case .simularity:
-                setInitialButtonState(simularityFilterButton, option: option)
+                setInitialButtonState(
+                    simularityFilterButton,
+                    option: option
+                )
                 simularityFilterButton.delegate = self
             case .date:
-                setInitialButtonState(dateFilterButton, option: option)
+                setInitialButtonState(
+                    dateFilterButton,
+                    option: option
+                )
                 dateFilterButton.delegate = self
             case .ascendingPrice:
-                setInitialButtonState(ascendingFilterButton, option: option)
+                setInitialButtonState(
+                    ascendingFilterButton,
+                    option: option
+                )
                 ascendingFilterButton.delegate = self
             case .descendingPrice:
-                setInitialButtonState(descendingFilterButton, option: option)
+                setInitialButtonState(
+                    descendingFilterButton,
+                    option: option
+                )
                 descendingFilterButton.delegate = self
             }
         }
@@ -177,7 +194,10 @@ final class SearchResultView: UIView, BaseViewBuildable {
     func setInitialButtonState(_ button: RoundCornerButton, option: SortOptions) {
         button.tintColor = .black
         button.setBackgroundColor(with: MOColors.moWhite.color)
-        button.setBorderLine(color: MOColors.moGray100.color, width: 1)
+        button.setBorderLine(
+            color: MOColors.moGray100.color,
+            width: 1
+        )
         var attributes = AttributeContainer()
         attributes.font = UIFont.boldSystemFont(ofSize: 12)
         button.setStringAttribute(attributes)
@@ -194,16 +214,23 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = spacing
         flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        flowLayout.sectionInset = UIEdgeInsets(
+            top: spacing,
+            left: spacing,
+            bottom: spacing,
+            right: spacing
+        )
         
         let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
         let length = lengthOfALine / numberOfRowsInLine
         
-        flowLayout.itemSize = CGSize(width: length, height: 300)
+        flowLayout.itemSize = CGSize(
+            width: length,
+            height: length * 2.0
+        )
         
         return flowLayout
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResult.items.count
@@ -229,7 +256,6 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = searchResult.items[indexPath.row]
-        
         delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
     
@@ -269,7 +295,6 @@ extension SearchResultView: BaseViewDelegate {
         delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }
-
 
 extension SearchResultView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped(_ type: RoundCornerButtonType) {

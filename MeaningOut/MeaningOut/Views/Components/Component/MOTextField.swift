@@ -53,14 +53,25 @@ final class MOTextField: UIView, BaseViewBuildable {
     }
     
     func configureUI() {
-        textField.placeholder = "닉네임을 입력해주세요 :)"
-        textField.addTarget(self, action: #selector(inputChanged), for: .editingChanged)
-        textField.addTarget(self, action: #selector(inputChanged), for: .editingDidBegin)
+        textField.placeholder = MOTextFieldConstants.placeholder
+        textField.addTarget(
+            self,
+            action: #selector(inputChanged),
+            for: .editingChanged
+        )
+        textField.addTarget(
+            self,
+            action: #selector(inputChanged),
+            for: .editingDidBegin
+        )
         textField.becomeFirstResponder()
         
         divider.backgroundColor = MOColors.moGray300.color
         
-        checkLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        checkLabel.font = UIFont.systemFont(
+            ofSize: 12,
+            weight: .medium
+        )
         
         setAsOnboardingType()
     }
@@ -92,24 +103,24 @@ final class MOTextField: UIView, BaseViewBuildable {
             return nicknameValidated(validatedNickname)
         } catch StringValidationError.isNil, StringValidationError.isEmpty, StringValidationError.isShort, StringValidationError.isLong {
             delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
-            checkLabel.text = "2글자 이상 10글자 미만으로 설정해주세요"
+            checkLabel.text = StringValidationConstants.lengthError
         } catch StringValidationError.isUsingNumeric {
             delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
-            checkLabel.text = "닉네임에 숫자는 포함할 수 없어요"
+            checkLabel.text = StringValidationConstants.containsNumericError
         } catch StringValidationError.isUsingSpecialLetter {
             delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
-            checkLabel.text = "닉네임에 @, #, $, %는 포함할 수 없어요"
+            checkLabel.text = StringValidationConstants.containsSpecialLetterError
         } catch {
             delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
-            print("Unhandled error occured")
+            print(StringValidationConstants.unHandledError)
         }
-        return ""
+        return String.emptyString
     }
     
     @discardableResult
     func nicknameValidated(_ validatedNickname: String) -> String {
         delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(true)))
-        checkLabel.text = "사용할 수 있는 닉네임이에요"
+        checkLabel.text = StringValidationConstants.avaliableNickname
         return validatedNickname
     }
     
@@ -142,7 +153,6 @@ extension String? {
 }
 
 extension String {
-    
     func checkIsEmpty() throws {
         guard self.isEmpty == false else { throw StringValidationError.isEmpty }
     }
@@ -153,7 +163,7 @@ extension String {
     }
     
     func checkContainsSpecialLetter() throws {
-        let specialLetters: [Character] = ["@", "#", "$", "%"]
+        let specialLetters: [Character] = SpecialLetterConstants.allStringCases
         
         try specialLetters.forEach { specialLetter in
             if self.contains(where: {$0 == specialLetter}) {
@@ -165,14 +175,4 @@ extension String {
     func checkNumeric() throws {
         guard !self.contains(where: {$0.isNumber}) else { throw StringValidationError.isUsingNumeric }
     }
-}
-
-
-enum StringValidationError: Error {
-    case isNil
-    case isEmpty
-    case isShort
-    case isLong
-    case isUsingSpecialLetter
-    case isUsingNumeric
 }

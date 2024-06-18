@@ -68,7 +68,6 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
                 .offset(-8)
             $0.centerY.equalTo(contentView.snp.centerY)
         }
-        
     }
     
     func configureUI() {
@@ -76,15 +75,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         profileImage.selectedState = .selected
         profileImage.setAsSelectedImage()
         
-        userNameLabel.text = ""
+        userNameLabel.text = String.emptyString
         userNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
         signUpDateLabel.text = Date.now.formatted()
         signUpDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         signUpDateLabel.textColor = MOColors.moGray200.color
-        trailingIcon.image = UIImage(systemName: "chevron.right")
+        trailingIcon.image = UIImage(systemName: ImageName.chevronRight)
         trailingIcon.tintColor = .black
-        
     }
     
     func configureData(_ state: any BaseViewControllerState) {
@@ -93,7 +91,7 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
             profileImage.setImage(state.profileImage)
             userNameLabel.text = state.userName
             DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
-//            signUpDateLabel.text = state.signUpDate.formatted()
+
             signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
         }
     }

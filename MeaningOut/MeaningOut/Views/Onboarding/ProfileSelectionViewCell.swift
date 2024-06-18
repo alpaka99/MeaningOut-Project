@@ -11,8 +11,7 @@ import SnapKit
 
 final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     
-    
-    let profileImage = ProfileImageView(profileImage: "profile_0")
+    let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
     
     var delegate: BaseViewDelegate?
     

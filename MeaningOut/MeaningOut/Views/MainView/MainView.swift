@@ -83,18 +83,21 @@ final class MainView: UIView, BaseViewBuildable {
         backgroundColor = MOColors.moWhite.color
         
         searchBar.delegate = self
-        searchBar.placeholder = "브랜드, 상품 등을 입력하세요"
+        searchBar.placeholder = MainViewConstants.searchBarPlaceholder
         
-        emptyView.image = UIImage(named: "empty")
+        emptyView.image = UIImage(named: ImageName.empty)
         emptyView.contentMode = .scaleAspectFill
-        emptyLabel.text = "최근 검색어가 없어요"
+        emptyLabel.text = MainViewConstants.emptyLabelText
         emptyLabel.textAlignment = .center
-        emptyLabel.font = .systemFont(ofSize: 16, weight: .heavy)
+        emptyLabel.font = .systemFont(
+            ofSize: 16,
+            weight: .heavy
+        )
         
         headerView.delegate = self
         headerView.configureData(MOButtonLabelData(
             leadingIconName: nil,
-            leadingText: "최근 기록",
+            leadingText: MainViewConstants.headerViewLeadingText,
             trailingButtonName: nil,
             trailingButtonType: .plain,
             trailingText: nil
@@ -106,8 +109,14 @@ final class MainView: UIView, BaseViewBuildable {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
-        tableView.register(MOTableViewCell.self, forCellReuseIdentifier: MOTableViewCell.identifier)
+        tableView.register(
+            UITableViewCell.self,
+            forCellReuseIdentifier: UITableViewCell.identifier
+        )
+        tableView.register(
+            MOTableViewCell.self,
+            forCellReuseIdentifier: MOTableViewCell.identifier
+        )
         tableView.alpha = 0
         tableView.separatorColor = .clear
         tableView.selectionFollowsFocus = false
@@ -158,9 +167,9 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         
         let data = recentSearch[indexPath.row]
         let cellData = MOButtonLabelData(
-            leadingIconName: "clock",
+            leadingIconName: ImageName.clock,
             leadingText: data,
-            trailingButtonName: "xmark",
+            trailingButtonName: ImageName.xmark,
             trailingButtonType: .systemImage,
             trailingText: nil
         )
@@ -173,7 +182,10 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         let keyword = recentSearch[indexPath.row]
         searchBar.text = keyword
         delegate?.baseViewAction(.mainViewAction(.searchKeyword(keyword)))
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(
+            at: indexPath,
+            animated: true
+        )
         // MARK: Possibly add search functionality
     }
 }

@@ -18,17 +18,9 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
     
     var state: State = State(
-        searchResult: NaverShoppingResponse(
-            start: 1,
-            total: 0,
-            items: []
-        ),
-        userData: UserData(
-            userName: "",
-            profileImage: .randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []),
-        keyword: "",
+        searchResult: NaverShoppingResponse.dummyNaverShoppingResponse(),
+        userData: UserData.dummyUserData(),
+        keyword: String.emptyString,
         filterOption: SortOptions.simularity
     ) {
         didSet {
@@ -58,10 +50,10 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         let url = APIKey.Naver.shoppingURL
         
         let parameters: Parameters = [
-            "query" : keyword,
-            "display" : 30,
-            "start" : 1,
-            "sort" : filterOption.rawValue
+            ParameterKey.query : keyword,
+            ParameterKey.display : PageNationConstants.pageAmount,
+            ParameterKey.start : PageNationConstants.start,
+            ParameterKey.sort : filterOption.rawValue
         ]
         
         AF.request(
@@ -100,7 +92,10 @@ extension SearchResultViewController: BaseViewDelegate {
             case .prefetchItems:
                 prefetchData()
             case .filterOptionButtonTapped(let filterOption):
-                fetchSearchResult(state.keyword, filterOption: filterOption)
+                fetchSearchResult(
+                    state.keyword,
+                    filterOption: filterOption
+                )
             }
         default:
             break
@@ -144,12 +139,12 @@ extension SearchResultViewController: BaseViewDelegate {
     }
     
     func prefetchData() {
-        if state.searchResult.start + 30 <= state.searchResult.total {
+        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
             let parameters: Parameters = [
-                "query" : state.keyword,
-                "display" : 30,
-                "start" : state.searchResult.start + 30,
-                "sort" : state.filterOption.rawValue
+                ParameterKey.query : state.keyword,
+                ParameterKey.display : PageNationConstants.pageAmount,
+                ParameterKey.start : state.searchResult.start + PageNationConstants.pageAmount,
+                ParameterKey.sort : state.filterOption.rawValue
             ]
             
             let url = APIKey.Naver.shoppingURL

@@ -9,13 +9,13 @@ import UIKit
 
 final class SettingViewController: MOBaseViewController, CommunicatableBaseViewController {
     struct State: SettingViewControllerState {
-        var userName = ""
+        var userName = String.emptyString
         var profileImage = ProfileImage.randomProfileImage
         var signUpDate = Date.now
         var likedItems:[ShoppingItem] = []
     }
     
-    var state = State() {
+    private(set) var state = State() {
         didSet {
             baseView.configureData(state)
         }
@@ -31,16 +31,13 @@ final class SettingViewController: MOBaseViewController, CommunicatableBaseViewC
             state.likedItems = userData.likedItems
             configureUI()
         }
-        
     }
     
     override func configureUI() {
         baseView.delegate = self
-        
         baseView.configureData(state)
     }
 }
-
 
 extension SettingViewController: BaseViewDelegate {
     func baseViewAction(_ type: BaseViewActionType) {
@@ -68,27 +65,41 @@ extension SettingViewController: BaseViewDelegate {
         )
         profileSettingViewController.setProfileSettingViewType(.setting)
         
-        navigationController?.pushViewController(profileSettingViewController, animated: true)
+        navigationController?.pushViewController(
+            profileSettingViewController,
+            animated: true
+        )
     }
     
     func likedItemsCellTapped() {
         // TODO: Fetch Liked Button Items
-        print(#function)
+        
     }
     
     func quitCellTapped() {
-        let ac = UIAlertController(title: "탈퇴하기", message: "탈퇴를 하면 테이터가 모두 초기화 됩니다. 탈퇴 하시겠습니까?", preferredStyle: .alert)
-        
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
-        let conformButton = UIAlertAction(title: "확인", style: .destructive) { [weak self] _ in
+        let ac = UIAlertController(
+            title: SettingViewConstants.alertControllerTitle,
+            message: SettingViewConstants.alertControllerMessage,
+            preferredStyle: .alert
+        )
+        let cancelButton = UIAlertAction(
+            title: SettingViewConstants.cancelButtonTitle,
+            style: .cancel
+        )
+        let conformButton = UIAlertAction(
+            title: SettingViewConstants.conformButtonTitle,
+            style: .destructive
+        ) { [weak self] _ in
             UserDefaults.standard.resetData(of: UserData.self)
-            
             self?.moveToLaunchScreen()
         }
         ac.addAction(cancelButton)
         ac.addAction(conformButton)
         
-        present(ac, animated: true)
+        present(
+            ac,
+            animated: true
+        )
     }
     
     func moveToLaunchScreen() {
@@ -97,7 +108,6 @@ extension SettingViewController: BaseViewDelegate {
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
         let launchScreen = LaunchScreenViewController(LogoView(type: .launching))
-        
         
         sceneDelegate?.window?.rootViewController = launchScreen
         sceneDelegate?.window?.makeKeyAndVisible()

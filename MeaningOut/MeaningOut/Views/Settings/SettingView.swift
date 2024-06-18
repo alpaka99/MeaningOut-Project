@@ -10,19 +10,13 @@ import UIKit
 import SnapKit
 
 final class SettingView: UIView, BaseViewBuildable {
-    let tableView = UITableView()
-    let settingOptions = SettingOptions.allCases
-    var userData = UserData(
-        userName: "",
-        profileImage: ProfileImage.randomProfileImage,
-        signUpDate: Date.now,
-        likedItems: []
-    ) {
+    private let tableView = UITableView()
+    private let settingOptions = SettingOptions.allCases
+    private(set) var userData = UserData.dummyUserData() {
         didSet {
             tableView.reloadData()
         }
     }
-    
     
     var delegate: (any BaseViewDelegate)?
     
@@ -38,28 +32,37 @@ final class SettingView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(tableView)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         tableView.snp.makeConstraints {
             $0.edges.equalTo(self.safeAreaLayoutGuide)
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         self.backgroundColor = .white
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
-        tableView.register(SettingHeaderCell.self, forCellReuseIdentifier: SettingHeaderCell.identifier)
-        tableView.register(MOTableViewCell.self, forCellReuseIdentifier: MOTableViewCell.identifier)
+        tableView.register(
+            UITableViewCell.self,
+            forCellReuseIdentifier: UITableViewCell.identifier
+        )
+        tableView.register(
+            SettingHeaderCell.self,
+            forCellReuseIdentifier: SettingHeaderCell.identifier
+        )
+        tableView.register(
+            MOTableViewCell.self,
+            forCellReuseIdentifier: MOTableViewCell.identifier
+        )
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SettingViewControllerState {
             let userData = UserData(
                 userName: state.userName,
@@ -72,28 +75,34 @@ final class SettingView: UIView, BaseViewBuildable {
     }
 }
 
-
 extension SettingView: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+    internal func numberOfSections(in tableView: UITableView) -> Int {
+        return SettingViewConstants.numberOfSection
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return SettingViewConstants.numberOfHeaderCell
         } else {
             return settingOptions.count
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            guard let  cell = tableView.dequeueReusableCell(withIdentifier: SettingHeaderCell.identifier, for: indexPath) as? SettingHeaderCell else { return UITableViewCell() }
+            guard let  cell = tableView.dequeueReusableCell(
+                withIdentifier: SettingHeaderCell.identifier,
+                for: indexPath
+            ) as? SettingHeaderCell else { return UITableViewCell() }
             
             cell.configureData(userData)
             
             return cell
         } else {
-            guard let  cell = tableView.dequeueReusableCell(withIdentifier: MOTableViewCell.identifier, for: indexPath) as? MOTableViewCell else { return UITableViewCell() }
+            guard let  cell = tableView.dequeueReusableCell(
+                withIdentifier: MOTableViewCell.identifier,
+                for: indexPath
+            ) as? MOTableViewCell else { return UITableViewCell() }
             
             let settingOption = settingOptions[indexPath.row]
             
@@ -117,15 +126,15 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return UITableView.automaticDimension
         } else {
-            return 44
+            return SettingViewConstants.settingCellHeight
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let section = indexPath.section
