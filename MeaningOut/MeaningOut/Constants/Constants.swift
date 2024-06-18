@@ -130,3 +130,8 @@ struct JSONHelper {
     static let jsonEncoder = JSONEncoder()
     static let jsonDecoder = JSONDecoder()
 }
+
+struct DateHelper {
+    static let dateFormatter = DateFormatter()
+    static let settingHeaederCellDateFormat = "yyyy.MM.dd 가입"
+}

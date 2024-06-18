@@ -76,7 +76,7 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         profileImage.selectedState = .selected
         profileImage.setAsSelectedImage()
         
-        userNameLabel.text = "옹골찬 고래밥"
+        userNameLabel.text = ""
         signUpDateLabel.text = Date.now.formatted()
         trailingIcon.image = UIImage(systemName: "chevron.right")
         trailingIcon.tintColor = .black
@@ -88,7 +88,9 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
             
             profileImage.setImage(state.profileImage)
             userNameLabel.text = state.userName
-            signUpDateLabel.text = state.signUpDate.formatted()
+            DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
+//            signUpDateLabel.text = state.signUpDate.formatted()
+            signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
         }
     }
 }
