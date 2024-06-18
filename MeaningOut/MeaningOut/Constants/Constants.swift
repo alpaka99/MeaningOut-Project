@@ -76,9 +76,9 @@ enum SortOptions: String, CaseIterable {
             return "정확도"
         case .date:
             return "날짜순"
-        case .ascendingPrice:
-            return "가격높은순"
         case .descendingPrice:
+            return "가격높은순"
+        case .ascendingPrice:
             return "가격낮은순"
         }
     }
