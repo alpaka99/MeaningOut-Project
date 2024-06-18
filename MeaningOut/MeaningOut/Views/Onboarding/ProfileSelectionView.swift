@@ -10,8 +10,7 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
-    
-    let selectedImageView: ProfileImageView
+    let selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
     lazy var profileCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout(
@@ -20,14 +19,16 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         ))
     
     let profileImages = ProfileImage.allCases
-    var selectedImage: ProfileImage
+    var selectedImage: ProfileImage = ProfileImage.randomProfileImage {
+        didSet {
+            selectedImageView.setImage(selectedImage)
+        }
+    }
     
     weak var delegate: BaseViewDelegate?
     
-    init(selectedImage: ProfileImage) {
-        self.selectedImageView = ProfileImageView(profileImage: selectedImage.rawValue)
-        self.selectedImage = selectedImage
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         configureHierarchy()
         configureLayout()
@@ -75,7 +76,11 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
     }
     
     func configureData(_ state: any BaseViewControllerState) {
-        
+        if let state = state as? ProfileSelectionViewControllerState {
+            print(#function, state)
+            selectedImage = state.selectedImage
+            selectedImageView.setImage(state.selectedImage)
+        }
     }
 }
 

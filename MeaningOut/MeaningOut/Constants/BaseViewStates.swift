@@ -48,3 +48,7 @@ protocol ProfileSettingViewControllerState: BaseViewControllerState {
     var userName: String { get set }
     var profileSettingViewType: ProfileSettingViewType { get set }
 }
+
+protocol ProfileSelectionViewControllerState: BaseViewControllerState {
+    var selectedImage: ProfileImage { get set }
+}
