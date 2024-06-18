@@ -108,6 +108,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         
         title.textColor = .black
         title.font = .systemFont(ofSize: 12, weight: .medium)
+        title.numberOfLines = 2
         
         price.textColor = .black
         title.font = .systemFont(ofSize: 16, weight: .heavy)

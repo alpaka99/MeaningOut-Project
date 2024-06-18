@@ -167,7 +167,9 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchBar.text = recentSearch[indexPath.row]
+        let keyword = recentSearch[indexPath.row]
+        searchBar.text = keyword
+        delegate?.baseViewAction(.mainViewAction(.searchKeyword(keyword)))
         tableView.deselectRow(at: indexPath, animated: true)
         // MARK: Possibly add search functionality
     }
