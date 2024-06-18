@@ -53,7 +53,7 @@ final class RoundCornerButton: UIButton {
             }
         case .image:
             config.image = image
-        case .filter(let filterOption):
+        case .sort(let filterOption):
             break
         }
         
@@ -102,7 +102,7 @@ final class RoundCornerButton: UIButton {
 enum RoundCornerButtonType {
     case plain
     case image
-    case filter(FilterOption)
+    case sort(SortOptions)
 }
 
 

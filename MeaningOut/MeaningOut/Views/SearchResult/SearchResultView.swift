@@ -11,24 +11,24 @@ import SnapKit
 
 final class SearchResultView: UIView, BaseViewBuildable {
     let totalResultLabel = UILabel()
-    let filterOptions: [FilterOption] = FilterOption.allCases
-    var selectedButton = FilterOption.simularity
+    let sortOptions: [SortOptions] = SortOptions.allCases
+    var selectedButton = SortOptions.simularity
     
     
     lazy var simularityFilterButton = RoundCornerButton(
-        type: .filter(.simularity),
+        type: .sort(.simularity),
         color: MOColors.moWhite.color
     )
     lazy var dateFilterButton = RoundCornerButton(
-        type: .filter(.date),
+        type: .sort(.date),
         color: MOColors.moWhite.color
     )
     lazy var ascendingFilterButton = RoundCornerButton(
-        type: .filter(.ascendingPrice),
+        type: .sort(.ascendingPrice),
         color: MOColors.moWhite.color
     )
     lazy var descendingFilterButton = RoundCornerButton(
-        type: .filter(.descendingPrice),
+        type: .sort(.descendingPrice),
         color: MOColors.moWhite.color
     )
     lazy var buttons: [UIButton] = [
@@ -124,8 +124,8 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
     
     //MARK: TargetButton 안쓰면 오류없이 가능할지도..?
-    func configureButtons(_ filterOption: FilterOption = .simularity) {
-        for option in filterOptions {
+    func configureButtons(_ filterOption: SortOptions = .simularity) {
+        for option in sortOptions {
             switch option {
             case .simularity:
                 setInitialButtonState(simularityFilterButton, option: option)
@@ -169,7 +169,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    func setInitialButtonState(_ button: RoundCornerButton, option: FilterOption) {
+    func setInitialButtonState(_ button: RoundCornerButton, option: SortOptions) {
         button.tintColor = .black
         button.setBackgroundColor(with: MOColors.moWhite.color)
         button.setBorderLine(color: MOColors.moGray100.color, width: 1)
@@ -269,7 +269,7 @@ extension SearchResultView: BaseViewDelegate {
 extension SearchResultView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         switch type {
-        case .filter(let option):
+        case .sort(let option):
             configureButtons(option)
             delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
         default:

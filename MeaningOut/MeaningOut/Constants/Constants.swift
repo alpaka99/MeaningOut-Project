@@ -64,7 +64,7 @@ enum ProfileImage: String, CaseIterable, Codable {
 }
 
 
-enum FilterOption: String, CaseIterable {
+enum SortOptions: String, CaseIterable {
     case simularity = "sim"
     case date = "date"
     case ascendingPrice = "asc"

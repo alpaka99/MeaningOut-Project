@@ -14,7 +14,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         var searchResult: NaverShoppingResponse
         var userData: UserData
         var keyword: String
-        var filterOption: FilterOption
+        var filterOption: SortOptions
     }
     
     var state: State = State(
@@ -29,7 +29,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
             signUpDate: Date.now,
             likedItems: []),
         keyword: "",
-        filterOption: FilterOption.simularity
+        filterOption: SortOptions.simularity
     ) {
         didSet {
             configureData(state)
@@ -51,7 +51,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     func fetchSearchResult(
         _ keyword: String,
-        filterOption: FilterOption
+        filterOption: SortOptions
     ) {
         state.keyword = keyword
         
