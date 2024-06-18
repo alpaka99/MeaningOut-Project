@@ -71,19 +71,11 @@ final class MOTextField: UIView, BaseViewBuildable {
         checkLabel.textColor = MOColors.moBlack.color
     }
     
-    func setTextFieldText(_ text: String) {
-        textField.text = text
-    }
-    
-    func fetchTextFieldText() -> String? {
-        if let text = textField.text, text.isEmpty == false {
-            return text
-        }
-        return nil
-    }
-    
     func configureData(_ state: any BaseViewControllerState) {
-        
+        if let state = state as? ProfileSettingViewControllerState {
+            print(state)
+            textField.text = state.userName
+        }
     }
     
     @objc
@@ -91,24 +83,38 @@ final class MOTextField: UIView, BaseViewBuildable {
         validateNickname(sender.text)
     }
     
-    func validateNickname(_ nickName: String?) {
+    @discardableResult
+    func validateNickname(_ nickName: String?) -> String {
         do {
             let validatedNickname = try nickName.validateNickname()
             
-            nicknameValidated(validatedNickname)
+            return nicknameValidated(validatedNickname)
         } catch StringValidationError.isNil, StringValidationError.isEmpty, StringValidationError.isShort, StringValidationError.isLong {
+            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = "2글자 이상 10글자 미만으로 설정해주세요"
         } catch StringValidationError.isUsingNumeric {
+            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = "닉네임에 숫자는 포함할 수 없어요"
         } catch StringValidationError.isUsingSpecialLetter {
+            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = "닉네임에 @, #, $, %는 포함할 수 없어요"
         } catch {
+            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             print("Unhandled error occured")
         }
+        return ""
     }
     
-    func nicknameValidated(_ validatedNickname: String) {
+    @discardableResult
+    func nicknameValidated(_ validatedNickname: String) -> String {
+        delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(true)))
         checkLabel.text = "사용할 수 있는 닉네임이에요"
+        return validatedNickname
+    }
+    
+    func triggerAction() {
+        let validatedNickname = validateNickname(textField.text)
+        delegate?.baseViewAction(.moTextFieldAction(.sendTextFieldText(validatedNickname)))
     }
 }
 

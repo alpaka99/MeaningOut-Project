@@ -17,6 +17,7 @@ enum BaseViewActionType {
     case searchCollectionViewCellAction(SearchCollectionViewCellAction)
     case settingViewAction(SettingViewAction)
     case profileSettingViewAction(ProfileSettingViewAction)
+    case moTextFieldAction(MOTextFieldAction)
 }
 
 
@@ -65,4 +66,9 @@ enum SettingViewAction {
 enum ProfileSettingViewAction {
     case completeButtonTapped(String)
     case saveButtonTapped(String)
+}
+
+enum MOTextFieldAction {
+    case textFieldTextChanged(Bool)
+    case sendTextFieldText(String)
 }
