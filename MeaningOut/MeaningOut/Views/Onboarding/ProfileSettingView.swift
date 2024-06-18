@@ -110,14 +110,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
 }
 
-extension ProfileSettingView: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text.isEmpty == false {
-            
-        }
-    }
-}
-
 
 extension ProfileSettingView: BaseViewDelegate {
     func baseViewAction(_ type: BaseViewActionType) {
