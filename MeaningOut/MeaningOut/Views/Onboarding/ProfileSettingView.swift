@@ -75,6 +75,8 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         profileImage.selectedState = .selected
         profileImage.setAsSelectedImage()
         
+        textField.delegate = self
+        
         completeButton.delegate = self
     }
     
@@ -83,7 +85,8 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         if let state = state as? ProfileSettingViewControllerState {
             profileImage.setImage(state.selectedImage)
             
-            textField.setTextFieldText(state.userName)
+            textField.configureData(state)
+//            textField.setTextFieldText(state.userName)
             
             switch state.profileSettingViewType {
             case .onBoarding:
@@ -104,17 +107,7 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     }
     
     func triggerAction() {
-        if let userName = textField.fetchTextFieldText() {
-            baseViewAction(.profileSettingViewAction(.saveButtonTapped(userName)))
-        }
-    }
-}
-
-extension ProfileSettingView: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text.isEmpty == false {
-            
-        }
+        textField.triggerAction()
     }
 }
 
@@ -127,8 +120,13 @@ extension ProfileSettingView: BaseViewDelegate {
             case .profileImageTapped:
                 profileImageTapped()
             }
-        case .profileSettingViewAction(.saveButtonTapped(let userName)):
-            saveButtonTapped(userName)
+        case .moTextFieldAction(let detailAction):
+            switch detailAction {
+            case .sendTextFieldText(let userName):
+                delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
+            case .textFieldTextChanged(let isEnabled):
+                completeButton.isEnabled = isEnabled
+            }
         default:
             break
         }
@@ -137,19 +135,11 @@ extension ProfileSettingView: BaseViewDelegate {
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
-    
-    func saveButtonTapped(_ userName: String) {
-        delegate?.baseViewAction(.profileSettingViewAction(.saveButtonTapped(userName)))
-    }
 }
 
 extension ProfileSettingView: RoundCornerButtonDelegate {
     func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
-        let userName = textField.fetchTextFieldText()
-        
-        if let userName = userName {
-            delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
-        }
+        triggerAction()
     }
 }
 

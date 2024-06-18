@@ -11,7 +11,6 @@ import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
     
-    
     let selectedImageView: ProfileImageView
     lazy var profileCollectionView = UICollectionView(
         frame: .zero,
