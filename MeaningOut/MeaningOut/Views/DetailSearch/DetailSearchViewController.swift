@@ -52,7 +52,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     func configureNavigationItem() {
-        navigationItem.title = state.shoppingItem.title
+        navigationItem.title = state.shoppingItem.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: isLiked ? "like_selected" : "like_unselected")?.withRenderingMode(.alwaysOriginal),
             style: .plain,

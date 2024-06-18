@@ -77,10 +77,10 @@ extension SettingViewController: BaseViewDelegate {
     }
     
     func quitCellTapped() {
-        let ac = UIAlertController(title: "데이터 초기화", message: "정말 모든 데이터를 초기화하실건가요?", preferredStyle: .alert)
+        let ac = UIAlertController(title: "탈퇴하기", message: "탈퇴를 하면 테이터가 모두 초기화 됩니다. 탈퇴 하시겠습니까?", preferredStyle: .alert)
         
         let cancelButton = UIAlertAction(title: "취소", style: .cancel)
-        let conformButton = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+        let conformButton = UIAlertAction(title: "확인", style: .destructive) { [weak self] _ in
             UserDefaults.standard.resetData(of: UserData.self)
             
             self?.moveToLaunchScreen()

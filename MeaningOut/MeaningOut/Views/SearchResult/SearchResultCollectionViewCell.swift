@@ -107,11 +107,11 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         mallName.font = .systemFont(ofSize: 12, weight: .regular)
         
         title.textColor = .black
-        title.font = .systemFont(ofSize: 12, weight: .medium)
+        title.font = .systemFont(ofSize: 14, weight: .medium)
         title.numberOfLines = 2
         
         price.textColor = .black
-        title.font = .systemFont(ofSize: 16, weight: .heavy)
+        price.font = .systemFont(ofSize: 16, weight: .heavy)
     }
     
     func configureData(_ state: any BaseViewControllerState) {

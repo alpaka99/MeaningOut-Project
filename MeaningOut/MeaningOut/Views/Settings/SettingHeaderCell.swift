@@ -53,14 +53,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
             $0.leading.equalTo(profileImage.snp.trailing)
                 .offset(8)
             $0.centerY.equalTo(profileImage.snp.centerY)
-                .offset(-16)
+                .offset(-12)
         }
         
         signUpDateLabel.snp.makeConstraints {
             $0.leading.equalTo(profileImage.snp.trailing)
                 .offset(8)
             $0.centerY.equalTo(profileImage.snp.centerY)
-                .offset(16)
+                .offset(12)
         }
         
         trailingIcon.snp.makeConstraints {
@@ -72,12 +72,16 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
     }
     
     func configureUI() {
-        profileImage.setImage(.profile_10)
+        profileImage.setImage(.randomProfileImage)
         profileImage.selectedState = .selected
         profileImage.setAsSelectedImage()
         
         userNameLabel.text = ""
+        userNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        
         signUpDateLabel.text = Date.now.formatted()
+        signUpDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        signUpDateLabel.textColor = MOColors.moGray200.color
         trailingIcon.image = UIImage(systemName: "chevron.right")
         trailingIcon.tintColor = .black
         

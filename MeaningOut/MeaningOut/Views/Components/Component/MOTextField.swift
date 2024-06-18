@@ -53,12 +53,14 @@ final class MOTextField: UIView, BaseViewBuildable {
     }
     
     func configureUI() {
-        textField.placeholder = "닉네임을 입력해주세요"
+        textField.placeholder = "닉네임을 입력해주세요 :)"
         textField.addTarget(self, action: #selector(inputChanged), for: .editingChanged)
         textField.addTarget(self, action: #selector(inputChanged), for: .editingDidBegin)
         textField.becomeFirstResponder()
         
         divider.backgroundColor = MOColors.moGray300.color
+        
+        checkLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         
         setAsOnboardingType()
     }

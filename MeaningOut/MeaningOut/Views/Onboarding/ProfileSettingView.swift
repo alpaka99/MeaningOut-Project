@@ -121,7 +121,7 @@ extension ProfileSettingView: BaseViewDelegate {
         case .moTextFieldAction(let detailAction):
             switch detailAction {
             case .sendTextFieldText(let userName):
-                delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
+                sendTextFieldText(userName)
             case .textFieldTextChanged(let isEnabled):
                 completeButton.isEnabled = isEnabled
                 delegate?.baseViewAction(.profileSettingViewAction(.textFieldTextChanged(isEnabled)))
@@ -133,6 +133,11 @@ extension ProfileSettingView: BaseViewDelegate {
     
     func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
+    }
+    
+    func sendTextFieldText(_ userName: String) {
+        
+        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
     }
 }
 

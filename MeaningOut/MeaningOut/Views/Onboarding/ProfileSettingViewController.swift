@@ -100,6 +100,7 @@ extension ProfileSettingViewController: BaseViewDelegate {
     }
     
     func updateUserData(userName: String) {
+        print(#function)
         let userData = UserData(
             userName: userName,
             profileImage: state.selectedImage,
