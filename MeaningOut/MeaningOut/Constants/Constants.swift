@@ -171,6 +171,8 @@ struct SettingViewConstants {
     static let numberOfHeaderCell: Int = 1
     static let settingCellHeight: CGFloat = 44
     
+    static let navigationTitle = "SETTING"
+    
 }
 
 struct ReplaceStringConstants {
@@ -246,10 +248,10 @@ enum SpecialLetterConstants:Character, CaseIterable {
     
     static var allStringCases: [Character] {
         var allRawValue: [Character] = []
+        
         Self.allCases.forEach { specialString in
             allRawValue.append(specialString.rawValue)
         }
-        
         return allRawValue
     }
 }
@@ -269,4 +271,7 @@ struct LogoViewConstants {
 struct ProfileSettingViewConstants {
     static let saveButtonTitle = "저장"
     static let completeButtonTitle = "완료"
+    
+    static let onBoardingTitle = "PROFILE SETTING"
+    static let settingTitle = "EDIT PROFILE"
 }

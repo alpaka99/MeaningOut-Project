@@ -36,6 +36,7 @@ final class SettingViewController: MOBaseViewController, CommunicatableBaseViewC
     override func configureUI() {
         baseView.delegate = self
         baseView.configureData(state)
+        navigationItem.title = SettingViewConstants.navigationTitle
     }
 }
 

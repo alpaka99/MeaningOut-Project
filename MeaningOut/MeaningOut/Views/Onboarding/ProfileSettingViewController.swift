@@ -27,9 +27,10 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
         baseView.configureData(state)
         switch state.profileSettingViewType {
         case .onBoarding:
-            break
+            navigationItem.title = ProfileSettingViewConstants.onBoardingTitle
         case .setting:
             setRightBarButtonItem()
+            navigationItem.title = ProfileSettingViewConstants.settingTitle
         }
     }
     
@@ -102,7 +103,6 @@ extension ProfileSettingViewController: BaseViewDelegate {
     }
     
     func updateUserData(userName: String) {
-        print(#function)
         let userData = UserData(
             userName: userName,
             profileImage: state.selectedImage,
