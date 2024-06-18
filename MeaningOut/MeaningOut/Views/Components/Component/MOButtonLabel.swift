@@ -123,6 +123,11 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         }
     }
     
+    func setTrailingButtonColor(with color: UIColor) {
+        print(#function)
+        trailingButton.tintColor = color
+    }
+    
     @objc
     func eraseAllButtonTapped() {
         delegate?.baseViewAction(.moButtonLabelAction(.eraseAllHistoryButtonTapped))

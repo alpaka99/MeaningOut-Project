@@ -83,6 +83,7 @@ final class MainView: UIView, BaseViewBuildable {
         backgroundColor = MOColors.moWhite.color
         
         searchBar.delegate = self
+        searchBar.placeholder = "브랜드, 상품 등을 입력하세요"
         
         emptyView.image = UIImage(named: "empty")
         emptyView.contentMode = .scaleAspectFill
@@ -90,6 +91,7 @@ final class MainView: UIView, BaseViewBuildable {
         emptyLabel.textAlignment = .center
         emptyLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         
+        headerView.delegate = self
         headerView.configureData(MOButtonLabelData(
             leadingIconName: nil,
             leadingText: "최근 기록",
@@ -98,7 +100,8 @@ final class MainView: UIView, BaseViewBuildable {
             trailingText: nil
         ))
         headerView.alpha = 0
-        headerView.delegate = self
+        headerView.setTrailingButtonColor(with: MOColors.moOrange.color)
+        
         
         tableView.delegate = self
         tableView.dataSource = self
