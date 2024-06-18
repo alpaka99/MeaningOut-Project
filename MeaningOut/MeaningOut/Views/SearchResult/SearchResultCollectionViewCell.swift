@@ -158,7 +158,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
 }
 
 extension SearchResultCollectionViewCell: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped() {
+    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         isLiked.toggle()
         
         changeLikeButtonUI()

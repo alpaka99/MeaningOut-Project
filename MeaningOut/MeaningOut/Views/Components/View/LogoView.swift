@@ -114,7 +114,7 @@ enum LogoViewType {
 }
 
 extension LogoView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped() {
+    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
     }
 }

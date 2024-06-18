@@ -84,7 +84,6 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         }
         
         if let syncedData = UserDefaults.standard.syncData(state.userData) {
-            print(syncedData.likedItems.count)
             state.userData = syncedData
         }
     }

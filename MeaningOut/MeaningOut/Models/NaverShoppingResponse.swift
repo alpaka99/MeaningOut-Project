@@ -8,7 +8,7 @@
 struct NaverShoppingResponse: Codable {
     let start: Int
     let total: Int
-    let items: [ShoppingItem]
+    var items: [ShoppingItem]
 }
 
 struct ShoppingItem: Codable, BaseViewControllerState {
