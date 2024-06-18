@@ -9,7 +9,24 @@ import UIKit
 
 import SnapKit
 
-final class ProfileSelectionViewController: MOBaseViewController {
+final class ProfileSelectionViewController: MOBaseViewController, CommunicatableBaseViewController {
+    struct State: ProfileSelectionViewControllerState {
+        var selectedImage = ProfileImage.randomProfileImage
+    }
+    
+    var state = State() {
+        didSet {
+            baseView.configureData(state)
+        }
+    }
+    
+    convenience init(_ baseView: BaseViewBuildable, selectedImage: ProfileImage) {
+        self.init(baseView)
+        state.selectedImage = selectedImage
+        configureUI()
+        configureData(state)
+    }
+    
     weak var delegate: ProfileSelectionViewControllerDelegate?
     
     override func configureUI() {

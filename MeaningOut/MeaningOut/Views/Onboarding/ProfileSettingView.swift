@@ -11,7 +11,7 @@ import SnapKit
 
 final class ProfileSettingView: UIView, BaseViewBuildable {
     let profileImage = ProfileImageView(
-        profileImage: "profile_0",
+        profileImage: ProfileImage.randomProfileImage.rawValue,
         subImage: "camera.fill"
     )
     let textField = MOTextField()
