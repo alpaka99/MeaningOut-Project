@@ -24,6 +24,7 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     override func configureUI() {
         baseView.delegate = self
         
+        baseView.configureData(state)
         switch state.profileSettingViewType {
         case .onBoarding:
             break
@@ -64,7 +65,10 @@ extension ProfileSettingViewController: BaseViewDelegate {
         case .profileImageAction(let detailAction):
             switch detailAction {
             case .profileImageTapped:
-                let profileSelectionViewController = ProfileSelectionViewController(ProfileSelectionView(), selectedImage: state.selectedImage)
+                let profileSelectionViewController = ProfileSelectionViewController(
+                    ProfileSelectionView(),
+                    selectedImage: state.selectedImage
+                )
                 profileSelectionViewController.delegate = self
                 navigationController?.pushViewController(profileSelectionViewController, animated: true)
             }

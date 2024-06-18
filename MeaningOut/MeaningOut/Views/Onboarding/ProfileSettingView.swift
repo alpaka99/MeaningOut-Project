@@ -24,7 +24,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
     weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
-        
         super.init(frame: .zero)
         
         configureHierarchy()
