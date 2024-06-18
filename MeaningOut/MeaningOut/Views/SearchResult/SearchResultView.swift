@@ -43,9 +43,9 @@ final class SearchResultView: UIView, BaseViewBuildable {
         collectionViewLayout: createFlowLayout(numberOfRowsInLine: 2, spacing: 20)
     )
     
-    var searchResult: [ShoppingItem] = [] {
+    var searchResult: NaverShoppingResponse = NaverShoppingResponse(start: 1, total: 0, items: []) {
         didSet {
-            resultCollectionView.reloadData()
+            searchResultChanged()
         }
     }
     
@@ -117,13 +117,18 @@ final class SearchResultView: UIView, BaseViewBuildable {
     
     func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SearchResultViewControllerState {
-            searchResult = state.searchResult.items
+            searchResult = state.searchResult
             let userData = state.userData
             self.userData = userData
+            configureUI()
         }
     }
     
-    //MARK: TargetButton 안쓰면 오류없이 가능할지도..?
+    func searchResultChanged() {
+        totalResultLabel.text = "\(searchResult.total.formatted())개의 검색결과"
+        resultCollectionView.reloadData()
+    }
+    
     func configureButtons(_ filterOption: SortOptions = .simularity) {
         for option in sortOptions {
             switch option {
@@ -201,7 +206,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResult.count
+        return searchResult.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -210,7 +215,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
             for: indexPath
         ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         
-        let data = searchResult[indexPath.row]
+        let data = searchResult.items[indexPath.row]
         cell.configureData(data)
         if userData.likedItems.contains(where: { $0.productId == data.productId }) {
             cell.isLiked = true
@@ -223,7 +228,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = searchResult[indexPath.row]
+        let data = searchResult.items[indexPath.row]
         
         delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
@@ -233,7 +238,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultView: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
-            if lastItem.row >= searchResult.count - 6 {
+            if lastItem.row >= searchResult.items.count - 6 {
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }

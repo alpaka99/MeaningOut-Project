@@ -123,7 +123,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             
             mallName.text = state.mallName
             
-            title.text = state.title
+            title.text = state.title.replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "</b>", with: "")
             
             let formattedPrice = Int(state.lprice)?.formatted() ?? "0"
             price.text = formattedPrice + "원"
