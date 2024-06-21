@@ -7,9 +7,20 @@
 
 import Foundation
 
-struct UserData: Codable, BaseViewControllerState {
+internal struct UserData: Codable, BaseViewControllerState {
     var userName: String
     var profileImage: ProfileImage
     var signUpDate: Date
     var likedItems: [ShoppingItem]
+}
+
+extension UserData {
+    static func dummyUserData() -> Self {
+        return UserData(
+            userName: String.emptyString,
+            profileImage: .randomProfileImage,
+            signUpDate: Date.now,
+            likedItems: []
+        )
+    }
 }

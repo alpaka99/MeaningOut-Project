@@ -9,30 +9,18 @@ import UIKit
 
 final class DetailSearchViewController: MOBaseViewController, CommunicatableBaseViewController {
     
-    var isLiked = false {
+    private var isLiked = false {
         didSet {
             configureNavigationItem()
         }
     }
     
-    struct State: DetailSearchViewControllerState {
-        var shoppingItem: ShoppingItem = ShoppingItem(
-            title: "",
-            image: "",
-            mallName: "",
-            lprice: "",
-            link: "",
-            productId: ""
-        )
-        var userData: UserData = UserData(
-            userName: "",
-            profileImage: .randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []
-        )
+    internal struct State: DetailSearchViewControllerState {
+        var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
+        var userData: UserData = UserData.dummyUserData()
     }
     
-    var state: State = State() {
+    internal var state: State = State() {
         didSet {
             baseView.configureData(state)
         }
@@ -51,10 +39,17 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         configureNavigationItem()
     }
     
-    func configureNavigationItem() {
-        navigationItem.title = state.shoppingItem.title
+    private func configureNavigationItem() {
+        navigationItem.title = state.shoppingItem.title.replacingOccurrences(
+            of: ReplaceStringConstants.boldHTMLOpenTag,
+            with: String.emptyString
+        ).replacingOccurrences(
+            of: ReplaceStringConstants.boldHTMLCloseTag,
+            with: String.emptyString
+        )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: isLiked ? "like_selected" : "like_unselected")?.withRenderingMode(.alwaysOriginal),
+            image: UIImage(named: isLiked ? ImageName.selectedLikeButtonImage : ImageName.unSelecteLikeButtonImage)?
+                .withRenderingMode(.alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(likeButtonTapped)
@@ -65,7 +60,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         baseView.configureData(state)
     }
     
-    func checkItemIsLiked() {
+    private func checkItemIsLiked() {
         if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) {
             isLiked = true
         } else {
@@ -74,7 +69,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     @objc
-    func likeButtonTapped(_ sender: UIBarButtonItem) {
+    private func likeButtonTapped(_ sender: UIBarButtonItem) {
         isLiked.toggle()
         
         if isLiked {
@@ -88,13 +83,13 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func addToLikedItems() {
+    private func addToLikedItems() {
         if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) == false {
             state.userData.likedItems.append(state.shoppingItem)
         }
     }
     
-    func removeFromLikedItems() {
+    private func removeFromLikedItems() {
         for i in 0..<state.userData.likedItems.count {
             let likedItem = state.userData.likedItems[i]
             if likedItem.productId == state.shoppingItem.productId {

@@ -11,9 +11,9 @@ import WebKit
 import SnapKit
 
 final class DetailSearchView: UIView, BaseViewBuildable {
-    let webView = WKWebView()
+    private let webView = WKWebView()
     
-    weak var delegate: BaseViewDelegate?
+    internal weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,32 +27,31 @@ final class DetailSearchView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(webView)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         webView.snp.makeConstraints {
             $0.edges.equalTo(self.safeAreaLayoutGuide)
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
     }
     
-    func configureData(_ data: ShoppingItem) {
-        
-        if let url = URL(string: data.link), let request = try? URLRequest(url: url, method: .get) {
+    internal func configureData(_ data: ShoppingItem) {
+        if let url = URL(string: data.link),
+           let request = try? URLRequest(url: url, method: .get) {
             webView.load(request)
         }
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? DetailSearchViewControllerState {
-            if let url = URL(string: state.shoppingItem.link) {
-                webView.load(URLRequest(url: url))
-            }
+    internal func configureData(_ state: any BaseViewControllerState) {
+        if let state = state as? DetailSearchViewControllerState,
+           let url = URL(string: state.shoppingItem.link) {
+            webView.load(URLRequest(url: url))
         }
     }
 }

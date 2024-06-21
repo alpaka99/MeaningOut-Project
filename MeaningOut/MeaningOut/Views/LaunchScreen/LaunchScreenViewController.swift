@@ -12,7 +12,7 @@ final class LaunchScreenViewController: MOBaseViewController {
         self.view.alpha = 0
         
         UIView.animate(
-            withDuration: 0.1,
+            withDuration: 2,
             delay: 0,
             options: .curveEaseOut
         ) { [weak self] in
@@ -26,7 +26,6 @@ final class LaunchScreenViewController: MOBaseViewController {
             let navigationViewController = UINavigationController(rootViewController: onBoardingViewController)
             navigationViewController.removeBackBarButtonTitle()
             
-     
             sceneDelegate?.window?.rootViewController = navigationViewController
             sceneDelegate?.window?.makeKeyAndVisible()
         }

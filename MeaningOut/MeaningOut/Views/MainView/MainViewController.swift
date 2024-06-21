@@ -9,17 +9,13 @@ import UIKit
 
 
 final class MainViewController: MOBaseViewController, CommunicatableBaseViewController {
-    struct State: MainViewControllerState {
+    internal struct State: MainViewControllerState {
         var userData: UserData
         var searchHistory: [String]
     }
     
-    var state: State = State(
-        userData: UserData(
-            userName: "",
-            profileImage: ProfileImage.randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []) ,
+    internal var state: State = State(
+        userData: UserData.dummyUserData() ,
         searchHistory: []
     ) {
         didSet {
@@ -38,10 +34,10 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
     override func configureUI() {
         baseView.delegate = self
         
-        navigationItem.title = "\(state.userData.userName)님의 MeaningOut"
+        navigationItem.title = "\(state.userData.userName)" + MainViewConstants.navigationTitleSufix
     }
     
-    func loadUserData() {
+    private func loadUserData() {
         if let userData = UserDefaults.standard.loadData(of: UserData.self) {
             state.userData = userData
         }
@@ -49,7 +45,7 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
 }
 
 extension MainViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .mainViewAction(let detailAction):
             switch detailAction {
@@ -66,22 +62,28 @@ extension MainViewController: BaseViewDelegate {
     }
     
     
-    func searchKeyword(_ keyword: String) {
+    private func searchKeyword(_ keyword: String) {
         if state.searchHistory.contains(keyword) == false {
             state.searchHistory.append(keyword)
         }
         
         let searchResultViewController = SearchResultViewController(SearchResultView())
-        searchResultViewController.fetchSearchResult(keyword, filterOption: .simularity)
+        searchResultViewController.fetchSearchResult(
+            keyword,
+            filterOption: .simularity
+        )
         
-        navigationController?.pushViewController(searchResultViewController, animated: true)
+        navigationController?.pushViewController(
+            searchResultViewController,
+            animated: true
+        )
     }
     
-    func eraseAllHistoryButtonTapped() {
+    private func eraseAllHistoryButtonTapped() {
         state.searchHistory = []
     }
     
-    func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
+    private func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
         for i in 0..<state.searchHistory.count {
             let searchHistory = state.searchHistory[i]
             if searchHistory == moCellData.leadingText {

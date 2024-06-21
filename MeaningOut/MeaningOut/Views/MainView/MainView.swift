@@ -11,19 +11,19 @@ import SnapKit
 
 final class MainView: UIView, BaseViewBuildable {
     
-    let searchBar = UISearchBar()
-    let emptyView = UIImageView()
-    let emptyLabel = UILabel()
-    let headerView = MOButtonLabel()
-    let tableView = UITableView()
+    private let searchBar = UISearchBar()
+    private let emptyView = UIImageView()
+    private let emptyLabel = UILabel()
+    private let headerView = MOButtonLabel()
+    private let tableView = UITableView()
     
-    var recentSearch: [String] = [] {
+    private var recentSearch: [String] = [] {
         didSet {
             changeView()
         }
     }
     
-    weak var delegate: BaseViewDelegate?
+    internal weak var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -38,7 +38,7 @@ final class MainView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(searchBar)
         self.addSubview(emptyView)
         self.addSubview(emptyLabel)
@@ -46,7 +46,7 @@ final class MainView: UIView, BaseViewBuildable {
         self.addSubview(tableView)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         searchBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
         }
@@ -79,44 +79,56 @@ final class MainView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         backgroundColor = MOColors.moWhite.color
         
         searchBar.delegate = self
+        searchBar.placeholder = MainViewConstants.searchBarPlaceholder
         
-        emptyView.image = UIImage(named: "empty")
+        emptyView.image = UIImage(named: ImageName.empty)
         emptyView.contentMode = .scaleAspectFill
-        emptyLabel.text = "최근 검색어가 없어요"
+        emptyLabel.text = MainViewConstants.emptyLabelText
         emptyLabel.textAlignment = .center
-        emptyLabel.font = .systemFont(ofSize: 16, weight: .heavy)
+        emptyLabel.font = .systemFont(
+            ofSize: 16,
+            weight: .heavy
+        )
         
+        headerView.delegate = self
         headerView.configureData(MOButtonLabelData(
             leadingIconName: nil,
-            leadingText: "최근 기록",
+            leadingText: MainViewConstants.headerViewLeadingText,
             trailingButtonName: nil,
             trailingButtonType: .plain,
             trailingText: nil
         ))
         headerView.alpha = 0
-        headerView.delegate = self
+        headerView.setTrailingButtonColor(with: MOColors.moOrange.color)
+        
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
-        tableView.register(MOTableViewCell.self, forCellReuseIdentifier: MOTableViewCell.identifier)
+        tableView.register(
+            UITableViewCell.self,
+            forCellReuseIdentifier: UITableViewCell.identifier
+        )
+        tableView.register(
+            MOTableViewCell.self,
+            forCellReuseIdentifier: MOTableViewCell.identifier
+        )
         tableView.alpha = 0
         tableView.separatorColor = .clear
         tableView.selectionFollowsFocus = false
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? MainViewControllerState {
             recentSearch = state.searchHistory
         }
     }
     
-    func changeView() {
+    private func changeView() {
         if recentSearch.isEmpty {
             showEmptyView()
         } else {
@@ -126,7 +138,7 @@ final class MainView: UIView, BaseViewBuildable {
     }
     
     
-    func showTableView() {
+    private func showTableView() {
         emptyView.alpha = 0
         emptyLabel.alpha = 0
         
@@ -135,7 +147,7 @@ final class MainView: UIView, BaseViewBuildable {
         tableView.reloadData()
     }
     
-    func showEmptyView() {
+    private func showEmptyView() {
         headerView.alpha = 0
         tableView.alpha = 0
         
@@ -146,18 +158,18 @@ final class MainView: UIView, BaseViewBuildable {
 }
 
 extension MainView: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recentSearch.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MOTableViewCell.identifier, for: indexPath) as? MOTableViewCell else { return UITableViewCell() }
         
         let data = recentSearch[indexPath.row]
         let cellData = MOButtonLabelData(
-            leadingIconName: "clock",
+            leadingIconName: ImageName.clock,
             leadingText: data,
-            trailingButtonName: "xmark",
+            trailingButtonName: ImageName.xmark,
             trailingButtonType: .systemImage,
             trailingText: nil
         )
@@ -166,16 +178,20 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchBar.text = recentSearch[indexPath.row]
-        tableView.deselectRow(at: indexPath, animated: true)
-        // MARK: Possibly add search functionality
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let keyword = recentSearch[indexPath.row]
+        searchBar.text = keyword
+        delegate?.baseViewAction(.mainViewAction(.searchKeyword(keyword)))
+        tableView.deselectRow(
+            at: indexPath,
+            animated: true
+        )
     }
 }
 
 
 extension MainView: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text, text.isEmpty == false {
             // MARK: Call Delegate method to fetch NewData
             delegate?.baseViewAction(.mainViewAction(.searchKeyword(text)))
@@ -184,7 +200,7 @@ extension MainView: UISearchBarDelegate {
 }
 
 extension MainView: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .moButtonLabelAction(let detailAction):
             switch detailAction {
@@ -198,11 +214,11 @@ extension MainView: BaseViewDelegate {
         }
     }
     
-    func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
+    private func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
         delegate?.baseViewAction(.mainViewAction(.deleteButtonTapped(moCellData)))
     }
     
-    func eraseAllButtonTapped() {
+    private func eraseAllButtonTapped() {
         delegate?.baseViewAction(.mainViewAction(.eraseAllHistoryButtonTapped))
     }
 }

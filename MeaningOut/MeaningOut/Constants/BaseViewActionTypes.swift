@@ -66,6 +66,7 @@ enum SettingViewAction {
 enum ProfileSettingViewAction {
     case completeButtonTapped(String)
     case saveButtonTapped(String)
+    case textFieldTextChanged(Bool)
 }
 
 enum MOTextFieldAction {

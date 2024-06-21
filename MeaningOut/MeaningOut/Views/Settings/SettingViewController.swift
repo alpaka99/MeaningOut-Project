@@ -8,14 +8,14 @@
 import UIKit
 
 final class SettingViewController: MOBaseViewController, CommunicatableBaseViewController {
-    struct State: SettingViewControllerState {
-        var userName = ""
+    internal struct State: SettingViewControllerState {
+        var userName = String.emptyString
         var profileImage = ProfileImage.randomProfileImage
         var signUpDate = Date.now
         var likedItems:[ShoppingItem] = []
     }
     
-    var state = State() {
+    private(set) var state = State() {
         didSet {
             baseView.configureData(state)
         }
@@ -31,16 +31,14 @@ final class SettingViewController: MOBaseViewController, CommunicatableBaseViewC
             state.likedItems = userData.likedItems
             configureUI()
         }
-        
     }
     
     override func configureUI() {
         baseView.delegate = self
-        
         baseView.configureData(state)
+        navigationItem.title = SettingViewConstants.navigationTitle
     }
 }
-
 
 extension SettingViewController: BaseViewDelegate {
     func baseViewAction(_ type: BaseViewActionType) {
@@ -59,7 +57,7 @@ extension SettingViewController: BaseViewDelegate {
         }
     }
     
-    func headerViewTapped() {
+    private func headerViewTapped() {
         let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
         
         profileSettingViewController.setUserData(
@@ -68,27 +66,49 @@ extension SettingViewController: BaseViewDelegate {
         )
         profileSettingViewController.setProfileSettingViewType(.setting)
         
-        navigationController?.pushViewController(profileSettingViewController, animated: true)
+        navigationController?.pushViewController(
+            profileSettingViewController,
+            animated: true
+        )
     }
     
-    func likedItemsCellTapped() {
+    private func likedItemsCellTapped() {
         // TODO: Fetch Liked Button Items
-        print(#function)
-    }
-    
-    func quitCellTapped() {
-        UserDefaults.standard.resetData(of: UserData.self)
         
-        moveToLaunchScreen()
     }
     
-    func moveToLaunchScreen() {
+    private func quitCellTapped() {
+        let ac = UIAlertController(
+            title: SettingViewConstants.alertControllerTitle,
+            message: SettingViewConstants.alertControllerMessage,
+            preferredStyle: .alert
+        )
+        let cancelButton = UIAlertAction(
+            title: SettingViewConstants.cancelButtonTitle,
+            style: .cancel
+        )
+        let conformButton = UIAlertAction(
+            title: SettingViewConstants.conformButtonTitle,
+            style: .destructive
+        ) { [weak self] _ in
+            UserDefaults.standard.resetData(of: UserData.self)
+            self?.moveToLaunchScreen()
+        }
+        ac.addAction(cancelButton)
+        ac.addAction(conformButton)
+        
+        present(
+            ac,
+            animated: true
+        )
+    }
+    
+    private func moveToLaunchScreen() {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
         let launchScreen = LaunchScreenViewController(LogoView(type: .launching))
-        
         
         sceneDelegate?.window?.rootViewController = launchScreen
         sceneDelegate?.window?.makeKeyAndVisible()

@@ -11,10 +11,11 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     struct State: ProfileSettingViewControllerState {
         var selectedImage = ProfileImage.randomProfileImage
-        var userName = ""
+        var userName = String.emptyString
         var profileSettingViewType = ProfileSettingViewType.onBoarding
     }
-    var state = State() {
+    
+    private(set) var state = State() {
         didSet {
             baseView.configureData(state)
             configureUI()
@@ -24,26 +25,28 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     override func configureUI() {
         baseView.delegate = self
         
+        baseView.configureData(state)
         switch state.profileSettingViewType {
         case .onBoarding:
-            break
+            navigationItem.title = ProfileSettingViewConstants.onBoardingTitle
         case .setting:
             setRightBarButtonItem()
+            navigationItem.title = ProfileSettingViewConstants.settingTitle
         }
     }
     
-    func setProfileSettingViewType(_ type: ProfileSettingViewType) {
+    internal func setProfileSettingViewType(_ type: ProfileSettingViewType) {
         self.state.profileSettingViewType = type
     }
     
-    func setUserData(userName: String, profileImage: ProfileImage) {
+    internal func setUserData(userName: String, profileImage: ProfileImage) {
         self.state.userName = userName
         self.state.selectedImage = profileImage
     }
     
-    func setRightBarButtonItem() {
+    internal func setRightBarButtonItem() {
         let rightBarButtonItem = UIBarButtonItem(
-            title: "저장",
+            title: ProfileSettingViewConstants.saveButtonTitle,
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
@@ -52,21 +55,26 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     }
     
     @objc
-    func saveButtonTapped(_ sender: UIBarButtonItem) {
-        // MARK: ViewController에서 어떻게 baseView의 action을 trigger 하지? 새롭게 프로토콜에 만들어야하나
+    private func saveButtonTapped(_ sender: UIBarButtonItem) {
         baseView.triggerAction()
     }
 }
 
 extension ProfileSettingViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .profileImageAction(let detailAction):
             switch detailAction {
             case .profileImageTapped:
-                let profileSelectionViewController = ProfileSelectionViewController(ProfileSelectionView(), selectedImage: state.selectedImage)
+                let profileSelectionViewController = ProfileSelectionViewController(
+                    ProfileSelectionView(),
+                    selectedImage: state.selectedImage
+                )
                 profileSelectionViewController.delegate = self
-                navigationController?.pushViewController(profileSelectionViewController, animated: true)
+                navigationController?.pushViewController(
+                    profileSelectionViewController,
+                    animated: true
+                )
             }
         case .profileSettingViewAction(let detailAction):
             switch detailAction {
@@ -74,13 +82,15 @@ extension ProfileSettingViewController: BaseViewDelegate {
                 saveUserData(userName: userName)
             case .saveButtonTapped(let userName):
                 updateUserData(userName: userName)
+            case .textFieldTextChanged(let isEnabled):
+                setSaveButtonEnabledState(isEnabled)
             }
         default:
             break
         }
     }
     
-    func saveUserData(userName: String) {
+    private func saveUserData(userName: String) {
         let userData = UserData(
             userName: userName, 
             profileImage: state.selectedImage,
@@ -93,7 +103,7 @@ extension ProfileSettingViewController: BaseViewDelegate {
         moveToMainView()
     }
     
-    func updateUserData(userName: String) {
+    private func updateUserData(userName: String) {
         let userData = UserData(
             userName: userName,
             profileImage: state.selectedImage,
@@ -104,7 +114,7 @@ extension ProfileSettingViewController: BaseViewDelegate {
         UserDefaults.standard.saveData(userData)
     }
     
-    func moveToMainView() {
+    private func moveToMainView() {
         if let userData = UserDefaults.standard.loadData(of: UserData.self) {
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             
@@ -117,10 +127,14 @@ extension ProfileSettingViewController: BaseViewDelegate {
             sceneDelegate?.window?.makeKeyAndVisible()
         }
     }
+    
+    private func setSaveButtonEnabledState(_ isEnabled: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+    }
 }
 
 extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
-    func profileImageSelected(_ image: ProfileImage) {
+    internal func profileImageSelected(_ image: ProfileImage) {
         self.state.selectedImage = image
     }
 }

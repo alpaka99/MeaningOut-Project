@@ -6,16 +6,10 @@
 //
 import UIKit
 
-struct MOButtonLabelData: MOButtonLabelState {
+internal struct MOButtonLabelData: MOButtonLabelState {
     var leadingIconName: String?
     var leadingText: String?
     var trailingButtonName: String?
     var trailingButtonType: MOButtonLabelTrailingButtonType
     var trailingText: String?
-}
-
-enum MOButtonLabelTrailingButtonType {
-    case systemImage
-    case assetImage
-    case plain
 }

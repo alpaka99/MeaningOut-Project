@@ -11,11 +11,15 @@ import SnapKit
 
 final class ProfileImageView: UIView, BaseViewBuildable {
     
-    let profileImageView = UIImageView()
-    let subButton = UIImageView()
-    var selectedState = ProfileImageState.normal
+    private let profileImageView = UIImageView()
+    private let subButton = UIImageView()
+    private var selectedState = ProfileImageType.normal
     
-    weak var delegate: BaseViewDelegate?
+    internal func setSelectedState(as: ProfileImageType) {
+        
+    }
+    
+    internal weak var delegate: BaseViewDelegate?
     
     init(
         profileImage: String,
@@ -45,12 +49,12 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         roundCorners()
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(profileImageView)
         self.addSubview(subButton)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         profileImageView.snp.makeConstraints {
             $0.center.equalTo(self.snp.center)
             $0.height.equalTo(self.snp.height)
@@ -65,7 +69,7 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.borderColor = MOColors.moGray100.color.cgColor
         profileImageView.alpha = 0.5
@@ -76,38 +80,37 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.tintColor = MOColors.moWhite.color
         subButton.backgroundColor = MOColors.moOrange.color
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(profileImageTapped)
+        )
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         
     }
     
-    func roundCorners() {
+    // MARK: Async하게 수정
+    private func roundCorners() {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.clipsToBounds = true
         subButton.layer.cornerRadius = subButton.frame.height / 2
     }
     
-    func setImage(_ image: ProfileImage) {
+    internal func setImage(_ image: ProfileImage) {
         profileImageView.image = UIImage(named: image.rawValue)
     }
     
-    func setAsSelectedImage() {
+    internal func setAsSelectedImage() {
         profileImageView.layer.borderWidth = 3
         profileImageView.alpha = 1
         profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
     }
     
     @objc
-    func profileImageTapped() {
+    private func profileImageTapped() {
         delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
-}
-
-enum ProfileImageState {
-    case selected
-    case normal
 }

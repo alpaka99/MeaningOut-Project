@@ -11,17 +11,17 @@ import SnapKit
 
 final class LogoView: UIView, BaseViewBuildable {
     
-    let type: LogoViewType
-    let logoTitle = UILabel()
-    let logoImage = UIImageView()
-    let userNameLabel = UILabel()
-    let startButton = RoundCornerButton(
+    private let type: LogoViewType
+    private let logoTitle = UILabel()
+    private let logoImage = UIImageView()
+    private let userNameLabel = UILabel()
+    private let startButton = RoundCornerButton(
         type: .plain,
-        title: "시작하기",
+        title: LogoViewConstants.startButtonTitle,
         color: MOColors.moOrange.color
     )
     
-    weak var delegate: BaseViewDelegate?
+    internal weak var delegate: BaseViewDelegate?
     
     init(type: LogoViewType) {
         self.type = type
@@ -79,19 +79,28 @@ final class LogoView: UIView, BaseViewBuildable {
         logoTitle.textAlignment = .center
         
         logoTitle.textColor = MOColors.moOrange.color
-        logoTitle.text = "MeaningOut"
+        logoTitle.text = LogoViewConstants.logoTitle
         
-        logoImage.image = UIImage(named: "launch")
+        logoImage.image = UIImage(named: ImageName.lauch)
         logoImage.contentMode = .scaleAspectFill
         
-        userNameLabel.text = "고석환"
+        userNameLabel.text = LogoViewConstants.creatorName
         userNameLabel.textAlignment = .center
-        userNameLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        userNameLabel.font = .systemFont(
+            ofSize: 20,
+            weight: .bold
+        )
         userNameLabel.textColor = MOColors.moOrange.color
         
         startButton.delegate = self
-        startButton.setTitle("시작하기", for: .normal)
-        startButton.setTitleColor(.white, for: .normal)
+        startButton.setTitle(
+            LogoViewConstants.startButtonTitle,
+            for: .normal
+        )
+        startButton.setTitleColor(
+            .white,
+            for: .normal
+        )
         startButton.backgroundColor = MOColors.moOrange.color
         
         switch type {
@@ -102,19 +111,13 @@ final class LogoView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         
     }
 }
 
-
-enum LogoViewType {
-    case launching
-    case onBoarding
-}
-
 extension LogoView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
+    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
     }
 }

@@ -11,27 +11,20 @@ import Kingfisher
 import SnapKit
 
 final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuildable {
-    let itemImage = UIImageView()
-    let likeButton = RoundCornerButton(
+    private let itemImage = UIImageView()
+    private let likeButton = RoundCornerButton(
         type: .image,
-        image: UIImage(named: "like_unselected"),
+        image: UIImage(named: ImageName.unSelecteLikeButtonImage),
         color: MOColors.moGray100.color.withAlphaComponent(0.3)
     )
-    let mallName = UILabel()
-    let title = UILabel()
-    let price = UILabel()
-    var isLiked = false
+    private let mallName = UILabel()
+    private let title = UILabel()
+    private let price = UILabel()
+    private var isLiked = false
     
-    var shoppingItem = ShoppingItem(
-        title: "",
-        image: "",
-        mallName: "",
-        lprice: "",
-        link: "",
-        productId: ""
-    )
+    private var shoppingItem = ShoppingItem.dummyShoppingItem()
     
-    var delegate: (any BaseViewDelegate)?
+    internal var delegate: (any BaseViewDelegate)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,10 +39,13 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     }
     
     override func prepareForReuse() {
-        likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+        likeButton.setImage(UIImage(
+            named: ImageName.unSelecteLikeButtonImage),
+                            for: .normal
+        )
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         contentView.addSubview(itemImage)
         contentView.addSubview(likeButton)
         contentView.addSubview(mallName)
@@ -57,7 +53,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         contentView.addSubview(price)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         itemImage.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
             $0.width.equalTo(contentView.snp.width)
@@ -91,12 +87,14 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         itemImage.layer.cornerRadius = 8
         itemImage.clipsToBounds = true
         
         if isLiked == false {
-            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            likeButton.setImage(
+                UIImage(named: ImageName.unSelecteLikeButtonImage),
+                for: .normal)
         }
         likeButton.backgroundColor = MOColors.moGray300.color.withAlphaComponent(0.5)
         likeButton.tintColor = .white
@@ -107,13 +105,14 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         mallName.font = .systemFont(ofSize: 12, weight: .regular)
         
         title.textColor = .black
-        title.font = .systemFont(ofSize: 12, weight: .medium)
+        title.font = .systemFont(ofSize: 14, weight: .medium)
+        title.numberOfLines = 2
         
         price.textColor = .black
-        title.font = .systemFont(ofSize: 16, weight: .heavy)
+        price.font = .systemFont(ofSize: 16, weight: .heavy)
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ShoppingItem {
             self.shoppingItem = state
             
@@ -123,42 +122,62 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             
             mallName.text = state.mallName
             
-            title.text = state.title
+            title.text = state.title.replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLOpenTag,
+                with: String.emptyString
+            ).replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLCloseTag,
+                with: String.emptyString
+            )
             
-            let formattedPrice = Int(state.lprice)?.formatted() ?? "0"
-            price.text = formattedPrice + "원"
+            let formattedPrice = Int(state.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+            price.text = formattedPrice + SearchResultConstants.won
             
             isLiked = false
         }
     }
     
-    func likeShoppingItem() {
+    private func likeShoppingItem() {
         delegate?.baseViewAction(.searchCollectionViewCellAction(.likeShoppingItem(shoppingItem)))
     }
     
-    func changeLikeButtonUI() {
+    private func changeLikeButtonUI() {
         if isLiked {
-            likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+            likeButton.setImage(UIImage(
+                named: ImageName.selectedLikeButtonImage),
+                                for: .normal
+            )
             likeShoppingItem()
         } else {
-            likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+            likeButton.setImage(UIImage(
+                named: ImageName.unSelecteLikeButtonImage),
+                                for: .normal
+            )
             cancelLikeShoppingItem()
         }
     }
     
-    func setAsLikeItem() {
+    internal func setAsLikeItem() {
         isLiked = true
         changeLikeButtonUI()
     }
     
-    func cancelLikeShoppingItem() {
-        
+    private func cancelLikeShoppingItem() {
         delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
+    }
+    
+    internal func toggleIsLiked() {
+        switch isLiked {
+        case true:
+            isLiked = false
+        case false:
+            isLiked = true
+        }
     }
 }
 
 extension SearchResultCollectionViewCell: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
+    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         isLiked.toggle()
         
         changeLikeButtonUI()

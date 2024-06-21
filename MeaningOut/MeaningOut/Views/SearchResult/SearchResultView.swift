@@ -10,53 +10,55 @@ import UIKit
 import SnapKit
 
 final class SearchResultView: UIView, BaseViewBuildable {
-    let totalResultLabel = UILabel()
-    let sortOptions: [SortOptions] = SortOptions.allCases
-    var selectedButton = SortOptions.simularity
+    private let totalResultLabel = UILabel()
+    private let sortOptions: [SortOptions] = SortOptions.allCases
+    private var selectedButton = SortOptions.simularity
     
-    
-    lazy var simularityFilterButton = RoundCornerButton(
+    private let simularityFilterButton = RoundCornerButton(
         type: .sort(.simularity),
         color: MOColors.moWhite.color
     )
-    lazy var dateFilterButton = RoundCornerButton(
+    private let dateFilterButton = RoundCornerButton(
         type: .sort(.date),
         color: MOColors.moWhite.color
     )
-    lazy var ascendingFilterButton = RoundCornerButton(
+    private let ascendingFilterButton = RoundCornerButton(
         type: .sort(.ascendingPrice),
         color: MOColors.moWhite.color
     )
-    lazy var descendingFilterButton = RoundCornerButton(
+    private let descendingFilterButton = RoundCornerButton(
         type: .sort(.descendingPrice),
         color: MOColors.moWhite.color
     )
-    lazy var buttons: [UIButton] = [
+    private lazy var buttons: [UIButton] = [
         simularityFilterButton,
         dateFilterButton,
         ascendingFilterButton,
         descendingFilterButton
     ]
-    lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
-    lazy var resultCollectionView = UICollectionView(
+    private lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
+    private lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: createFlowLayout(numberOfRowsInLine: 2, spacing: 20)
+        collectionViewLayout: createFlowLayout(
+            numberOfRowsInLine: 2,
+            spacing: 20
+        )
     )
     
-    var searchResult: [ShoppingItem] = [] {
+    private var searchResult: NaverShoppingResponse = NaverShoppingResponse.dummyNaverShoppingResponse() {
         didSet {
-            resultCollectionView.reloadData()
+            searchResultChanged()
         }
     }
     
-    var userData = UserData(
-        userName: "",
+    private var userData = UserData(
+        userName: String.emptyString,
         profileImage: ProfileImage.randomProfileImage,
         signUpDate: Date.now,
         likedItems: []
     )
     
-    var delegate: BaseViewDelegate?
+    internal var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -70,7 +72,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(totalResultLabel)
         
         configureButtons()
@@ -79,7 +81,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         self.addSubview(resultCollectionView)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         totalResultLabel.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
                 .inset(16)
@@ -98,11 +100,14 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         self.backgroundColor = .white
         
         totalResultLabel.textColor = MOColors.moOrange.color
-        totalResultLabel.font = .systemFont(ofSize: 12, weight: .bold)
+        totalResultLabel.font = .systemFont(
+            ofSize: 12,
+            weight: .bold
+        )
         
         horizontalButtonStack.axis = .horizontal
         horizontalButtonStack.spacing = 8
@@ -115,29 +120,46 @@ final class SearchResultView: UIView, BaseViewBuildable {
         resultCollectionView.showsVerticalScrollIndicator = false
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? SearchResultViewControllerState {
-            searchResult = state.searchResult.items
+            searchResult = state.searchResult
             let userData = state.userData
             self.userData = userData
+            configureUI()
         }
     }
     
-    //MARK: TargetButton 안쓰면 오류없이 가능할지도..?
-    func configureButtons(_ filterOption: SortOptions = .simularity) {
+    private func searchResultChanged() {
+        totalResultLabel.text = "\(searchResult.total.formatted())" + SearchResult.totalResultLabelText
+        resultCollectionView.reloadData()
+    }
+    
+    private func configureButtons(_ filterOption: SortOptions = .simularity) {
         for option in sortOptions {
             switch option {
             case .simularity:
-                setInitialButtonState(simularityFilterButton, option: option)
+                setInitialButtonState(
+                    simularityFilterButton,
+                    option: option
+                )
                 simularityFilterButton.delegate = self
             case .date:
-                setInitialButtonState(dateFilterButton, option: option)
+                setInitialButtonState(
+                    dateFilterButton,
+                    option: option
+                )
                 dateFilterButton.delegate = self
             case .ascendingPrice:
-                setInitialButtonState(ascendingFilterButton, option: option)
+                setInitialButtonState(
+                    ascendingFilterButton,
+                    option: option
+                )
                 ascendingFilterButton.delegate = self
             case .descendingPrice:
-                setInitialButtonState(descendingFilterButton, option: option)
+                setInitialButtonState(
+                    descendingFilterButton,
+                    option: option
+                )
                 descendingFilterButton.delegate = self
             }
         }
@@ -169,10 +191,13 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    func setInitialButtonState(_ button: RoundCornerButton, option: SortOptions) {
+    private func setInitialButtonState(_ button: RoundCornerButton, option: SortOptions) {
         button.tintColor = .black
         button.setBackgroundColor(with: MOColors.moWhite.color)
-        button.setBorderLine(color: MOColors.moGray100.color, width: 1)
+        button.setBorderLine(
+            color: MOColors.moGray100.color,
+            width: 1
+        )
         var attributes = AttributeContainer()
         attributes.font = UIFont.boldSystemFont(ofSize: 12)
         button.setStringAttribute(attributes)
@@ -184,36 +209,43 @@ final class SearchResultView: UIView, BaseViewBuildable {
 }
 
 extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
+    private func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = spacing
         flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        flowLayout.sectionInset = UIEdgeInsets(
+            top: spacing,
+            left: spacing,
+            bottom: spacing,
+            right: spacing
+        )
         
         let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
         let length = lengthOfALine / numberOfRowsInLine
         
-        flowLayout.itemSize = CGSize(width: length, height: 300)
+        flowLayout.itemSize = CGSize(
+            width: length,
+            height: length * 2.0
+        )
         
         return flowLayout
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResult.count
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return searchResult.items.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: SearchResultCollectionViewCell.identifier,
             for: indexPath
         ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         
-        let data = searchResult[indexPath.row]
+        let data = searchResult.items[indexPath.row]
         cell.configureData(data)
         if userData.likedItems.contains(where: { $0.productId == data.productId }) {
-            cell.isLiked = true
+            cell.toggleIsLiked()
             cell.setAsLikeItem()
         }
         
@@ -222,18 +254,17 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = searchResult[indexPath.row]
-        
+    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = searchResult.items[indexPath.row]
         delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
     
 }
 
 extension SearchResultView: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
-            if lastItem.row >= searchResult.count - 6 {
+            if lastItem.row >= searchResult.items.count - 6 {
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }
@@ -242,7 +273,7 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
 
 
 extension SearchResultView: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchCollectionViewCellAction(let detailAction):
             switch detailAction {
@@ -256,18 +287,17 @@ extension SearchResultView: BaseViewDelegate {
         }
     }
     
-    func likeShoppingItem(_ shoppingItem: ShoppingItem) {
+    private func likeShoppingItem(_ shoppingItem: ShoppingItem) {
         delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
     }
     
-    func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
+    private func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
         delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }
 
-
 extension SearchResultView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
+    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         switch type {
         case .sort(let option):
             configureButtons(option)

@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
-    let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
-    let userNameLabel = UILabel()
-    let signUpDateLabel = UILabel()
-    let trailingIcon = UIImageView()
+    private let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
+    private let userNameLabel = UILabel()
+    private let signUpDateLabel = UILabel()
+    private let trailingIcon = UIImageView()
     
-    var delegate: (any BaseViewDelegate)?
+    internal var delegate: (any BaseViewDelegate)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(
@@ -31,14 +31,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         contentView.addSubview(profileImage)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(signUpDateLabel)
         contentView.addSubview(trailingIcon)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.width.equalTo(contentView.snp.width)
                 .multipliedBy(0.2)
@@ -53,14 +53,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
             $0.leading.equalTo(profileImage.snp.trailing)
                 .offset(8)
             $0.centerY.equalTo(profileImage.snp.centerY)
-                .offset(-16)
+                .offset(-12)
         }
         
         signUpDateLabel.snp.makeConstraints {
             $0.leading.equalTo(profileImage.snp.trailing)
                 .offset(8)
             $0.centerY.equalTo(profileImage.snp.centerY)
-                .offset(16)
+                .offset(12)
         }
         
         trailingIcon.snp.makeConstraints {
@@ -68,27 +68,31 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
                 .offset(-8)
             $0.centerY.equalTo(contentView.snp.centerY)
         }
-        
     }
     
-    func configureUI() {
-        profileImage.setImage(.profile_10)
-        profileImage.selectedState = .selected
+    internal func configureUI() {
+        profileImage.setImage(.randomProfileImage)
+        profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
         
-        userNameLabel.text = "옹골찬 고래밥"
-        signUpDateLabel.text = Date.now.formatted()
-        trailingIcon.image = UIImage(systemName: "chevron.right")
-        trailingIcon.tintColor = .black
+        userNameLabel.text = String.emptyString
+        userNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
+        signUpDateLabel.text = Date.now.formatted()
+        signUpDateLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        signUpDateLabel.textColor = MOColors.moGray200.color
+        trailingIcon.image = UIImage(systemName: ImageName.chevronRight)
+        trailingIcon.tintColor = .black
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? UserData {
             
             profileImage.setImage(state.profileImage)
             userNameLabel.text = state.userName
-            signUpDateLabel.text = state.signUpDate.formatted()
+            DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
+
+            signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
         }
     }
 }

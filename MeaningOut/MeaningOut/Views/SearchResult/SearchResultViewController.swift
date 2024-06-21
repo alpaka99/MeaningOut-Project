@@ -10,25 +10,17 @@ import UIKit
 import Alamofire
 
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
-    struct State: SearchResultViewControllerState {
+    internal struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
         var userData: UserData
         var keyword: String
         var filterOption: SortOptions
     }
     
-    var state: State = State(
-        searchResult: NaverShoppingResponse(
-            start: 1,
-            total: 0,
-            items: []
-        ),
-        userData: UserData(
-            userName: "",
-            profileImage: .randomProfileImage,
-            signUpDate: Date.now,
-            likedItems: []),
-        keyword: "",
+    internal var state: State = State(
+        searchResult: NaverShoppingResponse.dummyNaverShoppingResponse(),
+        userData: UserData.dummyUserData(),
+        keyword: String.emptyString,
         filterOption: SortOptions.simularity
     ) {
         didSet {
@@ -49,7 +41,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func fetchSearchResult(
+    internal func fetchSearchResult(
         _ keyword: String,
         filterOption: SortOptions
     ) {
@@ -58,10 +50,10 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         let url = APIKey.Naver.shoppingURL
         
         let parameters: Parameters = [
-            "query" : keyword,
-            "display" : 30,
-            "start" : 1,
-            "sort" : filterOption.rawValue
+            ParameterKey.query : keyword,
+            ParameterKey.display : PageNationConstants.pageAmount,
+            ParameterKey.start : PageNationConstants.start,
+            ParameterKey.sort : filterOption.rawValue
         ]
         
         AF.request(
@@ -80,14 +72,14 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func setStateWithUserData(_ userData: UserData) {
+    private func setStateWithUserData(_ userData: UserData) {
         self.state.userData = userData
     }
 }
 
 
 extension SearchResultViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchResultViewAction(let detailAction):
             switch detailAction {
@@ -100,14 +92,17 @@ extension SearchResultViewController: BaseViewDelegate {
             case .prefetchItems:
                 prefetchData()
             case .filterOptionButtonTapped(let filterOption):
-                fetchSearchResult(state.keyword, filterOption: filterOption)
+                fetchSearchResult(
+                    state.keyword,
+                    filterOption: filterOption
+                )
             }
         default:
             break
         }
     }
     
-    func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
+    private func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
         let detailSearchViewController = DetailSearchViewController(
             DetailSearchView(),
             shoppingItem: shoppingItem,
@@ -135,7 +130,7 @@ extension SearchResultViewController: BaseViewDelegate {
         }
     }
     
-    func syncData() {
+    private func syncData() {
         let newUserData = state.userData
         
         if let syncedData = UserDefaults.standard.syncData(newUserData) {
@@ -144,12 +139,12 @@ extension SearchResultViewController: BaseViewDelegate {
     }
     
     func prefetchData() {
-        if state.searchResult.start + 30 <= state.searchResult.total {
+        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
             let parameters: Parameters = [
-                "query" : state.keyword,
-                "display" : 30,
-                "start" : state.searchResult.start + 30,
-                "sort" : state.filterOption.rawValue
+                ParameterKey.query : state.keyword,
+                ParameterKey.display : PageNationConstants.pageAmount,
+                ParameterKey.start : state.searchResult.start + PageNationConstants.pageAmount,
+                ParameterKey.sort : state.filterOption.rawValue
             ]
             
             let url = APIKey.Naver.shoppingURL
@@ -162,6 +157,8 @@ extension SearchResultViewController: BaseViewDelegate {
                 switch response.result {
                 case .success(let value):
                     self?.state.searchResult.items.append(contentsOf: value.items)
+//                    print(value.start)
+                    self?.state.searchResult.start = value.start
                 case .failure(let error):
                     print(error)
                 }

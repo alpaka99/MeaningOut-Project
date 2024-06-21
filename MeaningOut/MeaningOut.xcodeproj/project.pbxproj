@@ -53,11 +53,14 @@
 		CE0ECBC02C20A1280083E256 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECBBF2C20A1280083E256 /* UINavigationController+Extension.swift */; };
 		CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514C2C1AF69100165CAB /* AppDelegate.swift */; };
 		CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE61514E2C1AF69100165CAB /* SceneDelegate.swift */; };
-		CE6151512C1AF69100165CAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6151502C1AF69100165CAB /* ViewController.swift */; };
 		CE6151542C1AF69100165CAB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CE6151532C1AF69100165CAB /* Base */; };
 		CE6151562C1AF69200165CAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6151552C1AF69200165CAB /* Assets.xcassets */; };
 		CE6151592C1AF69200165CAB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CE6151582C1AF69200165CAB /* Base */; };
 		CE6151612C1AF90900165CAB /* .gitIgnore in Resources */ = {isa = PBXBuildFile; fileRef = CE6151602C1AF90900165CAB /* .gitIgnore */; };
+		CE82DF592C219F9000937DC7 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF582C219F9000937DC7 /* Types.swift */; };
+		CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */; };
+		CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */; };
+		CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,12 +108,15 @@
 		CE6151492C1AF69100165CAB /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61514C2C1AF69100165CAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE61514E2C1AF69100165CAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE6151502C1AF69100165CAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CE6151532C1AF69100165CAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE6151552C1AF69200165CAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE6151582C1AF69200165CAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE61515A2C1AF69200165CAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6151602C1AF90900165CAB /* .gitIgnore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitIgnore; sourceTree = "<group>"; };
+		CE82DF582C219F9000937DC7 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCornerButtonProtocol.swift; sourceTree = "<group>"; };
+		CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
+		CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,8 @@
 				CE0ECB282C1CA8CF0083E256 /* Constants.swift */,
 				CE0ECB7A2C1F369D0083E256 /* BaseViewActionTypes.swift */,
 				CE0ECB7C2C1F3DFB0083E256 /* BaseViewStates.swift */,
+				CE82DF582C219F9000937DC7 /* Types.swift */,
+				CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -180,6 +188,8 @@
 				CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */,
 				CE0ECB612C1DFB960083E256 /* Reusable.swift */,
 				CE0ECB782C1F36700083E256 /* BaseViewDelegate.swift */,
+				CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */,
+				CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -323,7 +333,6 @@
 				CE0ECB362C1CA9FC0083E256 /* Protocols */,
 				CE61514C2C1AF69100165CAB /* AppDelegate.swift */,
 				CE61514E2C1AF69100165CAB /* SceneDelegate.swift */,
-				CE6151502C1AF69100165CAB /* ViewController.swift */,
 				CE6151522C1AF69100165CAB /* Main.storyboard */,
 				CE6151552C1AF69200165CAB /* Assets.xcassets */,
 				CE6151572C1AF69200165CAB /* LaunchScreen.storyboard */,
@@ -422,11 +431,11 @@
 				CE0ECB792C1F36700083E256 /* BaseViewDelegate.swift in Sources */,
 				CE0ECB7D2C1F3DFB0083E256 /* BaseViewStates.swift in Sources */,
 				CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */,
-				CE6151512C1AF69100165CAB /* ViewController.swift in Sources */,
 				CE0ECB822C1F54AC0083E256 /* MOButtonLabel.swift in Sources */,
 				CE0ECB7B2C1F369D0083E256 /* BaseViewActionTypes.swift in Sources */,
 				CE0ECBB72C2035C80083E256 /* UserData.swift in Sources */,
 				CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */,
+				CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */,
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
@@ -449,8 +458,10 @@
 				CE0ECB512C1DBD910083E256 /* RoundCornerButton.swift in Sources */,
 				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
 				CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */,
+				CE82DF592C219F9000937DC7 /* Types.swift in Sources */,
 				CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
+				CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */,
 				CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */,
 				CE0ECBC02C20A1280083E256 /* UINavigationController+Extension.swift in Sources */,
 				CE0ECB6F2C1EAA050083E256 /* APIKey.swift in Sources */,
@@ -460,6 +471,7 @@
 				CE0ECBB12C1FFF3B0083E256 /* SettingViewController.swift in Sources */,
 				CE0ECBBA2C2064D20083E256 /* TabBarController.swift in Sources */,
 				CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */,
+				CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,6 +626,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "고석환";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -647,6 +660,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "고석환";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
