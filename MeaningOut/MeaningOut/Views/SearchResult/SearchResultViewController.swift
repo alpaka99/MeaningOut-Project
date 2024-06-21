@@ -10,14 +10,14 @@ import UIKit
 import Alamofire
 
 final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
-    struct State: SearchResultViewControllerState {
+    internal struct State: SearchResultViewControllerState {
         var searchResult: NaverShoppingResponse
         var userData: UserData
         var keyword: String
         var filterOption: SortOptions
     }
     
-    var state: State = State(
+    internal var state: State = State(
         searchResult: NaverShoppingResponse.dummyNaverShoppingResponse(),
         userData: UserData.dummyUserData(),
         keyword: String.emptyString,
@@ -41,7 +41,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func fetchSearchResult(
+    internal func fetchSearchResult(
         _ keyword: String,
         filterOption: SortOptions
     ) {
@@ -72,14 +72,14 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func setStateWithUserData(_ userData: UserData) {
+    private func setStateWithUserData(_ userData: UserData) {
         self.state.userData = userData
     }
 }
 
 
 extension SearchResultViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchResultViewAction(let detailAction):
             switch detailAction {
@@ -102,7 +102,7 @@ extension SearchResultViewController: BaseViewDelegate {
         }
     }
     
-    func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
+    private func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
         let detailSearchViewController = DetailSearchViewController(
             DetailSearchView(),
             shoppingItem: shoppingItem,
@@ -130,7 +130,7 @@ extension SearchResultViewController: BaseViewDelegate {
         }
     }
     
-    func syncData() {
+    private func syncData() {
         let newUserData = state.userData
         
         if let syncedData = UserDefaults.standard.syncData(newUserData) {
@@ -157,6 +157,8 @@ extension SearchResultViewController: BaseViewDelegate {
                 switch response.result {
                 case .success(let value):
                     self?.state.searchResult.items.append(contentsOf: value.items)
+//                    print(value.start)
+                    self?.state.searchResult.start = value.start
                 case .failure(let error):
                     print(error)
                 }

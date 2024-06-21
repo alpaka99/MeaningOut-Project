@@ -8,12 +8,12 @@
 import UIKit
 
 final class RoundCornerButton: UIButton {
-    let type: RoundCornerButtonType
-    let title: String?
-    let image: UIImage?
-    let color: UIColor
+    private let type: RoundCornerButtonType
+    private let title: String?
+    private let image: UIImage?
+    private let color: UIColor
     
-    weak var delegate: RoundCornerButtonDelegate?
+    internal weak var delegate: RoundCornerButtonDelegate?
     
     init(
         type: RoundCornerButtonType,
@@ -39,7 +39,7 @@ final class RoundCornerButton: UIButton {
         self.layer.cornerRadius = self.frame.height / 2
     }
     
-    func configureUI() {
+    internal func configureUI() {
         var config = UIButton.Configuration.plain()
         
         config.background.backgroundColor = color
@@ -72,12 +72,12 @@ final class RoundCornerButton: UIButton {
         )
     }
     
-    func setBorderLine(color: UIColor, width: CGFloat) {
+    internal func setBorderLine(color: UIColor, width: CGFloat) {
         self.layer.borderColor = color.cgColor
         self.layer.borderWidth = width
     }
     
-    func setStringAttribute(_ attributes: AttributeContainer) {
+    internal func setStringAttribute(_ attributes: AttributeContainer) {
         if let title = self.title {
             var config = self.configuration
             config?.attributedTitle = AttributedString(
@@ -89,18 +89,19 @@ final class RoundCornerButton: UIButton {
         }
     }
     
-    func setAsFilterOption() {
+    internal func setAsFilterOption() {
         self.tintColor = .white
         setBackgroundColor(with: MOColors.moGray100.color)
     }
     
-    func setBackgroundColor(with color: UIColor) {
+    internal func setBackgroundColor(with color: UIColor) {
         var config = self.configuration
         config?.background.backgroundColor = color
         self.configuration = config
     }
     
-    @objc func buttonTapped() {
+    @objc 
+    private func buttonTapped() {
         delegate?.roundCornerButtonTapped(type)
     }
 }

@@ -11,17 +11,17 @@ import SnapKit
 
 final class LogoView: UIView, BaseViewBuildable {
     
-    let type: LogoViewType
-    let logoTitle = UILabel()
-    let logoImage = UIImageView()
-    let userNameLabel = UILabel()
-    let startButton = RoundCornerButton(
+    private let type: LogoViewType
+    private let logoTitle = UILabel()
+    private let logoImage = UIImageView()
+    private let userNameLabel = UILabel()
+    private let startButton = RoundCornerButton(
         type: .plain,
         title: LogoViewConstants.startButtonTitle,
         color: MOColors.moOrange.color
     )
     
-    weak var delegate: BaseViewDelegate?
+    internal weak var delegate: BaseViewDelegate?
     
     init(type: LogoViewType) {
         self.type = type
@@ -111,13 +111,13 @@ final class LogoView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         
     }
 }
 
 extension LogoView: RoundCornerButtonDelegate {
-    func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
+    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
         delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
     }
 }

@@ -10,18 +10,18 @@ import UIKit
 import SnapKit
 
 final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
-    var delegate: BaseViewDelegate?
+    internal var delegate: BaseViewDelegate?
     
-    let leadingIcon = UIImageView()
-    let leadingText = UILabel()
-    let trailingButton = RoundCornerButton(
+    private let leadingIcon = UIImageView()
+    private let leadingText = UILabel()
+    private let trailingButton = RoundCornerButton(
         type: .image,
         image: nil,
         color: .clear
     )
-    let trailingText = UILabel()
+    private let trailingText = UILabel()
     
-    var moCellData = MOButtonLabelData(
+    private var moCellData = MOButtonLabelData(
         leadingIconName: nil,
         leadingText:  nil,
         trailingButtonName: nil,
@@ -54,14 +54,14 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         )
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         contentView.addSubview(leadingIcon)
         contentView.addSubview(leadingText)
         contentView.addSubview(trailingButton)
         contentView.addSubview(trailingText)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         leadingIcon.snp.makeConstraints {
             $0.leading.verticalEdges.equalTo(contentView)
                 .inset(8)
@@ -85,7 +85,7 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         if let leadingIconName = moCellData.leadingIconName {
             leadingIcon.image = UIImage(systemName: leadingIconName)
             }
@@ -122,14 +122,14 @@ final class MOTableViewCell: UITableViewCell, BaseViewBuildable {
         trailingText.text = moCellData.trailingText
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? MOButtonLabelData {
             self.moCellData = state
         }
     }
     
     @objc
-    func trailingButtonTapped() {
+    private func trailingButtonTapped() {
         delegate?.baseViewAction(.moButtonLabelAction(.trailingButtonTapped(moCellData)))
     }
 }

@@ -16,7 +16,7 @@ final class OnboardingViewController: MOBaseViewController {
 
 
 extension OnboardingViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .logoViewAction(let action):
             switch action {
@@ -28,7 +28,7 @@ extension OnboardingViewController: BaseViewDelegate {
         }
     }
     
-    func moveToProfileSettingView() {
+    private func moveToProfileSettingView() {
         let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
         navigationController?.pushViewController(profileSettingViewController, animated: true)
     }

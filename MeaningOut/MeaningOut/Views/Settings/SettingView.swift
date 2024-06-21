@@ -18,7 +18,7 @@ final class SettingView: UIView, BaseViewBuildable {
         }
     }
     
-    var delegate: (any BaseViewDelegate)?
+    internal var delegate: (any BaseViewDelegate)?
     
     init() {
         super.init(frame: .zero)

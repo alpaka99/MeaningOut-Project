@@ -9,18 +9,18 @@ import UIKit
 
 final class DetailSearchViewController: MOBaseViewController, CommunicatableBaseViewController {
     
-    var isLiked = false {
+    private var isLiked = false {
         didSet {
             configureNavigationItem()
         }
     }
     
-    struct State: DetailSearchViewControllerState {
+    internal struct State: DetailSearchViewControllerState {
         var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
         var userData: UserData = UserData.dummyUserData()
     }
     
-    var state: State = State() {
+    internal var state: State = State() {
         didSet {
             baseView.configureData(state)
         }
@@ -39,7 +39,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         configureNavigationItem()
     }
     
-    func configureNavigationItem() {
+    private func configureNavigationItem() {
         navigationItem.title = state.shoppingItem.title.replacingOccurrences(
             of: ReplaceStringConstants.boldHTMLOpenTag,
             with: String.emptyString
@@ -60,7 +60,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         baseView.configureData(state)
     }
     
-    func checkItemIsLiked() {
+    private func checkItemIsLiked() {
         if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) {
             isLiked = true
         } else {
@@ -69,7 +69,7 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     @objc
-    func likeButtonTapped(_ sender: UIBarButtonItem) {
+    private func likeButtonTapped(_ sender: UIBarButtonItem) {
         isLiked.toggle()
         
         if isLiked {
@@ -83,13 +83,13 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    func addToLikedItems() {
+    private func addToLikedItems() {
         if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) == false {
             state.userData.likedItems.append(state.shoppingItem)
         }
     }
     
-    func removeFromLikedItems() {
+    private func removeFromLikedItems() {
         for i in 0..<state.userData.likedItems.count {
             let likedItem = state.userData.likedItems[i]
             if likedItem.productId == state.shoppingItem.productId {

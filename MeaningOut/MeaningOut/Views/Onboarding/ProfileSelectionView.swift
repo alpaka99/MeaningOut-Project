@@ -10,22 +10,22 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: UIView, BaseViewBuildable {
-    let selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
-    lazy var profileCollectionView = UICollectionView(
+    private let selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
+    private lazy var profileCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout(
             numberOfRowsInLine: 4,
             spacing: 20
         ))
     
-    let profileImages = ProfileImage.allCases
-    var selectedImage: ProfileImage = ProfileImage.randomProfileImage {
+    private let profileImages = ProfileImage.allCases
+    private var selectedImage: ProfileImage = ProfileImage.randomProfileImage {
         didSet {
             selectedImageView.setImage(selectedImage)
         }
     }
     
-    weak var delegate: BaseViewDelegate?
+    internal weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,12 +39,12 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(selectedImageView)
         self.addSubview(profileCollectionView)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         selectedImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
                 .offset(16)
@@ -62,10 +62,10 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         self.backgroundColor = .white
         
-        selectedImageView.selectedState = .selected
+        selectedImageView.setSelectedState(as: .selected)
         selectedImageView.setAsSelectedImage()
         
         profileCollectionView.delegate = self
@@ -81,7 +81,7 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         )
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ProfileSelectionViewControllerState {
             selectedImage = state.selectedImage
             selectedImageView.setImage(state.selectedImage)
@@ -90,7 +90,7 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
 }
 
 extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
+    internal func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = spacing
@@ -106,11 +106,11 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return profileImages.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ProfileSelectionViewCell.identifier,
             for: indexPath
@@ -119,13 +119,13 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
         let data = profileImages[indexPath.row]
         cell.configureData(data.rawValue)
         if data == selectedImage {
-            cell.profileImage.selectedState = .selected
+            cell.profileImage.setSelectedState(as: .selected)
             cell.profileImage.setAsSelectedImage()
         }
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedImage = profileImages[indexPath.row]
         selectedImageView.setImage(selectedImage)
         

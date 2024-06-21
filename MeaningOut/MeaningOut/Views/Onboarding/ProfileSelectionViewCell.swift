@@ -11,9 +11,9 @@ import SnapKit
 
 final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
     
-    let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
+    internal let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
     
-    var delegate: BaseViewDelegate?
+    internal var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,30 +27,32 @@ final class ProfileSelectionViewCell: UICollectionViewCell, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(profileImage)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.edges.equalTo(self.snp.edges)
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         
     }
     
-    func configureData(_ imageName: String) {
-        profileImage.profileImageView.image = UIImage(named: imageName)
+    internal func configureData(_ imageName: String) {
+//        profileImage.profileImageView.image = UIImage(named: imageName)
+        profileImage.setImage(ProfileImage.init(rawValue: imageName) ?? ProfileImage
+            .randomProfileImage)
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         
     }
     
     override func prepareForReuse() {
-        profileImage.selectedState = .normal
+        profileImage.setSelectedState(as: .normal)
         profileImage.configureUI()
     }
 }

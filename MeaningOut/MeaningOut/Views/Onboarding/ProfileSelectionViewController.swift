@@ -14,7 +14,7 @@ final class ProfileSelectionViewController: MOBaseViewController, Communicatable
         var selectedImage = ProfileImage.randomProfileImage
     }
     
-    var state = State() {
+    private(set) var state = State() {
         didSet {
             baseView.configureData(state)
         }
@@ -27,7 +27,7 @@ final class ProfileSelectionViewController: MOBaseViewController, Communicatable
         configureData(state)
     }
     
-    weak var delegate: ProfileSelectionViewControllerDelegate?
+    internal weak var delegate: ProfileSelectionViewControllerDelegate?
     
     override func configureUI() {
         baseView.delegate = self
@@ -36,7 +36,7 @@ final class ProfileSelectionViewController: MOBaseViewController, Communicatable
 
 
 extension ProfileSelectionViewController: BaseViewDelegate {
-    func baseViewAction(_ type: BaseViewActionType) {
+    internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .profileSelectionAction(let detailAction):
             switch detailAction {
@@ -48,7 +48,7 @@ extension ProfileSelectionViewController: BaseViewDelegate {
         }
     }
     
-    func profileImageCellTapped(_ image: ProfileImage) {
+    private func profileImageCellTapped(_ image: ProfileImage) {
         // MARK: send selected profile image to ProfileSettingViewController
         delegate?.profileImageSelected(image)
         

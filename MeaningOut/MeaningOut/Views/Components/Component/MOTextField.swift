@@ -11,9 +11,9 @@ final class MOTextField: UIView, BaseViewBuildable {
     
     weak var delegate: BaseViewDelegate?
     
-    let textField = UITextField()
-    let divider = UIView()
-    let checkLabel = UILabel()
+    private let textField = UITextField()
+    private let divider = UIView()
+    private let checkLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,13 +27,13 @@ final class MOTextField: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         self.addSubview(textField)
         self.addSubview(divider)
         self.addSubview(checkLabel)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         textField.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self)
         }
@@ -52,7 +52,7 @@ final class MOTextField: UIView, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         textField.placeholder = MOTextFieldConstants.placeholder
         textField.addTarget(
             self,
@@ -76,27 +76,28 @@ final class MOTextField: UIView, BaseViewBuildable {
         setAsOnboardingType()
     }
     
-    func setAsOnboardingType() {
+    // MARK: 추후에 하나의 메서드로 합치기
+    internal func setAsOnboardingType() {
         checkLabel.textColor = MOColors.moOrange.color
     }
     
-    func setAsSettingType() {
+    internal func setAsSettingType() {
         checkLabel.textColor = MOColors.moBlack.color
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? ProfileSettingViewControllerState {
             textField.text = state.userName
         }
     }
     
     @objc
-    func inputChanged(_ sender: UITextField) {
+    private func inputChanged(_ sender: UITextField) {
         validateNickname(sender.text)
     }
     
     @discardableResult
-    func validateNickname(_ nickName: String?) -> String {
+    private func validateNickname(_ nickName: String?) -> String {
         do {
             let validatedNickname = try nickName.validateNickname()
             
@@ -118,20 +119,20 @@ final class MOTextField: UIView, BaseViewBuildable {
     }
     
     @discardableResult
-    func nicknameValidated(_ validatedNickname: String) -> String {
+    private func nicknameValidated(_ validatedNickname: String) -> String {
         delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(true)))
         checkLabel.text = StringValidationConstants.avaliableNickname
         return validatedNickname
     }
     
-    func triggerAction() {
+    internal func triggerAction() {
         let validatedNickname = validateNickname(textField.text)
         delegate?.baseViewAction(.moTextFieldAction(.sendTextFieldText(validatedNickname)))
     }
 }
 
 extension String? {
-    func validateNickname() throws -> String {
+    internal func validateNickname() throws -> String {
         do {
             let unWrappedNickName = try self.checkNil()
             
@@ -146,23 +147,23 @@ extension String? {
         }
     }
     
-    func checkNil() throws -> String {
+    private func checkNil() throws -> String {
         guard let unwrappedSelf = self  else { throw StringValidationError.isNil }
         return unwrappedSelf
     }
 }
 
 extension String {
-    func checkIsEmpty() throws {
+    internal func checkIsEmpty() throws {
         guard self.isEmpty == false else { throw StringValidationError.isEmpty }
     }
     
-    func checkStringLength() throws {
+    internal func checkStringLength() throws {
         guard self.count >= 2 else { throw StringValidationError.isShort }
         guard self.count <= 10 else { throw StringValidationError.isLong }
     }
     
-    func checkContainsSpecialLetter() throws {
+    internal func checkContainsSpecialLetter() throws {
         let specialLetters: [Character] = SpecialLetterConstants.allStringCases
         
         try specialLetters.forEach { specialLetter in
@@ -172,7 +173,7 @@ extension String {
         }
     }
     
-    func checkNumeric() throws {
+    internal func checkNumeric() throws {
         guard !self.contains(where: {$0.isNumber}) else { throw StringValidationError.isUsingNumeric }
     }
 }

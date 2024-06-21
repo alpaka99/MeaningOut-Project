@@ -8,7 +8,7 @@
 import UIKit
 
 final class SettingViewController: MOBaseViewController, CommunicatableBaseViewController {
-    struct State: SettingViewControllerState {
+    internal struct State: SettingViewControllerState {
         var userName = String.emptyString
         var profileImage = ProfileImage.randomProfileImage
         var signUpDate = Date.now
@@ -57,7 +57,7 @@ extension SettingViewController: BaseViewDelegate {
         }
     }
     
-    func headerViewTapped() {
+    private func headerViewTapped() {
         let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
         
         profileSettingViewController.setUserData(
@@ -72,12 +72,12 @@ extension SettingViewController: BaseViewDelegate {
         )
     }
     
-    func likedItemsCellTapped() {
+    private func likedItemsCellTapped() {
         // TODO: Fetch Liked Button Items
         
     }
     
-    func quitCellTapped() {
+    private func quitCellTapped() {
         let ac = UIAlertController(
             title: SettingViewConstants.alertControllerTitle,
             message: SettingViewConstants.alertControllerMessage,
@@ -103,7 +103,7 @@ extension SettingViewController: BaseViewDelegate {
         )
     }
     
-    func moveToLaunchScreen() {
+    private func moveToLaunchScreen() {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         
         let sceneDelegate = windowScene?.delegate as? SceneDelegate

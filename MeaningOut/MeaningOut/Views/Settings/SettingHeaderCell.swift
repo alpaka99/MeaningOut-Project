@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
-    let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
-    let userNameLabel = UILabel()
-    let signUpDateLabel = UILabel()
-    let trailingIcon = UIImageView()
+    private let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
+    private let userNameLabel = UILabel()
+    private let signUpDateLabel = UILabel()
+    private let trailingIcon = UIImageView()
     
-    var delegate: (any BaseViewDelegate)?
+    internal var delegate: (any BaseViewDelegate)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(
@@ -31,14 +31,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy() {
+    internal func configureHierarchy() {
         contentView.addSubview(profileImage)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(signUpDateLabel)
         contentView.addSubview(trailingIcon)
     }
     
-    func configureLayout() {
+    internal func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.width.equalTo(contentView.snp.width)
                 .multipliedBy(0.2)
@@ -70,9 +70,9 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         }
     }
     
-    func configureUI() {
+    internal func configureUI() {
         profileImage.setImage(.randomProfileImage)
-        profileImage.selectedState = .selected
+        profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
         
         userNameLabel.text = String.emptyString
@@ -85,7 +85,7 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         trailingIcon.tintColor = .black
     }
     
-    func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ state: any BaseViewControllerState) {
         if let state = state as? UserData {
             
             profileImage.setImage(state.profileImage)
