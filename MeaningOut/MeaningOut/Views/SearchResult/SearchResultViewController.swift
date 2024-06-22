@@ -156,9 +156,10 @@ extension SearchResultViewController: BaseViewDelegate {
             ).responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let value):
-                    self?.state.searchResult.items.append(contentsOf: value.items)
-//                    print(value.start)
-                    self?.state.searchResult.start = value.start
+                    if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= value.start {
+                        self?.state.searchResult.items.append(contentsOf: value.items)
+                        self?.state.searchResult.start = value.start
+                    }
                 case .failure(let error):
                     print(error)
                 }
