@@ -43,6 +43,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             named: ImageName.unSelecteLikeButtonImage),
                             for: .normal
         )
+        itemImage.image = nil
     }
     
     internal func configureHierarchy() {
