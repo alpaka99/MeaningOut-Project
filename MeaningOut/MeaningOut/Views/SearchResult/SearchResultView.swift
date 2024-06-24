@@ -13,6 +13,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     private let totalResultLabel = UILabel()
     private let sortOptions: [SortOptions] = SortOptions.allCases
     private var selectedButton = SortOptions.simularity
+    private var imageCache: [String : UIImage] = [:]
     
     private let simularityFilterButton = RoundCornerButton(
         type: .sort(.simularity),
@@ -70,6 +71,11 @@ final class SearchResultView: UIView, BaseViewBuildable {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print(#function)
+        MOImageManager.shared.removeCachedImage(objectName: getTypeName())
     }
     
     internal func configureHierarchy() {
@@ -243,6 +249,20 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         
         let data = searchResult.items[indexPath.row]
+        
+        do {
+            try MOImageManager.shared.fetchImage(
+                objectName: getTypeName(),
+                urlString: data.image
+            ) { image in
+                cell.setImage(with: image)
+            }
+        } catch NetworkError.urlNotGenerated {
+            print("Check Image URL")
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         cell.configureData(data)
         if userData.likedItems.contains(where: { $0.productId == data.productId }) {
             cell.toggleIsLiked()
