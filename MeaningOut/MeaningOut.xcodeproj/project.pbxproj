@@ -61,9 +61,11 @@
 		CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */; };
 		CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */; };
 		CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */; };
+		CE82DFD82C297DF100937DC7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */; };
 		CE82DFAC2C27C1BF00937DC7 /* NaverAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */; };
 		CE82DFD42C29462700937DC7 /* MOImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD32C29462700937DC7 /* MOImageManager.swift */; };
 		CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +122,7 @@
 		CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCornerButtonProtocol.swift; sourceTree = "<group>"; };
 		CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatableViewController.swift; sourceTree = "<group>"; };
+		CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverAPIManager.swift; sourceTree = "<group>"; };
 		CE82DFD32C29462700937DC7 /* MOImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOImageManager.swift; sourceTree = "<group>"; };
 		CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 				CE0ECB562C1DD7850083E256 /* UIImage+Extension.swift */,
 				CE0ECBBB2C206D030083E256 /* UserDefaults+Extension.swift */,
 				CE0ECBBF2C20A1280083E256 /* UINavigationController+Extension.swift */,
+				CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */,
 				CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */,
 			);
 			path = Extensions;
@@ -443,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE82DFD82C297DF100937DC7 /* UIViewController+Extension.swift in Sources */,
 				CE0ECB672C1E95340083E256 /* MOTableViewCell.swift in Sources */,
 				CE0ECB342C1CA8ED0083E256 /* LaunchScreenViewController.swift in Sources */,
 				CE0ECB792C1F36700083E256 /* BaseViewDelegate.swift in Sources */,
