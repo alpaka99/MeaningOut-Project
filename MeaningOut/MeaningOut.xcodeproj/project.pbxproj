@@ -61,7 +61,7 @@
 		CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */; };
 		CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */; };
 		CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */; };
-		CE82DFAC2C27C1BF00937DC7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFAB2C27C1BF00937DC7 /* NetworkManager.swift */; };
+		CE82DFAC2C27C1BF00937DC7 /* NaverAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */; };
 		CE82DFD42C29462700937DC7 /* MOImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD32C29462700937DC7 /* MOImageManager.swift */; };
 		CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -120,7 +120,7 @@
 		CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCornerButtonProtocol.swift; sourceTree = "<group>"; };
 		CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatableViewController.swift; sourceTree = "<group>"; };
-		CE82DFAB2C27C1BF00937DC7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverAPIManager.swift; sourceTree = "<group>"; };
 		CE82DFD32C29462700937DC7 /* MOImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOImageManager.swift; sourceTree = "<group>"; };
 		CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -355,7 +355,7 @@
 		CE82DFAA2C27C1B800937DC7 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				CE82DFAB2C27C1BF00937DC7 /* NetworkManager.swift */,
+				CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */,
 				CE82DFD32C29462700937DC7 /* MOImageManager.swift */,
 			);
 			path = Manager;
@@ -481,7 +481,7 @@
 				CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
 				CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */,
-				CE82DFAC2C27C1BF00937DC7 /* NetworkManager.swift in Sources */,
+				CE82DFAC2C27C1BF00937DC7 /* NaverAPIManager.swift in Sources */,
 				CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */,
 				CE0ECBC02C20A1280083E256 /* UINavigationController+Extension.swift in Sources */,
 				CE0ECB6F2C1EAA050083E256 /* APIKey.swift in Sources */,

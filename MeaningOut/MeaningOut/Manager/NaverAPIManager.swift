@@ -10,8 +10,8 @@ import Alamofire
 import Kingfisher
 import UIKit
 
-final class NetworkManager {
-    static let shared = NetworkManager()
+final class NaverAPIManager {
+    static let shared = NaverAPIManager()
     
     private init() {
         

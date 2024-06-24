@@ -47,7 +47,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     ) {
         state.keyword = searchText
         
-        NetworkManager.shared.fetchNaverShoppingResponse(
+        NaverAPIManager.shared.fetchNaverShoppingResponse(
             searchText,
             sortOption: state.sortOption.rawValue
         ) { [weak self] naverShoppingResponse in
@@ -58,7 +58,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     private func prefetchSearchResult() {
         if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
-            NetworkManager.shared.fetchNaverShoppingResponse(
+            NaverAPIManager.shared.fetchNaverShoppingResponse(
                 state.keyword,
                 start: state.searchResult.start + PageNationConstants.pageAmount,
                 sortOption: state.sortOption.rawValue
