@@ -64,7 +64,7 @@ enum ProfileImage: String, CaseIterable, Codable {
 }
 
 
-enum SortOptions: String, CaseIterable {
+enum SortOptions: String, CaseIterable, Codable {
     case simularity = "sim"
     case date = "date"
     case ascendingPrice = "asc"
@@ -197,7 +197,7 @@ struct ImageName {
     static let cameraFilled = "camera.fill"
 }
 
-struct ParameterKey {
+enum ParameterKey: CaseIterable {
     static let query = "query"
     static let display = "display"
     static let start = "start"
