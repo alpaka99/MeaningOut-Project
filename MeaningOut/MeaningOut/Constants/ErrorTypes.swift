@@ -13,3 +13,7 @@ enum StringValidationError: Error {
     case isUsingSpecialLetter
     case isUsingNumeric
 }
+
+enum NetworkError: Error {
+    case urlNotGenerated
+}

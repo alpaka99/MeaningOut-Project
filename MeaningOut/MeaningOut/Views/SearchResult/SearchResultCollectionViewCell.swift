@@ -116,10 +116,6 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         if let state = state as? ShoppingItem {
             self.shoppingItem = state
             
-            if let url = URL(string: state.image) {
-                itemImage.kf.setImage(with: url)
-            }
-            
             mallName.text = state.mallName
             
             title.text = state.title.replacingOccurrences(
@@ -135,6 +131,10 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             
             isLiked = false
         }
+    }
+    
+    internal func setImage(with image: UIImage) {
+        self.itemImage.image = image
     }
     
     private func likeShoppingItem() {

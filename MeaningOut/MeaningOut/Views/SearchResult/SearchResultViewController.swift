@@ -14,14 +14,14 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         var searchResult: NaverShoppingResponse
         var userData: UserData
         var keyword: String
-        var filterOption: SortOptions
+        var sortOption: SortOptions
     }
     
     internal var state: State = State(
         searchResult: NaverShoppingResponse.dummyNaverShoppingResponse(),
         userData: UserData.dummyUserData(),
         keyword: String.emptyString,
-        filterOption: SortOptions.simularity
+        sortOption: SortOptions.simularity
     ) {
         didSet {
             configureData(state)
@@ -42,32 +42,31 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
     
     internal func fetchSearchResult(
-        _ keyword: String,
+        _ searchText: String,
         filterOption: SortOptions
     ) {
-        state.keyword = keyword
+        state.keyword = searchText
         
-        let url = APIKey.Naver.shoppingURL
-        
-        let parameters: Parameters = [
-            ParameterKey.query : keyword,
-            ParameterKey.display : PageNationConstants.pageAmount,
-            ParameterKey.start : PageNationConstants.start,
-            ParameterKey.sort : filterOption.rawValue
-        ]
-        
-        AF.request(
-            url,
-            parameters: parameters,
-            headers: APIKey.Naver.headers
-        )
-        .responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
-            switch response.result {
-            case .success(let value):
-                self?.state.searchResult = value
-                self?.navigationItem.title = keyword
-            case .failure(let error):
-                print(error)
+        NetworkManager.shared.fetchNaverShoppingResponse(
+            searchText,
+            sortOption: state.sortOption.rawValue
+        ) { [weak self] naverShoppingResponse in
+            self?.state.searchResult = naverShoppingResponse
+            self?.navigationItem.title = searchText
+        }
+    }
+    
+    private func prefetchSearchResult() {
+        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
+            NetworkManager.shared.fetchNaverShoppingResponse(
+                state.keyword,
+                start: state.searchResult.start + PageNationConstants.pageAmount,
+                sortOption: state.sortOption.rawValue
+            ) { [weak self] naverShoppingResponse in
+                if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= naverShoppingResponse.start {
+                        self?.state.searchResult.items.append(contentsOf: naverShoppingResponse.items)
+                        self?.state.searchResult.start = naverShoppingResponse.start
+                    }
             }
         }
     }
@@ -90,7 +89,7 @@ extension SearchResultViewController: BaseViewDelegate {
             case .cancelLikeShoppingItem(let shoppingItem):
                 removeFromLikedItems(shoppingItem)
             case .prefetchItems:
-                prefetchData()
+                prefetchSearchResult()
             case .filterOptionButtonTapped(let filterOption):
                 fetchSearchResult(
                     state.keyword,
@@ -135,35 +134,6 @@ extension SearchResultViewController: BaseViewDelegate {
         
         if let syncedData = UserDefaults.standard.syncData(newUserData) {
             setStateWithUserData(syncedData)
-        }
-    }
-    
-    func prefetchData() {
-        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
-            let parameters: Parameters = [
-                ParameterKey.query : state.keyword,
-                ParameterKey.display : PageNationConstants.pageAmount,
-                ParameterKey.start : state.searchResult.start + PageNationConstants.pageAmount,
-                ParameterKey.sort : state.filterOption.rawValue
-            ]
-            
-            let url = APIKey.Naver.shoppingURL
-            
-            AF.request(
-                url,
-                parameters: parameters,
-                headers: APIKey.Naver.headers
-            ).responseDecodable(of: NaverShoppingResponse.self) { [weak self] response in
-                switch response.result {
-                case .success(let value):
-                    if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= value.start {
-                        self?.state.searchResult.items.append(contentsOf: value.items)
-                        self?.state.searchResult.start = value.start
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
         }
     }
 }
