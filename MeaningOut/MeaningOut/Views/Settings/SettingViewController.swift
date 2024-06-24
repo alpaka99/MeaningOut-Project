@@ -78,29 +78,13 @@ extension SettingViewController: BaseViewDelegate {
     }
     
     private func quitCellTapped() {
-        let ac = UIAlertController(
+        showAlert(
             title: SettingViewConstants.alertControllerTitle,
             message: SettingViewConstants.alertControllerMessage,
-            preferredStyle: .alert
-        )
-        let cancelButton = UIAlertAction(
-            title: SettingViewConstants.cancelButtonTitle,
-            style: .cancel
-        )
-        let conformButton = UIAlertAction(
-            title: SettingViewConstants.conformButtonTitle,
-            style: .destructive
-        ) { [weak self] _ in
-            UserDefaults.standard.resetData(of: UserData.self)
-            self?.moveToLaunchScreen()
-        }
-        ac.addAction(cancelButton)
-        ac.addAction(conformButton)
-        
-        present(
-            ac,
-            animated: true
-        )
+            conformButtonTitle: SettingViewConstants.conformButtonTitle) { [weak self] in
+                UserDefaults.standard.resetData(of: UserData.self)
+                self?.moveToLaunchScreen()
+            }
     }
     
     private func moveToLaunchScreen() {
