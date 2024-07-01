@@ -32,6 +32,24 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         super.viewDidLoad()
         
         baseView.delegate = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(fetchData(_:)),
+            name: Notification.Name("NaverAPIComplete"),
+            object: nil
+        )
+    }
+    
+    @objc
+    func fetchData(_ notification: NSNotification) {
+        guard let data = notification.object as? Data, let decodedData = try? JSONHelper.jsonDecoder.decode(NaverShoppingResponse.self, from: data) else {
+            print("decoding failed")
+            return
+        }
+        
+        DispatchQueue.main.async {[weak self] in
+            self?.state.searchResult = decodedData
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +64,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         sortOptions: SortOptions
     ) {
         state.keyword = searchText
-        
+        print(#function)
         NaverAPIManager.shared.fetchNaverShoppingResponse(
             .naverShopping(searchText, 1, sortOptions),
             as: NaverShoppingResponse.self

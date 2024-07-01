@@ -10,10 +10,16 @@ import UIKit
 import Alamofire
 import Kingfisher
 
-final class NaverAPIManager {
+final class NaverAPIManager: NSObject {
     static let shared = NaverAPIManager()
+    private var total: Double = 0
+    private var buffer: Data?
+    private var session = URLSession()
     
-    private init() { }
+    private override init() {
+        super.init()
+        self.session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+    }
     
     internal func fetchNaverShoppingResponse<T: Decodable>(
         _ router: URLRouter,
@@ -23,31 +29,35 @@ final class NaverAPIManager {
         
         guard let url = router.urlRequest else { return }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let response = response as? HTTPURLResponse else {
-                print("Cannot convert response to HTTPURLResponse")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error while fetching Network job")
-                return
-            }
-            
-            guard (200...299).contains(response.statusCode) else {
-                print("Status code not success")
-                return
-            }
-            
-            if let data = data,
-               let decodedData = try? JSONHelper.jsonDecoder.decode(T.self, from: data) {
-                DispatchQueue.main.async {
-                    completionHandler(decodedData)
-                }
-            } else {
-                print("Decoding Fail")
-            }
-        }.resume()
+//        URLSession.shared.dataTask(with: url)
+        session
+            .dataTask(with: url)
+            .resume()
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let response = response as? HTTPURLResponse else {
+//                print("Cannot convert response to HTTPURLResponse")
+//                return
+//            }
+//            
+//            guard error == nil else {
+//                print("Error while fetching Network job")
+//                return
+//            }
+//            
+//            guard (200...299).contains(response.statusCode) else {
+//                print("Status code not success")
+//                return
+//            }
+//            
+//            if let data = data,
+//               let decodedData = try? JSONHelper.jsonDecoder.decode(T.self, from: data) {
+//                DispatchQueue.main.async {
+//                    completionHandler(decodedData)
+//                }
+//            } else {
+//                print("Decoding Fail")
+//            }
+//        }.resume()
         
         
     }
@@ -81,13 +91,6 @@ final class NaverAPIManager {
             return components
         }
         
-//        var headers: HTTPHeaders {
-//            switch self {
-//            case .naverShopping(_, _, _):
-//                return APIKey.Naver.headers
-//            }
-//        }
-        
         var headers: [String:String] {
             switch self {
             case .naverShopping(_, _, _):
@@ -103,6 +106,44 @@ final class NaverAPIManager {
             urlRequest.allHTTPHeaderFields = self.headers
             
             return urlRequest
+        }
+    }
+}
+
+extension NaverAPIManager: URLSessionDataDelegate {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse) async -> URLSession.ResponseDisposition {
+        guard let response = response as? HTTPURLResponse else {
+            print("Response Convertion Failed")
+            return .cancel
+        }
+        
+        guard (200...299).contains(response.statusCode) else {
+            print("Response Status not Success")
+            return .cancel
+        }
+        
+        guard let contentLength = response.allHeaderFields["Content-Length"] else {
+            print("No Content-Length")
+            return .cancel
+        }
+        
+        total = 0
+        buffer = Data()
+        
+        return .allow
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        buffer?.append(data)
+        NotificationCenter.default.post(
+            name: Notification.Name("NaverAPIComplete"),
+            object: buffer
+        )
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?) {
+        if let error = error {
+            print(error)
         }
     }
 }

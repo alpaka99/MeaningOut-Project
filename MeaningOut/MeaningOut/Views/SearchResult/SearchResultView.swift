@@ -74,7 +74,6 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
     
     deinit {
-        print(#function)
         MOImageManager.shared.removeCachedImage(objectName: getTypeName())
     }
     

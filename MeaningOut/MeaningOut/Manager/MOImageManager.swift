@@ -19,12 +19,10 @@ final class MOImageManager {
         if let designatedCache = totalImageCache[objectName] {
             if let cachedImage = designatedCache[urlString] {
                 completionHandler(cachedImage)
-                print("Cache Hit ✅")
-                print(objectName)
                 return
             }
         }
-        print("Cache Miss ❌")
+        
         guard let url = URL(string: urlString) else { throw NetworkError.urlNotGenerated }
                 
         AF.request(url)
