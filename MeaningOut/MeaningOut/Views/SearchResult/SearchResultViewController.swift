@@ -43,13 +43,13 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     internal func fetchSearchResult(
         _ searchText: String,
-        filterOption: SortOptions
+        sortOptions: SortOptions
     ) {
         state.keyword = searchText
         
         NaverAPIManager.shared.fetchNaverShoppingResponse(
-            searchText,
-            sortOption: state.sortOption.rawValue
+            .naverShopping(searchText, 1, sortOptions),
+            as: NaverShoppingResponse.self
         ) { [weak self] naverShoppingResponse in
             self?.state.searchResult = naverShoppingResponse
             self?.navigationItem.title = searchText
@@ -57,11 +57,11 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
     
     private func prefetchSearchResult() {
-        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
+        let nextPage = state.searchResult.start + PageNationConstants.pageAmount
+        if nextPage <= state.searchResult.total {
             NaverAPIManager.shared.fetchNaverShoppingResponse(
-                state.keyword,
-                start: state.searchResult.start + PageNationConstants.pageAmount,
-                sortOption: state.sortOption.rawValue
+                .naverShopping(state.keyword, nextPage, state.sortOption),
+                as: NaverShoppingResponse.self
             ) { [weak self] naverShoppingResponse in
                 if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= naverShoppingResponse.start {
                         self?.state.searchResult.items.append(contentsOf: naverShoppingResponse.items)
@@ -90,10 +90,10 @@ extension SearchResultViewController: BaseViewDelegate {
                 removeFromLikedItems(shoppingItem)
             case .prefetchItems:
                 prefetchSearchResult()
-            case .filterOptionButtonTapped(let filterOption):
+            case .filterOptionButtonTapped(let sortOption):
                 fetchSearchResult(
                     state.keyword,
-                    filterOption: filterOption
+                    sortOptions: sortOption
                 )
             }
         default:

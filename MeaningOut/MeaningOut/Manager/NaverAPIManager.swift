@@ -15,37 +15,38 @@ final class NaverAPIManager {
     
     private init() { }
     
-    internal func fetchNaverShoppingResponse(_ searchText: String, start: Int = 1, sortOption: String ,completionHandler: @escaping (NaverShoppingResponse) -> ()) {
-//            let parameters: Parameters = [
-//                ParameterKey.query : searchText,
-//                ParameterKey.display : PageNationConstants.pageAmount,
-//                ParameterKey.start : start,
-//                ParameterKey.sort : sortOption
-//            ]
-            
-//            let url = APIKey.Naver.shoppingURL
-            
-//            AF.request(
-//                url,
-//                parameters: parameters,
-//                headers: APIKey.Naver.headers
-//            ).responseDecodable(of: NaverShoppingResponse.self) { response in
-//                switch response.result {
-//                case .success(let value):
-//                    completionHandler(value)
-//                case .failure(let error):
-//                    print(error)
-//                }
-//        }
+    internal func fetchNaverShoppingResponse<T: Decodable>(
+        _ router: URLRouter,
+        as: T.Type,
+        completionHandler: @escaping (T) -> ()
+    ) {
         
-        guard let testURL = URLRouter.naverShopping("으앙", 1, .simularity).urlRequest else { return }
-        print(testURL.url?.absoluteString)
-        URLSession.shared.dataTask(with: testURL) { data, response, error in
-            print(data)
-
-            print(response)
+        guard let url = router.urlRequest else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let response = response as? HTTPURLResponse else {
+                print("Cannot convert response to HTTPURLResponse")
+                return
+            }
             
-            print(error)
+            guard error == nil else {
+                print("Error while fetching Network job")
+                return
+            }
+            
+            guard (200...299).contains(response.statusCode) else {
+                print("Status code not success")
+                return
+            }
+            
+            if let data = data,
+               let decodedData = try? JSONHelper.jsonDecoder.decode(T.self, from: data) {
+                DispatchQueue.main.async {
+                    completionHandler(decodedData)
+                }
+            } else {
+                print("Decoding Fail")
+            }
         }.resume()
         
         
