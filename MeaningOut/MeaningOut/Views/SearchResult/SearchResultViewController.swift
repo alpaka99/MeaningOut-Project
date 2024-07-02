@@ -48,8 +48,11 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
         
         DispatchQueue.main.async {[weak self] in
-            self?.state.searchResult = decodedData
+//            self?.state.searchResult = decodedData
+            self?.state.searchResult.items.append(contentsOf: decodedData.items)
         }
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,11 +67,11 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         sortOptions: SortOptions
     ) {
         state.keyword = searchText
-        print(#function)
         NaverAPIManager.shared.fetchNaverShoppingResponse(
             .naverShopping(searchText, 1, sortOptions),
             as: NaverShoppingResponse.self
         ) { [weak self] naverShoppingResponse in
+            print(#function)
             self?.state.searchResult = naverShoppingResponse
             self?.navigationItem.title = searchText
         }
@@ -77,6 +80,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     private func prefetchSearchResult() {
         let nextPage = state.searchResult.start + PageNationConstants.pageAmount
         if nextPage <= state.searchResult.total {
+            print(#function, nextPage)
             NaverAPIManager.shared.fetchNaverShoppingResponse(
                 .naverShopping(state.keyword, nextPage, state.sortOption),
                 as: NaverShoppingResponse.self

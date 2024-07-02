@@ -18,7 +18,11 @@ final class NaverAPIManager: NSObject {
     
     private override init() {
         super.init()
-        self.session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+        self.session = URLSession(
+            configuration: .default,
+            delegate: self,
+            delegateQueue: .main
+        )
     }
     
     internal func fetchNaverShoppingResponse<T: Decodable>(
@@ -29,37 +33,13 @@ final class NaverAPIManager: NSObject {
         
         guard let url = router.urlRequest else { return }
         
-//        URLSession.shared.dataTask(with: url)
-        session
-            .dataTask(with: url)
-            .resume()
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            guard let response = response as? HTTPURLResponse else {
-//                print("Cannot convert response to HTTPURLResponse")
-//                return
-//            }
-//            
-//            guard error == nil else {
-//                print("Error while fetching Network job")
-//                return
-//            }
-//            
-//            guard (200...299).contains(response.statusCode) else {
-//                print("Status code not success")
-//                return
-//            }
-//            
-//            if let data = data,
-//               let decodedData = try? JSONHelper.jsonDecoder.decode(T.self, from: data) {
-//                DispatchQueue.main.async {
-//                    completionHandler(decodedData)
-//                }
-//            } else {
-//                print("Decoding Fail")
-//            }
-//        }.resume()
+        let dispatchGroup = DispatchGroup()
         
-        
+        DispatchQueue.global().async {[weak self] in
+            self?.session
+                .dataTask(with: url)
+                .resume()
+        }
     }
     
     enum URLRouter {
@@ -77,12 +57,12 @@ final class NaverAPIManager: NSObject {
             components.scheme = "https"
             components.path = self.baseURL
             
-            
             switch self {
             case .naverShopping(let searchText, let start, let sortOption):
                 components.queryItems = [
                     URLQueryItem(name: "method", value: "get"),
                     URLQueryItem(name: "query", value: searchText),
+                    URLQueryItem(name: "display", value: String(PageNationConstants.pageAmount)),
                     URLQueryItem(name: "start", value: String(start)),
                     URLQueryItem(name: "sort", value: sortOption.rawValue)
                 ]
