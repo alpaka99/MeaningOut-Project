@@ -283,8 +283,8 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultView: UICollectionViewDataSourcePrefetching {
     internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
-            print(#function, lastItem.row, searchResult.items.count)
-            print(searchResult.items.count)
+//            print(#function, lastItem.row, searchResult.items.count)
+//            print(searchResult.items.count)
             if lastItem.row >= searchResult.items.count - 4 {
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }

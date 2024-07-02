@@ -7,7 +7,7 @@
 
 internal struct NaverShoppingResponse: Codable {
     var start: Int
-    let total: Int
+    var total: Int
     var items: [ShoppingItem]
 }
 

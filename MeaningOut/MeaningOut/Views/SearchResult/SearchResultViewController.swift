@@ -49,7 +49,9 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         
         DispatchQueue.main.async {[weak self] in
 //            self?.state.searchResult = decodedData
-            self?.state.searchResult.items.append(contentsOf: decodedData.items)
+            self?.state.searchResult.items.append(contentsOf:  decodedData.items)
+            self?.state.searchResult.start = decodedData.start
+            self?.state.searchResult.total = decodedData.total
         }
         
         
@@ -78,11 +80,17 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     }
     
     private func prefetchSearchResult() {
+        
         let nextPage = state.searchResult.start + PageNationConstants.pageAmount
+        print(#function, nextPage, state.searchResult.total)
         if nextPage <= state.searchResult.total {
             print(#function, nextPage)
             NaverAPIManager.shared.fetchNaverShoppingResponse(
-                .naverShopping(state.keyword, nextPage, state.sortOption),
+                .naverShopping(
+                    state.keyword,
+                    nextPage,
+                    state.sortOption
+                ),
                 as: NaverShoppingResponse.self
             ) { [weak self] naverShoppingResponse in
                 if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= naverShoppingResponse.start {
