@@ -70,7 +70,7 @@ extension MainViewController: BaseViewDelegate {
         let searchResultViewController = SearchResultViewController(SearchResultView())
         searchResultViewController.fetchSearchResult(
             keyword,
-            filterOption: .simularity
+            sortOptions: .simularity
         )
         
         navigationController?.pushViewController(

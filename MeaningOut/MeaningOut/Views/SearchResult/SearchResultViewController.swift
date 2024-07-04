@@ -32,6 +32,29 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         super.viewDidLoad()
         
         baseView.delegate = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(fetchData(_:)),
+            name: Notification.Name("NaverAPIComplete"),
+            object: nil
+        )
+    }
+    
+    @objc
+    func fetchData(_ notification: NSNotification) {
+        guard let data = notification.object as? Data, let decodedData = try? JSONHelper.jsonDecoder.decode(NaverShoppingResponse.self, from: data) else {
+            print("decoding failed")
+            return
+        }
+        
+        DispatchQueue.main.async {[weak self] in
+//            self?.state.searchResult = decodedData
+            self?.state.searchResult.items.append(contentsOf:  decodedData.items)
+            self?.state.searchResult.start = decodedData.start
+            self?.state.searchResult.total = decodedData.total
+        }
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,25 +66,32 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
     
     internal func fetchSearchResult(
         _ searchText: String,
-        filterOption: SortOptions
+        sortOptions: SortOptions
     ) {
         state.keyword = searchText
-        
         NaverAPIManager.shared.fetchNaverShoppingResponse(
-            searchText,
-            sortOption: state.sortOption.rawValue
+            .naverShopping(searchText, 1, sortOptions),
+            as: NaverShoppingResponse.self
         ) { [weak self] naverShoppingResponse in
+            print(#function)
             self?.state.searchResult = naverShoppingResponse
             self?.navigationItem.title = searchText
         }
     }
     
     private func prefetchSearchResult() {
-        if state.searchResult.start + PageNationConstants.pageAmount <= state.searchResult.total {
+        
+        let nextPage = state.searchResult.start + PageNationConstants.pageAmount
+        print(#function, nextPage, state.searchResult.total)
+        if nextPage <= state.searchResult.total {
+            print(#function, nextPage)
             NaverAPIManager.shared.fetchNaverShoppingResponse(
-                state.keyword,
-                start: state.searchResult.start + PageNationConstants.pageAmount,
-                sortOption: state.sortOption.rawValue
+                .naverShopping(
+                    state.keyword,
+                    nextPage,
+                    state.sortOption
+                ),
+                as: NaverShoppingResponse.self
             ) { [weak self] naverShoppingResponse in
                 if (self?.state.searchResult.start ?? 1) + PageNationConstants.pageAmount <= naverShoppingResponse.start {
                         self?.state.searchResult.items.append(contentsOf: naverShoppingResponse.items)
@@ -90,10 +120,10 @@ extension SearchResultViewController: BaseViewDelegate {
                 removeFromLikedItems(shoppingItem)
             case .prefetchItems:
                 prefetchSearchResult()
-            case .filterOptionButtonTapped(let filterOption):
+            case .filterOptionButtonTapped(let sortOption):
                 fetchSearchResult(
                     state.keyword,
-                    filterOption: filterOption
+                    sortOptions: sortOption
                 )
             }
         default:

@@ -74,7 +74,6 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
     
     deinit {
-        print(#function)
         MOImageManager.shared.removeCachedImage(objectName: getTypeName())
     }
     
@@ -284,7 +283,9 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultView: UICollectionViewDataSourcePrefetching {
     internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
-            if lastItem.row >= searchResult.items.count - 6 {
+//            print(#function, lastItem.row, searchResult.items.count)
+//            print(searchResult.items.count)
+            if lastItem.row >= searchResult.items.count - 4 {
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }
