@@ -15,6 +15,8 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
+    private var likedItems = RealmRepository.shared.readAll(of: LikedItems.self)
+    
     internal struct State: DetailSearchViewControllerState {
         var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
         var userData: UserData = UserData.dummyUserData()
@@ -84,18 +86,18 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
     }
     
     private func addToLikedItems() {
-        if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) == false {
-            state.userData.likedItems.append(state.shoppingItem)
-        }
+//        if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) == false {
+//            state.userData.likedItems.append(state.shoppingItem)
+//        }
     }
     
     private func removeFromLikedItems() {
-        for i in 0..<state.userData.likedItems.count {
-            let likedItem = state.userData.likedItems[i]
-            if likedItem.productId == state.shoppingItem.productId {
-                state.userData.likedItems.remove(at: i)
-                return
-            }
-        }
+//        for i in 0..<state.userData.likedItems.count {
+//            let likedItem = state.userData.likedItems[i]
+//            if likedItem.productId == state.shoppingItem.productId {
+//                state.userData.likedItems.remove(at: i)
+//                return
+//            }
+//        }
     }
 }

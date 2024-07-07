@@ -14,6 +14,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     private let sortOptions: [SortOptions] = SortOptions.allCases
     private var selectedButton = SortOptions.simularity
     private var imageCache: [String : UIImage] = [:]
+    private var likedItems = RealmRepository.shared.readAll(of: LikedItems.self)
     
     private let simularityFilterButton = RoundCornerButton(
         type: .sort(.simularity),
@@ -263,7 +264,21 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         cell.configureData(data)
-        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
+        
+//        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
+//            cell.toggleIsLiked()
+//            cell.setAsLikeItem()
+//        }
+        
+        let likedItem = LikedItems(
+            title: data.title,
+            mallName: data.mallName,
+            lprice: data.lprice,
+            link: data.link,
+            productId: data.productId
+        )
+        
+        if RealmRepository.shared.readLikedItems(likedItem) != nil {
             cell.toggleIsLiked()
             cell.setAsLikeItem()
         }

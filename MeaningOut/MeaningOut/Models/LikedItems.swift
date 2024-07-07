@@ -9,12 +9,11 @@ import Foundation
 import RealmSwift
 
 final class LikedItems: Object {
-    @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var title: String
     @Persisted var mallName: String
     @Persisted var lprice: String
     @Persisted var link: String
-    @Persisted var productId: String
+    @Persisted(primaryKey: true) var productId: String
     @Persisted var createdAt: Date = Date.now
     //    @Persisted var image: Data -> id로 bundle에서 찾아 쓰기
     
