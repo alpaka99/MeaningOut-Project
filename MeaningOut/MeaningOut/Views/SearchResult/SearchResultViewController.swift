@@ -145,7 +145,7 @@ extension SearchResultViewController: BaseViewDelegate {
         let data = LikedItems(
             title: shoppingItem.title,
             mallName: shoppingItem.mallName,
-            lprice: shoppingItem.lprice,
+            lprice: shoppingItem.lprice, image: shoppingItem.image,
             link: shoppingItem.link,
             productId: shoppingItem.productId
         )
@@ -160,6 +160,7 @@ extension SearchResultViewController: BaseViewDelegate {
             title: shoppingItem.title,
             mallName: shoppingItem.mallName,
             lprice: shoppingItem.lprice,
+            image: shoppingItem.image,
             link: shoppingItem.link,
             productId: shoppingItem.productId
         )

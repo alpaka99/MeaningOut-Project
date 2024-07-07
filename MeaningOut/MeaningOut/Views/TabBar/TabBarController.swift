@@ -31,6 +31,10 @@ final class TabBarController: UITabBarController {
         mainViewNavigationController.tabBarItem.image = UIImage(systemName: TabBarItemProperty.mainView.systemName)
         mainViewNavigationController.tabBarItem.title = TabBarItemProperty.mainView.title
         
+        let likedItemsViewController = LikedItemsViewController()
+        likedItemsViewController.tabBarItem.image = UIImage(systemName: "heart")
+        likedItemsViewController.tabBarItem.title = "좋아요"
+        
         let settingViewController = SettingViewController(SettingView())
         let settingViewNavigationController = UINavigationController(rootViewController: settingViewController)
         settingViewNavigationController.removeBackBarButtonTitle()
@@ -38,7 +42,9 @@ final class TabBarController: UITabBarController {
         settingViewController.tabBarItem.title = TabBarItemProperty.settingView.title
         
         setViewControllers(
-            [mainViewNavigationController, settingViewNavigationController],
+            [mainViewNavigationController,
+             likedItemsViewController,
+             settingViewNavigationController],
             animated: true
         )
         

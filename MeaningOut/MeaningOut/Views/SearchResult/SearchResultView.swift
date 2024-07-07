@@ -41,7 +41,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
     private lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
     private lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: createFlowLayout(
+        collectionViewLayout: UICollectionView.createFlowLayout(
             numberOfRowsInLine: 2,
             spacing: 20
         )
@@ -214,8 +214,8 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
 }
 
-extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
-    private func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
+extension UICollectionView {
+    static func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = spacing
@@ -237,6 +237,9 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         return flowLayout
     }
+}
+
+extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResult.items.count
@@ -269,6 +272,7 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
             title: data.title,
             mallName: data.mallName,
             lprice: data.lprice,
+            image: data.image,
             link: data.link,
             productId: data.productId
         )

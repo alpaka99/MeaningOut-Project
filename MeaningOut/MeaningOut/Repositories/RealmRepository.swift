@@ -37,8 +37,7 @@ final class RealmRepository {
     internal func delete<T: Object>(_ data: T) {
         do {
             try realm.write {
-//                realm.delete(data)
-                
+                realm.delete(data)
             }
         } catch {
             print("Realm Delete Error")

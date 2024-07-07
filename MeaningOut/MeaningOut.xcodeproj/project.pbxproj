@@ -68,6 +68,8 @@
 		CED1E0E82C36A238004BFBE1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CED1E0E72C36A238004BFBE1 /* RealmSwift */; };
 		CED1E0ED2C36A2EA004BFBE1 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E0EC2C36A2EA004BFBE1 /* RealmRepository.swift */; };
 		CED1E0EF2C36A6C8004BFBE1 /* LikedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E0EE2C36A6C8004BFBE1 /* LikedItems.swift */; };
+		CED1E1342C3AE776004BFBE1 /* LikedItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1332C3AE776004BFBE1 /* LikedItemsViewController.swift */; };
+		CED1E1362C3AE77B004BFBE1 /* LikedItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1352C3AE77B004BFBE1 /* LikedItemsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,8 @@
 		CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		CED1E0EC2C36A2EA004BFBE1 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		CED1E0EE2C36A6C8004BFBE1 /* LikedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedItems.swift; sourceTree = "<group>"; };
+		CED1E1332C3AE776004BFBE1 /* LikedItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedItemsViewController.swift; sourceTree = "<group>"; };
+		CED1E1352C3AE77B004BFBE1 /* LikedItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedItemsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,7 @@
 		CE0ECB332C1CA8ED0083E256 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CED1E1322C3AE760004BFBE1 /* LikedItemsView */,
 				CE0ECBB82C2064C30083E256 /* TabBar */,
 				CE0ECBAF2C1FFF310083E256 /* Settings */,
 				CE0ECB722C1ECE5C0083E256 /* DetailSearch */,
@@ -380,6 +385,15 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		CED1E1322C3AE760004BFBE1 /* LikedItemsView */ = {
+			isa = PBXGroup;
+			children = (
+				CED1E1332C3AE776004BFBE1 /* LikedItemsViewController.swift */,
+				CED1E1352C3AE77B004BFBE1 /* LikedItemsView.swift */,
+			);
+			path = LikedItemsView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -475,8 +489,10 @@
 				CE0ECB7B2C1F369D0083E256 /* BaseViewActionTypes.swift in Sources */,
 				CE0ECBB72C2035C80083E256 /* UserData.swift in Sources */,
 				CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */,
+				CED1E1342C3AE776004BFBE1 /* LikedItemsViewController.swift in Sources */,
 				CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */,
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
+				CED1E1362C3AE77B004BFBE1 /* LikedItemsView.swift in Sources */,
 				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
 				CE0ECB762C1ECE9F0083E256 /* DetailSearchView.swift in Sources */,

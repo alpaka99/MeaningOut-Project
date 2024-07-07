@@ -12,7 +12,7 @@ import SnapKit
 
 final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuildable {
     private let itemImage = UIImageView()
-    private let likeButton = RoundCornerButton(
+    private(set) var likeButton = RoundCornerButton(
         type: .image,
         image: UIImage(named: ImageName.unSelecteLikeButtonImage),
         color: MOColors.moGray100.color.withAlphaComponent(0.3)
@@ -133,6 +133,26 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
             isLiked = false
         }
     }
+        
+        
+        internal func configureRealmData(_ data: LikedItems) {
+            
+            mallName.text = data.mallName
+            
+            title.text = data.title.replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLOpenTag,
+                with: String.emptyString
+            ).replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLCloseTag,
+                with: String.emptyString
+            )
+            
+            let formattedPrice = Int(data.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+            price.text = formattedPrice + SearchResultConstants.won
+            
+            isLiked = false
+        }
+    
     
     internal func setImage(with image: UIImage) {
         self.itemImage.image = image
