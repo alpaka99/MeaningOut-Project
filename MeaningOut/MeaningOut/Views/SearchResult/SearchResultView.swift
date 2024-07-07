@@ -265,11 +265,6 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
         
         cell.configureData(data)
         
-//        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
-//            cell.toggleIsLiked()
-//            cell.setAsLikeItem()
-//        }
-        
         let likedItem = LikedItems(
             title: data.title,
             mallName: data.mallName,
@@ -298,8 +293,6 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
 extension SearchResultView: UICollectionViewDataSourcePrefetching {
     internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if let lastItem = indexPaths.last {
-//            print(#function, lastItem.row, searchResult.items.count)
-//            print(searchResult.items.count)
             if lastItem.row >= searchResult.items.count - 4 {
                 delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }

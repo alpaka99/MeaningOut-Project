@@ -164,7 +164,10 @@ extension SearchResultViewController: BaseViewDelegate {
             productId: shoppingItem.productId
         )
         
-        RealmRepository.shared.delete(data)
+        if let likedItem = RealmRepository.shared.readLikedItems(data) {
+            
+            RealmRepository.shared.delete(likedItem)
+        }
     }
     
     private func syncData() {
