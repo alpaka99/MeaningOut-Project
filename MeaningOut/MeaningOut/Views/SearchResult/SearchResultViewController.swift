@@ -142,20 +142,31 @@ extension SearchResultViewController: BaseViewDelegate {
     }
     
     private func addToLikedItems(_ shoppingItem: ShoppingItem) {
-        if state.userData.likedItems.contains(where: { $0.productId == shoppingItem.productId }) == false {
-            state.userData.likedItems.append(shoppingItem)
-            syncData()
+        let data = LikedItems(
+            title: shoppingItem.title,
+            mallName: shoppingItem.mallName,
+            lprice: shoppingItem.lprice, image: shoppingItem.image,
+            link: shoppingItem.link,
+            productId: shoppingItem.productId
+        )
+        
+        if RealmRepository.shared.readLikedItems(data) == nil {
+            RealmRepository.shared.create(data)
         }
     }
     
     private func removeFromLikedItems(_ shoppingItem: ShoppingItem) {
-        for i in 0..<state.userData.likedItems.count {
-            let likedItem = state.userData.likedItems[i]
-            if likedItem.productId == shoppingItem.productId {
-                state.userData.likedItems.remove(at: i)
-                syncData()
-                return
-            }
+        let data = LikedItems(
+            title: shoppingItem.title,
+            mallName: shoppingItem.mallName,
+            lprice: shoppingItem.lprice,
+            image: shoppingItem.image,
+            link: shoppingItem.link,
+            productId: shoppingItem.productId
+        )
+        
+        if let likedItem = RealmRepository.shared.readLikedItems(data) {
+            RealmRepository.shared.delete(likedItem) // 생성한 data 말고, realm에서 꺼내온값만 다시 넣어서 삭제할 수 있음
         }
     }
     
