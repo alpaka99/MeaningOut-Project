@@ -21,6 +21,7 @@ final class LikedItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
         configureDelegate()
     }
     
@@ -29,6 +30,10 @@ final class LikedItemsViewController: UIViewController {
         
         likedItems = RealmRepository.shared.readAll(of: LikedItems.self)
         baseView.collectionView.reloadData()
+    }
+    
+    func configureUI() {
+        navigationItem.title = "좋아요 누른 목록"
     }
     
     func configureDelegate() {
