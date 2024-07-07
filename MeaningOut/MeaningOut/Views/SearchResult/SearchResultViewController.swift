@@ -165,8 +165,7 @@ extension SearchResultViewController: BaseViewDelegate {
         )
         
         if let likedItem = RealmRepository.shared.readLikedItems(data) {
-            
-            RealmRepository.shared.delete(likedItem)
+            RealmRepository.shared.delete(likedItem) // 생성한 data 말고, realm에서 꺼내온값만 다시 넣어서 삭제할 수 있음
         }
     }
     
