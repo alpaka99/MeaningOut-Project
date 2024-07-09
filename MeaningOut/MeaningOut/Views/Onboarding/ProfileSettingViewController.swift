@@ -7,13 +7,8 @@
 
 import UIKit
 
-//struct ProfileSettingState {
-//    var selectedImage = ProfileImage.randomProfileImage
-//    var userName = String.emptyString
-//    var profileSettingViewType = ProfileSettingViewType.onBoarding
-//}
-
 final class ProfileSettingViewController: BaseViewController<ProfileSettingView> {
+    
     let viewModel = ProfileSettingViewModel()
     
     override func viewDidLoad() {
@@ -72,46 +67,45 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     @objc
     func completeButtonTapped() {
         saveUserData(userName: baseView.textField.textField.text ?? "")
-        moveToMainView()
     }
     
-    private func moveToMainView() {
-        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let tabBarController = TabBarController(userData: userData)
-            
-            
-            sceneDelegate?.window?.rootViewController = tabBarController
-            sceneDelegate?.window?.makeKeyAndVisible()
-        }
-    }
+//    private func moveToMainView() {
+//        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+//            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//            
+//            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//            
+//            let tabBarController = TabBarController(userData: userData)
+//            
+//            
+//            sceneDelegate?.window?.rootViewController = tabBarController
+//            sceneDelegate?.window?.makeKeyAndVisible()
+//        }
+//    }
     
     @objc
     private func inputChanged(_ sender: UITextField) {
-//        validateNickname(sender.text)
         viewModel.userName.value = sender.text
+        print(viewModel.userName.value)
     }
     
-    @discardableResult
-    private func validateNickname(_ nickName: String?) -> String {
-        do {
-            let validatedNickname = try nickName.validateNickname()
-            
-//            return nicknameValidated(validatedNickname)
-        } catch StringValidationError.isNil, StringValidationError.isEmpty, StringValidationError.isShort, StringValidationError.isLong {
-            baseView.textField.checkLabel.text = StringValidationConstants.lengthError
-        } catch StringValidationError.isUsingNumeric {
-            baseView.textField.checkLabel.text = StringValidationConstants.containsNumericError
-        } catch StringValidationError.isUsingSpecialLetter {
-            baseView.textField.checkLabel.text = StringValidationConstants.containsSpecialLetterError
-        } catch {
-            print(StringValidationConstants.unHandledError)
-        }
-        return String.emptyString
-    }
+//    @discardableResult
+//    private func validateNickname(_ nickName: String?) -> String {
+//        do {
+//            let validatedNickname = try nickName.validateNickname()
+//            
+////            return nicknameValidated(validatedNickname)
+//        } catch StringValidationError.isNil, StringValidationError.isEmpty, StringValidationError.isShort, StringValidationError.isLong {
+//            baseView.textField.checkLabel.text = StringValidationConstants.lengthError
+//        } catch StringValidationError.isUsingNumeric {
+//            baseView.textField.checkLabel.text = StringValidationConstants.containsNumericError
+//        } catch StringValidationError.isUsingSpecialLetter {
+//            baseView.textField.checkLabel.text = StringValidationConstants.containsSpecialLetterError
+//        } catch {
+//            print(StringValidationConstants.unHandledError)
+//        }
+//        return String.emptyString
+//    }
     
     internal func setRightBarButtonItem() {
         let rightBarButtonItem = UIBarButtonItem(
@@ -139,8 +133,6 @@ extension ProfileSettingViewController {
         )
         
         UserDefaults.standard.saveData(userData)
-        
-        moveToMainView()
     }
     
     private func updateUserData(userName: String) {
