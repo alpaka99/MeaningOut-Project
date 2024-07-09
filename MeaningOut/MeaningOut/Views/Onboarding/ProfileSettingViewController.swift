@@ -49,6 +49,7 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
         viewModel.inputCompleteButtonTapped.bind { [weak self] _ in
             if let validatedUserName = self?.viewModel.inputUserName.value {
                 self?.saveUserData(userName: validatedUserName)
+                self?.moveToMainView()
             }
         }
         
@@ -97,22 +98,22 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     @objc
     func completeButtonTapped() {
-        viewModel.inputProfileImageTapped.value = ()
+        viewModel.inputCompleteButtonTapped.value = ()
     }
     
-//    private func moveToMainView() {
-//        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
-//            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//            
-//            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//            
-//            let tabBarController = TabBarController(userData: userData)
-//            
-//            
-//            sceneDelegate?.window?.rootViewController = tabBarController
-//            sceneDelegate?.window?.makeKeyAndVisible()
-//        }
-//    }
+    private func moveToMainView() {
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            
+            let tabBarController = TabBarController(userData: userData)
+            
+            
+            sceneDelegate?.window?.rootViewController = tabBarController
+            sceneDelegate?.window?.makeKeyAndVisible()
+        }
+    }
     
     @objc
     private func inputChanged(_ sender: UITextField) {

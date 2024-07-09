@@ -25,8 +25,6 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
     ) {
         self.init(baseView: baseView)
         viewModel.selectedImage.value = selectedImage
-        print(selectedImage)
-        print(viewModel.selectedImage.value)
     }
     
     internal weak var delegate: ProfileSelectionViewControllerDelegate?
