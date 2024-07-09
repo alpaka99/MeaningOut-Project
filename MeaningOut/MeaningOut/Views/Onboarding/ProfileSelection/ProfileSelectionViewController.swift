@@ -23,11 +23,6 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
     
     internal weak var delegate: ProfileSelectionViewControllerDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        bindData()
-    }
     
     override func configureDelegate() {
         super.configureDelegate()
@@ -45,7 +40,9 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
         )
     }
     
-    func bindData() {
+    override func bindData() {
+        super.bindData()
+        
         viewModel.selectedImage.actionBind { [weak self] value in
             self?.baseView.selectedImageView.setImage(value)
         }

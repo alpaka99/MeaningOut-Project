@@ -11,13 +11,9 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     let viewModel = ProfileSettingViewModel()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func bindData() {
+        super.bindData()
         
-        bindData()
-    }
-    
-    func bindData() {
         viewModel.inputProfileSettingViewType.bind { [weak self] value in
             switch value {
             case .onBoarding:

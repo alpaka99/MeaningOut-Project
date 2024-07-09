@@ -30,9 +30,12 @@ class BaseViewController<T: BaseView>: UIViewController {
         super.viewDidLoad()
         configureNavigationItem()
         configureDelegate()
+        bindData()
     }
     
     func configureNavigationItem() { }
     
     func configureDelegate() { }
+    
+    func bindData() {}
 }
