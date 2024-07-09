@@ -68,30 +68,9 @@ final class ProfileSettingView: BaseView {
     override internal func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
         
-//        profileImage.delegate = self
         profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
-        
-//        textField.delegate = self
-        
-//        completeButton.delegate = self
     }
-    
-    
-//    internal func configureData(_ state: any BaseViewControllerState) {
-//        if let state = state as? ProfileSettingViewControllerState {
-//            profileImage.setImage(state.selectedImage)
-//            
-//            textField.configureData(state)
-//            
-//            switch state.profileSettingViewType {
-//            case .onBoarding:
-//                setAsOnBoardingType()
-//            case .setting:
-//                setAsSettingType()
-//            }
-//        }
-//    }
     
     internal func setAsOnBoardingType() {
         textField.setAsOnboardingType()

@@ -73,6 +73,9 @@
 		CED1E14B2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14A2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift */; };
 		CED1E14D2C3D2502004BFBE1 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14C2C3D2502004BFBE1 /* BaseTableViewCell.swift */; };
 		CED1E14F2C3D3D81004BFBE1 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14E2C3D3D81004BFBE1 /* UICollectionView+Extension.swift */; };
+		CED1E1522C3D5029004BFBE1 /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */; };
+		CED1E1542C3D5634004BFBE1 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1532C3D5634004BFBE1 /* Observable.swift */; };
+		CED1E1572C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +143,9 @@
 		CED1E14A2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CED1E14C2C3D2502004BFBE1 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		CED1E14E2C3D3D81004BFBE1 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
+		CED1E1532C3D5634004BFBE1 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,11 +241,9 @@
 		CE0ECB422C1CBF810083E256 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				CED1E1552C3D94D6004BFBE1 /* ProfileSelection */,
+				CED1E1502C3D501D004BFBE1 /* ProfileSetting */,
 				CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */,
-				CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */,
-				CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */,
-				CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */,
-				CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */,
 				CE0ECB632C1DFCDD0083E256 /* ProfileSelectionViewCell.swift */,
 			);
 			path = Onboarding;
@@ -317,6 +321,7 @@
 				CE0ECB832C1F601C0083E256 /* NaverShoppingResponse.swift */,
 				CE0ECBB62C2035C80083E256 /* UserData.swift */,
 				CED1E0EE2C36A6C8004BFBE1 /* LikedItems.swift */,
+				CED1E1532C3D5634004BFBE1 /* Observable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -401,6 +406,26 @@
 				CED1E1352C3AE77B004BFBE1 /* LikedItemsView.swift */,
 			);
 			path = LikedItemsView;
+			sourceTree = "<group>";
+		};
+		CED1E1502C3D501D004BFBE1 /* ProfileSetting */ = {
+			isa = PBXGroup;
+			children = (
+				CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */,
+				CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */,
+				CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */,
+			);
+			path = ProfileSetting;
+			sourceTree = "<group>";
+		};
+		CED1E1552C3D94D6004BFBE1 /* ProfileSelection */ = {
+			isa = PBXGroup;
+			children = (
+				CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */,
+				CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */,
+				CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */,
+			);
+			path = ProfileSelection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -511,6 +536,7 @@
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
 				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
 				CED1E14D2C3D2502004BFBE1 /* BaseTableViewCell.swift in Sources */,
+				CED1E1542C3D5634004BFBE1 /* Observable.swift in Sources */,
 				CE0ECBB52C2000B20083E256 /* SettingHeaderCell.swift in Sources */,
 				CED1E0ED2C36A2EA004BFBE1 /* RealmRepository.swift in Sources */,
 				CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */,
@@ -530,6 +556,7 @@
 				CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */,
 				CE82DF592C219F9000937DC7 /* Types.swift in Sources */,
 				CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */,
+				CED1E1522C3D5029004BFBE1 /* ProfileSettingViewModel.swift in Sources */,
 				CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */,
 				CED1E14B2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
@@ -546,6 +573,7 @@
 				CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */,
 				CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
+				CED1E1572C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

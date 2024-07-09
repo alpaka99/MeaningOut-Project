@@ -77,13 +77,6 @@ final class ProfileImageView: BaseView {
         subButton.contentMode = .scaleAspectFit
         subButton.tintColor = MOColors.moWhite.color
         subButton.backgroundColor = MOColors.moOrange.color
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(profileImageTapped)
-        )
-        tapGestureRecognizer.cancelsTouchesInView = false
-        self.addGestureRecognizer(tapGestureRecognizer)
     }
     
     // MARK: Async하게 수정
@@ -101,10 +94,5 @@ final class ProfileImageView: BaseView {
         profileImageView.layer.borderWidth = 3
         profileImageView.alpha = 1
         profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
-    }
-    
-    @objc
-    private func profileImageTapped() {
-//        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
 }

@@ -69,11 +69,11 @@ final class SettingViewController: BaseViewController<SettingView> {
     private func headerViewTapped() {
         let profileSettingViewController = ProfileSettingViewController(baseView: ProfileSettingView())
     
-            profileSettingViewController.setUserData(
-                userName: state.userName,
-                profileImage: state.profileImage
-            )
-            profileSettingViewController.setProfileSettingViewType(.setting)
+//            profileSettingViewController.setUserData(
+//                userName: state.userName,
+//                profileImage: state.profileImage
+//            )
+//            profileSettingViewController.setProfileSettingViewType(.setting)
     
             navigationController?.pushViewController(
                 profileSettingViewController,
