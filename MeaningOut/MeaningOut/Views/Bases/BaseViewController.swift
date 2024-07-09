@@ -29,6 +29,7 @@ class BaseViewController<T: BaseView>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationItem()
+        configureDelegate()
     }
     
     func configureNavigationItem() { }

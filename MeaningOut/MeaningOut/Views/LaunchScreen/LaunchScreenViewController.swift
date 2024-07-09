@@ -7,7 +7,13 @@
 
 import UIKit
 
-final class LaunchScreenViewController: UIViewController {
+final class LaunchScreenViewController: BaseViewController<LogoView> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+    }
+    
     func configureUI() {
         self.view.alpha = 0
         

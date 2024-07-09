@@ -98,7 +98,7 @@ final class SearchResultCollectionViewCell: BaseCollectionViewCell {
         likeButton.backgroundColor = MOColors.moGray300.color.withAlphaComponent(0.5)
         likeButton.tintColor = .white
         likeButton.layer.cornerRadius = 8
-        likeButton.delegate = self
+//        likeButton.delegate = self
         
         mallName.textColor = MOColors.moGray300.color
         mallName.font = .systemFont(ofSize: 12, weight: .regular)

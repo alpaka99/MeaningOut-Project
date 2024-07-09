@@ -10,12 +10,11 @@ import UIKit
 import SnapKit
 
 final class LogoView: BaseView {
-    
     private let type: LogoViewType
     private let logoTitle = UILabel()
     private let logoImage = UIImageView()
     private let userNameLabel = UILabel()
-    private let startButton = RoundCornerButton(
+    private(set) var startButton = RoundCornerButton(
         type: .plain,
         title: LogoViewConstants.startButtonTitle,
         color: MOColors.moOrange.color
@@ -36,6 +35,7 @@ final class LogoView: BaseView {
     }
     
     override internal func configureHierarchy() {
+        super.configureHierarchy()
         self.addSubview(logoTitle)
         self.addSubview(logoImage)
         self.addSubview(userNameLabel)
@@ -43,6 +43,7 @@ final class LogoView: BaseView {
     }
     
     override internal func configureLayout() {
+        super.configureLayout()
         logoTitle.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
                 .inset(16)
@@ -71,6 +72,7 @@ final class LogoView: BaseView {
     }
     
     override internal func configureUI() {
+        super.configureUI()
         self.backgroundColor = MOColors.moWhite.color
         
         logoTitle.font = .systemFont(ofSize: 48, weight: .heavy)
@@ -90,7 +92,6 @@ final class LogoView: BaseView {
         )
         userNameLabel.textColor = MOColors.moOrange.color
         
-        startButton.delegate = self
         startButton.setTitle(
             LogoViewConstants.startButtonTitle,
             for: .normal
@@ -110,8 +111,3 @@ final class LogoView: BaseView {
     }
 }
 
-extension LogoView: RoundCornerButtonDelegate {
-    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
-//        delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
-    }
-}

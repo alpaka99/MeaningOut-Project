@@ -27,6 +27,12 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
     }
     
     internal weak var delegate: ProfileSelectionViewControllerDelegate?
+    
+    override func configureDelegate() {
+        super.configureDelegate()
+        
+        baseView
+    }
 }
 
 

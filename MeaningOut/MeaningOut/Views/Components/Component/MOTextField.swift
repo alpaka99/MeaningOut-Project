@@ -9,7 +9,7 @@ import UIKit
 
 final class MOTextField: BaseView {
     
-    private let textField = UITextField()
+    private(set) var textField = UITextField()
     private let divider = UIView()
     private let checkLabel = UILabel()
     

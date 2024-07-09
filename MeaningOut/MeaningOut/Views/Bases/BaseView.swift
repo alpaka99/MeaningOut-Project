@@ -24,5 +24,7 @@ class BaseView: UIView {
     
     func configureLayout() { }
     
-    func configureUI() { }
+    func configureUI() { 
+        self.backgroundColor = MOColors.moWhite.color
+    }
 }

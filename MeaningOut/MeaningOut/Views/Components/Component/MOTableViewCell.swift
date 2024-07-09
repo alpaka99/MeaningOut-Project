@@ -12,7 +12,7 @@ import SnapKit
 final class MOTableViewCell: BaseTableViewCell {
     private let leadingIcon = UIImageView()
     private let leadingText = UILabel()
-    private let trailingButton = RoundCornerButton(
+    private(set) var trailingButton = RoundCornerButton(
         type: .image,
         image: nil,
         color: .clear
@@ -120,11 +120,9 @@ final class MOTableViewCell: BaseTableViewCell {
         trailingText.text = moCellData.trailingText
     }
     
-//    internal func configureData(_ state: any BaseViewControllerState) {
-//        if let state = state as? MOButtonLabelData {
-//            self.moCellData = state
-//        }
-//    }
+    internal func configureData(_ data: MOButtonLabelData) {
+        self.moCellData = data
+    }
     
     @objc
     private func trailingButtonTapped() {

@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class ProfileSettingView: BaseView {
-    private let profileImage = ProfileImageView(
+    private(set) var profileImage = ProfileImageView(
         profileImage: ProfileImage.randomProfileImage.rawValue,
         subImage: ImageName.cameraFilled
     )
-    private let textField = MOTextField()
-    private let completeButton = RoundCornerButton(
+    private(set) var textField = MOTextField()
+    private(set) var completeButton = RoundCornerButton(
         type: .plain,
         title: ProfileSettingViewConstants.completeButtonTitle,
         color: MOColors.moOrange.color
@@ -74,7 +74,7 @@ final class ProfileSettingView: BaseView {
         
 //        textField.delegate = self
         
-        completeButton.delegate = self
+//        completeButton.delegate = self
     }
     
     
@@ -100,47 +100,5 @@ final class ProfileSettingView: BaseView {
     internal func setAsSettingType() {
         textField.setAsSettingType()
         completeButton.alpha = 0
-    }
-    
-    internal func triggerAction() {
-        textField.triggerAction()
-    }
-}
-
-
-extension ProfileSettingView {
-    internal func baseViewAction(_ type: BaseViewActionType) {
-        switch type {
-        case .profileImageAction(let action):
-            switch action {
-            case .profileImageTapped:
-                profileImageTapped()
-            }
-        case .moTextFieldAction(let detailAction):
-            switch detailAction {
-            case .sendTextFieldText(let userName):
-                sendTextFieldText(userName)
-            case .textFieldTextChanged(let isEnabled):
-                completeButton.isEnabled = isEnabled
-//                delegate?.baseViewAction(.profileSettingViewAction(.textFieldTextChanged(isEnabled)))
-            }
-        default:
-            break
-        }
-    }
-    
-    private func profileImageTapped() {
-//        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
-    }
-    
-    private func sendTextFieldText(_ userName: String) {
-        
-//        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
-    }
-}
-
-extension ProfileSettingView: RoundCornerButtonDelegate {
-    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
-        triggerAction()
     }
 }

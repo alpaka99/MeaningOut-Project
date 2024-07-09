@@ -145,25 +145,25 @@ final class SearchResultView: BaseView {
                     simularityFilterButton,
                     option: option
                 )
-                simularityFilterButton.delegate = self
+//                simularityFilterButton.delegate = self
             case .date:
                 setInitialButtonState(
                     dateFilterButton,
                     option: option
                 )
-                dateFilterButton.delegate = self
+//                dateFilterButton.delegate = self
             case .ascendingPrice:
                 setInitialButtonState(
                     ascendingFilterButton,
                     option: option
                 )
-                ascendingFilterButton.delegate = self
+//                ascendingFilterButton.delegate = self
             case .descendingPrice:
                 setInitialButtonState(
                     descendingFilterButton,
                     option: option
                 )
-                descendingFilterButton.delegate = self
+//                descendingFilterButton.delegate = self
             }
         }
         
@@ -209,73 +209,6 @@ final class SearchResultView: BaseView {
             for: .normal
         )
     }
-}
-
-extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
-    private func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-        flowLayout.minimumLineSpacing = spacing
-        flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.sectionInset = UIEdgeInsets(
-            top: spacing,
-            left: spacing,
-            bottom: spacing,
-            right: spacing
-        )
-        
-        let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
-        let length = lengthOfALine / numberOfRowsInLine
-        
-        flowLayout.itemSize = CGSize(
-            width: length,
-            height: length * 2.0
-        )
-        
-        return flowLayout
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResult.items.count
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SearchResultCollectionViewCell.identifier,
-            for: indexPath
-        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
-        
-        let data = searchResult.items[indexPath.row]
-        
-        do {
-            try MOImageManager.shared.fetchImage(
-                objectName: getTypeName(),
-                urlString: data.image
-            ) { image in
-                cell.setImage(with: image)
-            }
-        } catch NetworkError.urlNotGenerated {
-            print("Check Image URL")
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-//        cell.configureData(data)
-        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
-            cell.toggleIsLiked()
-            cell.setAsLikeItem()
-        }
-        
-//        cell.delegate = self
-        
-        return cell
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = searchResult.items[indexPath.row]
-//        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
-    }
-    
 }
 
 extension SearchResultView: UICollectionViewDataSourcePrefetching {

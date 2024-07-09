@@ -9,24 +9,19 @@ import UIKit
 
 final class OnboardingViewController: BaseViewController<LogoView> {
     
-    
-}
-
-
-extension OnboardingViewController {
-    internal func baseViewAction(_ type: BaseViewActionType) {
-        switch type {
-        case .logoViewAction(let action):
-            switch action {
-            case .startButtonTapped:
-                moveToProfileSettingView()
-            }
-        default:
-            break
-        }
+    override func configureDelegate() {
+        super.configureDelegate()
+        
+        baseView.startButton.addTarget(
+            self,
+            action: #selector(startButtonTapped),
+            for: .touchUpInside
+        )
     }
     
-    private func moveToProfileSettingView() {
+    @objc
+    private func startButtonTapped() {
+        print(#function)
         let profileSettingViewController = ProfileSettingViewController(baseView: ProfileSettingView())
         navigationController?.pushViewController(profileSettingViewController, animated: true)
     }

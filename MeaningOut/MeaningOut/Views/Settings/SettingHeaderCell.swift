@@ -83,14 +83,12 @@ final class SettingHeaderCell: BaseTableViewCell {
         trailingIcon.tintColor = .black
     }
     
-//    internal func configureData(_ state: any BaseViewControllerState) {
-//        if let state = state as? UserData {
-//            
-//            profileImage.setImage(state.profileImage)
-//            userNameLabel.text = state.userName
-//            DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
-//
-//            signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
-//        }
-//    }
+    internal func configureData(_ data: UserData) {
+        profileImage.setImage(data.profileImage)
+        userNameLabel.text = data.userName
+        DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
+
+        signUpDateLabel.text = DateHelper.dateFormatter.string(from: data.signUpDate)
+    }
+    
 }

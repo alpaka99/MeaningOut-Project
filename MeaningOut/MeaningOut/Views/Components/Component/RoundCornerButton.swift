@@ -13,8 +13,6 @@ final class RoundCornerButton: UIButton {
     private let image: UIImage?
     private let color: UIColor
     
-    internal weak var delegate: RoundCornerButtonDelegate?
-    
     init(
         type: RoundCornerButtonType,
         title: String? = nil,
@@ -64,12 +62,6 @@ final class RoundCornerButton: UIButton {
         self.tintColor = .white
         self.contentVerticalAlignment = .fill
         self.contentHorizontalAlignment = .fill
-        
-        self.addTarget(
-            self,
-            action: #selector(buttonTapped),
-            for: .touchUpInside
-        )
     }
     
     internal func setBorderLine(color: UIColor, width: CGFloat) {
@@ -98,10 +90,5 @@ final class RoundCornerButton: UIButton {
         var config = self.configuration
         config?.background.backgroundColor = color
         self.configuration = config
-    }
-    
-    @objc 
-    private func buttonTapped() {
-        delegate?.roundCornerButtonTapped(type)
     }
 }

@@ -24,9 +24,9 @@ final class MOButtonLabel: BaseView {
         }
     }
     
-    private let leadingIcon = UIImageView()
+    private(set) var leadingIcon = UIImageView()
     private let leadingText = UILabel()
-    private let trailingButton = RoundCornerButton(
+    private(set) var trailingButton = RoundCornerButton(
         type: .plain,
         title: MOButtonLabelConstants.eraseAllTitle,
         color: .clear

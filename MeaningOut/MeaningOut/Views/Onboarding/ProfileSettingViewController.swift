@@ -17,18 +17,47 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     private(set) var state = State() {
         didSet {
-//            baseView.configureData(state)
-//            configureUI()
+            configureUI()
         }
     }
     
-    override func configureDelegate() {
+    
+    func configureUI() {
         switch state.profileSettingViewType {
         case .onBoarding:
             navigationItem.title = ProfileSettingViewConstants.onBoardingTitle
         case .setting:
             setRightBarButtonItem()
             navigationItem.title = ProfileSettingViewConstants.settingTitle
+        }
+    }
+    
+    override func configureDelegate() {
+        super.configureDelegate()
+        
+        
+        baseView.completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        
+        
+    }
+    
+    @objc
+    func completeButtonTapped() {
+        saveUserData(userName: baseView.textField.textField.text ?? "")
+        moveToMainView()
+    }
+    
+    private func moveToMainView() {
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            
+            let tabBarController = TabBarController(userData: userData)
+            
+            
+            sceneDelegate?.window?.rootViewController = tabBarController
+            sceneDelegate?.window?.makeKeyAndVisible()
         }
     }
     
@@ -53,7 +82,7 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     @objc
     private func saveButtonTapped(_ sender: UIBarButtonItem) {
-        baseView.triggerAction()
+        
     }
 }
 
@@ -111,27 +140,17 @@ extension ProfileSettingViewController {
         UserDefaults.standard.saveData(userData)
     }
     
-    private func moveToMainView() {
-        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let tabBarController = TabBarController(userData: userData)
-            
-            
-            sceneDelegate?.window?.rootViewController = tabBarController
-            sceneDelegate?.window?.makeKeyAndVisible()
-        }
-    }
-    
     private func setSaveButtonEnabledState(_ isEnabled: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = isEnabled
     }
-}
-
-extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
+    
     internal func profileImageSelected(_ image: ProfileImage) {
         self.state.selectedImage = image
     }
+}
+
+
+
+extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
+    
 }
