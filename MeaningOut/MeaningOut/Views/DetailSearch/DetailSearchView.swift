@@ -11,7 +11,7 @@ import WebKit
 import SnapKit
 
 final class DetailSearchView: BaseView {
-    private let webView = WKWebView()
+    private(set) var webView = WKWebView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,18 +38,4 @@ final class DetailSearchView: BaseView {
     override internal func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
     }
-    
-    internal func configureData(_ data: ShoppingItem) {
-        if let url = URL(string: data.link),
-           let request = try? URLRequest(url: url, method: .get) {
-            webView.load(request)
-        }
-    }
-    
-//    internal func configureData(_ state: any BaseViewControllerState) {
-//        if let state = state as? DetailSearchViewControllerState,
-//           let url = URL(string: state.shoppingItem.link) {
-//            webView.load(URLRequest(url: url))
-//        }
-//    }
 }

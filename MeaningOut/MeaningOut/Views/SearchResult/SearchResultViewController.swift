@@ -26,6 +26,8 @@ final class SearchResultViewController: BaseViewController<SearchResultView> {
     
     private var searchText: String
     
+    private var likedItems: [LikedItems] = []
+    
     init(baseView: SearchResultView, searchText: String) {
         self.searchText = searchText
         super.init(baseView: baseView)
@@ -52,21 +54,28 @@ final class SearchResultViewController: BaseViewController<SearchResultView> {
             print("decoding failed")
             return
         }
-        
+
         DispatchQueue.main.async {[weak self] in
             self?.state.searchResult.items.append(contentsOf:  decodedData.items)
             self?.state.searchResult.start = decodedData.start
             self?.state.searchResult.total = decodedData.total
+            self?.baseView.resultCollectionView.reloadData()
         }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
-            setStateWithUserData(userData)
-        }
+        likedItems = Array(RealmRepository.shared.readAll(of: LikedItems.self))
+        baseView.resultCollectionView.reloadData()
+    }
+    
+    override func configureDelegate() {
+        super.configureDelegate()
+        
+        baseView.resultCollectionView.delegate = self
+        baseView.resultCollectionView.dataSource = self
+        baseView.resultCollectionView.prefetchDataSource = self
+        baseView.resultCollectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
     }
     
     internal func fetchSearchResult(
@@ -78,9 +87,9 @@ final class SearchResultViewController: BaseViewController<SearchResultView> {
             .naverShopping(searchText, 1, sortOptions),
             as: NaverShoppingResponse.self
         ) { [weak self] naverShoppingResponse in
-            print(#function)
             self?.state.searchResult = naverShoppingResponse
             self?.navigationItem.title = searchText
+            self?.baseView.resultCollectionView.reloadData()
         }
     }
     
@@ -138,36 +147,80 @@ extension SearchResultViewController {
     private func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
         let detailSearchViewController = DetailSearchViewController(
             baseView: DetailSearchView(),
-            shoppingItem: shoppingItem,
-            userData: state.userData
+            shoppingItem: shoppingItem
         )
         
         navigationController?.pushViewController(detailSearchViewController, animated: true)
     }
     
     private func addToLikedItems(_ shoppingItem: ShoppingItem) {
-        if state.userData.likedItems.contains(where: { $0.productId == shoppingItem.productId }) == false {
-            state.userData.likedItems.append(shoppingItem)
-            syncData()
+        let data = LikedItems(
+            title: shoppingItem.title,
+            mallName: shoppingItem.mallName,
+            lprice: shoppingItem.lprice, image: shoppingItem.image,
+            link: shoppingItem.link,
+            productId: shoppingItem.productId
+        )
+        
+        if RealmRepository.shared.readLikedItems(data) == nil {
+            RealmRepository.shared.create(data)
         }
     }
     
     private func removeFromLikedItems(_ shoppingItem: ShoppingItem) {
-        for i in 0..<state.userData.likedItems.count {
-            let likedItem = state.userData.likedItems[i]
-            if likedItem.productId == shoppingItem.productId {
-                state.userData.likedItems.remove(at: i)
-                syncData()
-                return
-            }
+        let data = LikedItems(
+            title: shoppingItem.title,
+            mallName: shoppingItem.mallName,
+            lprice: shoppingItem.lprice,
+            image: shoppingItem.image,
+            link: shoppingItem.link,
+            productId: shoppingItem.productId
+        )
+        
+        if let likedItem = RealmRepository.shared.readLikedItems(data) {
+            RealmRepository.shared.delete(likedItem) // 생성한 data 말고, realm에서 꺼내온값만 다시 넣어서 삭제할 수 있음
         }
     }
     
-    private func syncData() {
-        let newUserData = state.userData
+    @objc
+    private func likeButtonTapped(_ sender: UIButton) {
+        addToLikedItems(sender.tag)
         
-        if let syncedData = UserDefaults.standard.syncData(newUserData) {
-            setStateWithUserData(syncedData)
+        likedItems = Array(RealmRepository.shared.readAll(of: LikedItems.self))
+        baseView.resultCollectionView.reloadData()
+    }
+    
+    private func addToLikedItems(_ index: Int) {
+        let item = state.searchResult.items[index]
+        let data = LikedItems(
+            title: item.title,
+            mallName: item.mallName,
+            lprice: item.lprice,
+            image: item.image,
+            link: item.link,
+            productId: item.productId
+        )
+        
+        if RealmRepository.shared.readLikedItems(data) != nil {
+            removeFromLikedItems(index)
+        } else {
+            RealmRepository.shared.create(data)
+        }
+    }
+    
+    private func removeFromLikedItems(_ index: Int) {
+        
+        let item = state.searchResult.items[index]
+        let data = LikedItems(
+            title: item.title,
+            mallName: item.mallName,
+            lprice: item.lprice,
+            image: item.image,
+            link: item.link,
+            productId: item.productId
+        )
+        if let target = RealmRepository.shared.readLikedItems(data) {
+            RealmRepository.shared.delete(target)
         }
     }
 }
@@ -221,20 +274,35 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             print(error.localizedDescription)
         }
         
-//        cell.configureData(data)
-//        if userData.likedItems.contains(where: { $0.productId == data.productId }) {
-//            cell.toggleIsLiked()
-//            cell.setAsLikeItem()
-//        }
+        cell.configureData(data)
+        if likedItems.contains(where: { $0.productId == data.productId }) {
+            print("Liked!")
+            cell.toggleIsLiked()
+            cell.setAsLikeItem()
+        }
         
-//        cell.delegate = self
+        cell.likeButton.tag = indexPath.row
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+//
         
         return cell
     }
     
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = state.searchResult.items[indexPath.row]
-//        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
+        
+        let vc = DetailSearchViewController(baseView: DetailSearchView(), shoppingItem: data)
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
+}
+
+extension SearchResultViewController: UICollectionViewDataSourcePrefetching {
+    internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if let lastItem = indexPaths.last {
+            if lastItem.row >= state.searchResult.items.count - 4 {
+                prefetchSearchResult()
+            }
+        }
+    }
 }

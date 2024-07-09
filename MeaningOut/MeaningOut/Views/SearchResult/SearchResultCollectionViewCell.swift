@@ -12,7 +12,7 @@ import SnapKit
 
 final class SearchResultCollectionViewCell: BaseCollectionViewCell {
     private let itemImage = UIImageView()
-    private let likeButton = RoundCornerButton(
+    private(set) var likeButton = RoundCornerButton(
         type: .image,
         image: UIImage(named: ImageName.unSelecteLikeButtonImage),
         color: MOColors.moGray100.color.withAlphaComponent(0.3)
@@ -111,7 +111,27 @@ final class SearchResultCollectionViewCell: BaseCollectionViewCell {
         price.font = .systemFont(ofSize: 16, weight: .heavy)
     }
     
-//    override internal func configureData(_ state: any BaseViewControllerState) {
+    internal func configureData(_ data: ShoppingItem) {
+        
+            self.shoppingItem = data
+            
+            mallName.text = data.mallName
+            
+            title.text = data.title.replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLOpenTag,
+                with: String.emptyString
+            ).replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLCloseTag,
+                with: String.emptyString
+            )
+            
+            let formattedPrice = Int(data.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+            price.text = formattedPrice + SearchResultConstants.won
+            
+            isLiked = false
+    }
+
+//    internal func configureData(_ state: any BaseViewControllerState) {
 //        if let state = state as? ShoppingItem {
 //            self.shoppingItem = state
 //            
@@ -131,6 +151,26 @@ final class SearchResultCollectionViewCell: BaseCollectionViewCell {
 //            isLiked = false
 //        }
 //    }
+        
+        
+        internal func configureRealmData(_ data: LikedItems) {
+            
+            mallName.text = data.mallName
+            
+            title.text = data.title.replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLOpenTag,
+                with: String.emptyString
+            ).replacingOccurrences(
+                of: ReplaceStringConstants.boldHTMLCloseTag,
+                with: String.emptyString
+            )
+            
+            let formattedPrice = Int(data.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+            price.text = formattedPrice + SearchResultConstants.won
+            
+            isLiked = false
+        }
+    
     
     internal func setImage(with image: UIImage) {
         self.itemImage.image = image

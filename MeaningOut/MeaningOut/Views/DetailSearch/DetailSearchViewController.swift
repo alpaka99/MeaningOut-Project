@@ -15,26 +15,27 @@ final class DetailSearchViewController: BaseViewController<DetailSearchView> {
         }
     }
     
+    private var likedItems = RealmRepository.shared.readAll(of: LikedItems.self)
+    
     internal struct State {
         var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
         var userData: UserData = UserData.dummyUserData()
     }
     
-    internal var state: State = State() {
-        didSet {
-//            baseView.configureData(state)
-        }
-    }
+    internal var state: State = State()
     
     convenience init(
         baseView: DetailSearchView,
-        shoppingItem: ShoppingItem,
-        userData: UserData
+        shoppingItem: ShoppingItem
     ) {
         self.init(baseView: baseView)
         state.shoppingItem = shoppingItem
-        state.userData = userData
-//        configureData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureData(state.shoppingItem)
         checkItemIsLiked()
         configureNavigationItem()
     }
@@ -56,12 +57,8 @@ final class DetailSearchViewController: BaseViewController<DetailSearchView> {
         )
     }
     
-//    override func configureData() {
-//        baseView.configureData(state)
-//    }
-    
     private func checkItemIsLiked() {
-        if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) {
+        if likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) {
             isLiked = true
         } else {
             isLiked = false
@@ -77,25 +74,48 @@ final class DetailSearchViewController: BaseViewController<DetailSearchView> {
         } else {
             removeFromLikedItems()
         }
-        
-        if let syncedData = UserDefaults.standard.syncData(state.userData) {
-            state.userData = syncedData
-        }
     }
     
+    
+    
     private func addToLikedItems() {
-        if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) == false {
-            state.userData.likedItems.append(state.shoppingItem)
+        let item = state.shoppingItem
+        let data = LikedItems(
+            title: item.title,
+            mallName: item.mallName,
+            lprice: item.lprice,
+            image: item.image,
+            link: item.link,
+            productId: item.productId
+        )
+        
+        if RealmRepository.shared.readLikedItems(data) != nil {
+            removeFromLikedItems()
+        } else {
+            RealmRepository.shared.create(data)
         }
     }
     
     private func removeFromLikedItems() {
-        for i in 0..<state.userData.likedItems.count {
-            let likedItem = state.userData.likedItems[i]
-            if likedItem.productId == state.shoppingItem.productId {
-                state.userData.likedItems.remove(at: i)
-                return
-            }
+        let item = state.shoppingItem
+        
+        let data = LikedItems(
+            title: item.title,
+            mallName: item.mallName,
+            lprice: item.lprice,
+            image: item.image,
+            link: item.link,
+            productId: item.productId
+        )
+        if let target = RealmRepository.shared.readLikedItems(data) {
+            RealmRepository.shared.delete(target)
+        }
+    }
+    
+    internal func configureData(_ data: ShoppingItem) {
+        if let url = URL(string: data.link),
+           let request = try? URLRequest(url: url, method: .get) {
+            baseView.webView.load(request)
         }
     }
 }
