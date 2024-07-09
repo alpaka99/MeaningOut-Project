@@ -9,12 +9,6 @@ import UIKit
 
 import SnapKit
 
-class ProfileSelectionViewModel {
-    let profileImages = ProfileImage.allCases
-    
-    var selectedImage = Observable<ProfileImage>(ProfileImage.randomProfileImage)
-}
-
 final class ProfileSelectionViewController: BaseViewController<ProfileSelectionView> {
     
     var viewModel = ProfileSelectionViewModel()

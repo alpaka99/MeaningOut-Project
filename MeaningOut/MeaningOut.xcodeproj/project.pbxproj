@@ -75,6 +75,7 @@
 		CED1E14F2C3D3D81004BFBE1 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14E2C3D3D81004BFBE1 /* UICollectionView+Extension.swift */; };
 		CED1E1522C3D5029004BFBE1 /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */; };
 		CED1E1542C3D5634004BFBE1 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1532C3D5634004BFBE1 /* Observable.swift */; };
+		CED1E1572C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		CED1E14E2C3D3D81004BFBE1 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
 		CED1E1532C3D5634004BFBE1 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,12 +241,9 @@
 		CE0ECB422C1CBF810083E256 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				CED1E1502C3D501D004BFBE1 /* ProfileSettingViewModel */,
+				CED1E1552C3D94D6004BFBE1 /* ProfileSelection */,
+				CED1E1502C3D501D004BFBE1 /* ProfileSetting */,
 				CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */,
-				CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */,
-				CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */,
-				CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */,
-				CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */,
 				CE0ECB632C1DFCDD0083E256 /* ProfileSelectionViewCell.swift */,
 			);
 			path = Onboarding;
@@ -409,12 +408,24 @@
 			path = LikedItemsView;
 			sourceTree = "<group>";
 		};
-		CED1E1502C3D501D004BFBE1 /* ProfileSettingViewModel */ = {
+		CED1E1502C3D501D004BFBE1 /* ProfileSetting */ = {
 			isa = PBXGroup;
 			children = (
+				CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */,
 				CED1E1512C3D5029004BFBE1 /* ProfileSettingViewModel.swift */,
+				CE0ECB522C1DCE540083E256 /* ProfileSettingView.swift */,
 			);
-			path = ProfileSettingViewModel;
+			path = ProfileSetting;
+			sourceTree = "<group>";
+		};
+		CED1E1552C3D94D6004BFBE1 /* ProfileSelection */ = {
+			isa = PBXGroup;
+			children = (
+				CED1E1562C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift */,
+				CE0ECB5D2C1DEA830083E256 /* ProfileSelectionViewController.swift */,
+				CE0ECB5F2C1DEAA40083E256 /* ProfileSelectionView.swift */,
+			);
+			path = ProfileSelection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -562,6 +573,7 @@
 				CE0ECB5E2C1DEA830083E256 /* ProfileSelectionViewController.swift in Sources */,
 				CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */,
 				CE0ECB2A2C1CA8CF0083E256 /* Constants.swift in Sources */,
+				CED1E1572C3D94E2004BFBE1 /* ProfileSelectionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

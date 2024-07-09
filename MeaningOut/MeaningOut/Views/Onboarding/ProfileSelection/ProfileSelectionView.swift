@@ -11,7 +11,7 @@ import SnapKit
 
 final class ProfileSelectionView: BaseView {
     private(set) var selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
-    private(set) lazy var profileCollectionView = UICollectionView(
+    private(set) var profileCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionView.createFlowLayout(
             numberOfRowsInLine: 4,
