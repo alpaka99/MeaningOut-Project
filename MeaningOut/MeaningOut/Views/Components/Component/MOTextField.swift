@@ -7,9 +7,7 @@
 
 import UIKit
 
-final class MOTextField: UIView, BaseViewBuildable {
-    
-    weak var delegate: BaseViewDelegate?
+final class MOTextField: BaseView {
     
     private let textField = UITextField()
     private let divider = UIView()
@@ -27,13 +25,13 @@ final class MOTextField: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(textField)
         self.addSubview(divider)
         self.addSubview(checkLabel)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         textField.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self)
         }
@@ -52,7 +50,7 @@ final class MOTextField: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         textField.placeholder = MOTextFieldConstants.placeholder
         textField.addTarget(
             self,
@@ -85,11 +83,11 @@ final class MOTextField: UIView, BaseViewBuildable {
         checkLabel.textColor = MOColors.moBlack.color
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? ProfileSettingViewControllerState {
-            textField.text = state.userName
-        }
-    }
+//    override internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? ProfileSettingViewControllerState {
+//            textField.text = state.userName
+//        }
+//    }
     
     @objc
     private func inputChanged(_ sender: UITextField) {
@@ -103,16 +101,16 @@ final class MOTextField: UIView, BaseViewBuildable {
             
             return nicknameValidated(validatedNickname)
         } catch StringValidationError.isNil, StringValidationError.isEmpty, StringValidationError.isShort, StringValidationError.isLong {
-            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
+//            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = StringValidationConstants.lengthError
         } catch StringValidationError.isUsingNumeric {
-            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
+//            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = StringValidationConstants.containsNumericError
         } catch StringValidationError.isUsingSpecialLetter {
-            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
+//            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             checkLabel.text = StringValidationConstants.containsSpecialLetterError
         } catch {
-            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
+//            delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(false)))
             print(StringValidationConstants.unHandledError)
         }
         return String.emptyString
@@ -120,14 +118,14 @@ final class MOTextField: UIView, BaseViewBuildable {
     
     @discardableResult
     private func nicknameValidated(_ validatedNickname: String) -> String {
-        delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(true)))
+//        delegate?.baseViewAction(.moTextFieldAction(.textFieldTextChanged(true)))
         checkLabel.text = StringValidationConstants.avaliableNickname
         return validatedNickname
     }
     
     internal func triggerAction() {
         let validatedNickname = validateNickname(textField.text)
-        delegate?.baseViewAction(.moTextFieldAction(.sendTextFieldText(validatedNickname)))
+//        delegate?.baseViewAction(.moTextFieldAction(.sendTextFieldText(validatedNickname)))
     }
 }
 

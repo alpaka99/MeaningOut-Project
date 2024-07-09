@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ProfileSelectionView: UIView, BaseViewBuildable {
+final class ProfileSelectionView: BaseView {
     private let selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
     private lazy var profileCollectionView = UICollectionView(
         frame: .zero,
@@ -25,8 +25,6 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         }
     }
     
-    internal weak var delegate: BaseViewDelegate?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -39,12 +37,12 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(selectedImageView)
         self.addSubview(profileCollectionView)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         selectedImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
                 .offset(16)
@@ -62,7 +60,7 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         self.backgroundColor = .white
         
         selectedImageView.setSelectedState(as: .selected)
@@ -81,12 +79,12 @@ final class ProfileSelectionView: UIView, BaseViewBuildable {
         )
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? ProfileSelectionViewControllerState {
-            selectedImage = state.selectedImage
-            selectedImageView.setImage(state.selectedImage)
-        }
-    }
+//    override internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? ProfileSelectionViewControllerState {
+//            selectedImage = state.selectedImage
+//            selectedImageView.setImage(state.selectedImage)
+//        }
+//    }
 }
 
 extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -131,6 +129,6 @@ extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSo
         
         collectionView.reloadData()
         
-        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
+//        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
     }
 }

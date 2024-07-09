@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class ProfileSettingViewController: MOBaseViewController, CommunicatableBaseViewController {
+final class ProfileSettingViewController: BaseViewController<ProfileSettingView> {
     
-    struct State: ProfileSettingViewControllerState {
+    struct State {
         var selectedImage = ProfileImage.randomProfileImage
         var userName = String.emptyString
         var profileSettingViewType = ProfileSettingViewType.onBoarding
@@ -17,15 +17,12 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     
     private(set) var state = State() {
         didSet {
-            baseView.configureData(state)
-            configureUI()
+//            baseView.configureData(state)
+//            configureUI()
         }
     }
     
-    override func configureUI() {
-        baseView.delegate = self
-        
-        baseView.configureData(state)
+    override func configureDelegate() {
         switch state.profileSettingViewType {
         case .onBoarding:
             navigationItem.title = ProfileSettingViewConstants.onBoardingTitle
@@ -60,14 +57,14 @@ final class ProfileSettingViewController: MOBaseViewController, CommunicatableBa
     }
 }
 
-extension ProfileSettingViewController: BaseViewDelegate {
+extension ProfileSettingViewController {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .profileImageAction(let detailAction):
             switch detailAction {
             case .profileImageTapped:
                 let profileSelectionViewController = ProfileSelectionViewController(
-                    ProfileSelectionView(),
+                    baseView: ProfileSelectionView(),
                     selectedImage: state.selectedImage
                 )
                 profileSelectionViewController.delegate = self

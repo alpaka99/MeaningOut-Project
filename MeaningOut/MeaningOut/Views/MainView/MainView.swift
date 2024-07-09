@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MainView: UIView, BaseViewBuildable {
+final class MainView: BaseView {
     
     private let searchBar = UISearchBar()
     private let emptyView = UIImageView()
@@ -22,8 +22,6 @@ final class MainView: UIView, BaseViewBuildable {
             changeView()
         }
     }
-    
-    internal weak var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -38,7 +36,7 @@ final class MainView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(searchBar)
         self.addSubview(emptyView)
         self.addSubview(emptyLabel)
@@ -46,7 +44,7 @@ final class MainView: UIView, BaseViewBuildable {
         self.addSubview(tableView)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         searchBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
         }
@@ -79,7 +77,7 @@ final class MainView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         backgroundColor = MOColors.moWhite.color
         
         searchBar.delegate = self
@@ -94,14 +92,14 @@ final class MainView: UIView, BaseViewBuildable {
             weight: .heavy
         )
         
-        headerView.delegate = self
-        headerView.configureData(MOButtonLabelData(
-            leadingIconName: nil,
-            leadingText: MainViewConstants.headerViewLeadingText,
-            trailingButtonName: nil,
-            trailingButtonType: .plain,
-            trailingText: nil
-        ))
+//        headerView.delegate = self
+//        headerView.configureData(MOButtonLabelData(
+//            leadingIconName: nil,
+//            leadingText: MainViewConstants.headerViewLeadingText,
+//            trailingButtonName: nil,
+//            trailingButtonType: .plain,
+//            trailingText: nil
+//        ))
         headerView.alpha = 0
         headerView.setTrailingButtonColor(with: MOColors.moOrange.color)
         
@@ -122,10 +120,8 @@ final class MainView: UIView, BaseViewBuildable {
         tableView.selectionFollowsFocus = false
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? MainViewControllerState {
-            recentSearch = state.searchHistory
-        }
+    func configureData() {
+        
     }
     
     private func changeView() {
@@ -173,15 +169,15 @@ extension MainView: UITableViewDelegate, UITableViewDataSource {
             trailingButtonType: .systemImage,
             trailingText: nil
         )
-        cell.configureData(cellData)
-        cell.delegate = self
+//        cell.configureData(cellData)
+//        cell.delegate = self
         return cell
     }
     
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let keyword = recentSearch[indexPath.row]
         searchBar.text = keyword
-        delegate?.baseViewAction(.mainViewAction(.searchKeyword(keyword)))
+//        delegate?.baseViewAction(.mainViewAction(.searchKeyword(keyword)))
         tableView.deselectRow(
             at: indexPath,
             animated: true
@@ -194,31 +190,31 @@ extension MainView: UISearchBarDelegate {
     internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text, text.isEmpty == false {
             // MARK: Call Delegate method to fetch NewData
-            delegate?.baseViewAction(.mainViewAction(.searchKeyword(text)))
+//            delegate?.baseViewAction(.mainViewAction(.searchKeyword(text)))
         }
     }
 }
 
-extension MainView: BaseViewDelegate {
-    internal func baseViewAction(_ type: BaseViewActionType) {
-        switch type {
-        case .moButtonLabelAction(let detailAction):
-            switch detailAction {
-            case .trailingButtonTapped(let moCellData):
-                deleteButtonTapped(moCellData)
-            case .eraseAllHistoryButtonTapped:
-                eraseAllButtonTapped()
-            }
-        default:
-            break
-        }
-    }
-    
-    private func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
-        delegate?.baseViewAction(.mainViewAction(.deleteButtonTapped(moCellData)))
-    }
-    
-    private func eraseAllButtonTapped() {
-        delegate?.baseViewAction(.mainViewAction(.eraseAllHistoryButtonTapped))
-    }
-}
+//extension MainView: BaseViewDelegate {
+//    internal func baseViewAction(_ type: BaseViewActionType) {
+//        switch type {
+//        case .moButtonLabelAction(let detailAction):
+//            switch detailAction {
+//            case .trailingButtonTapped(let moCellData):
+//                deleteButtonTapped(moCellData)
+//            case .eraseAllHistoryButtonTapped:
+//                eraseAllButtonTapped()
+//            }
+//        default:
+//            break
+//        }
+//    }
+//    
+//    private func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
+//        delegate?.baseViewAction(.mainViewAction(.deleteButtonTapped(moCellData)))
+//    }
+//    
+//    private func eraseAllButtonTapped() {
+//        delegate?.baseViewAction(.mainViewAction(.eraseAllHistoryButtonTapped))
+//    }
+//}

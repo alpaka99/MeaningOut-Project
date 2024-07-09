@@ -16,8 +16,7 @@
 		CE0ECB342C1CA8ED0083E256 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB302C1CA8ED0083E256 /* LaunchScreenViewController.swift */; };
 		CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */; };
 		CE0ECB382C1CAA060083E256 /* BaseViewBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */; };
-		CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */; };
-		CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */; };
+		CE0ECB3D2C1CB2940083E256 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */; };
 		CE0ECB452C1CBF9F0083E256 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB442C1CBF9F0083E256 /* LogoView.swift */; };
 		CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */; };
 		CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ECB4C2C1D91660083E256 /* ProfileImageView.swift */; };
@@ -61,11 +60,13 @@
 		CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */; };
 		CE82DF5D2C21A41A00937DC7 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */; };
 		CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */; };
-		CE82DFD82C297DF100937DC7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */; };
 		CE82DFAC2C27C1BF00937DC7 /* NaverAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */; };
 		CE82DFD42C29462700937DC7 /* MOImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD32C29462700937DC7 /* MOImageManager.swift */; };
 		CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */; };
-
+		CE82DFD82C297DF100937DC7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */; };
+		CED1E1492C3D1D14004BFBE1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E1482C3D1D14004BFBE1 /* BaseView.swift */; };
+		CED1E14B2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14A2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift */; };
+		CED1E14D2C3D2502004BFBE1 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1E14C2C3D2502004BFBE1 /* BaseTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,8 +76,7 @@
 		CE0ECB302C1CA8ED0083E256 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		CE0ECB322C1CA8ED0083E256 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewBuildable.swift; sourceTree = "<group>"; };
-		CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOBaseViewController.swift; sourceTree = "<group>"; };
-		CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerBuildable.swift; sourceTree = "<group>"; };
+		CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CE0ECB442C1CBF9F0083E256 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		CE0ECB4A2C1D90FC0083E256 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		CE0ECB4C2C1D91660083E256 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -122,10 +122,13 @@
 		CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCornerButtonProtocol.swift; sourceTree = "<group>"; };
 		CE82DF5C2C21A41A00937DC7 /* ErrorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		CE82DF5E2C21A51900937DC7 /* CommunicatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatableViewController.swift; sourceTree = "<group>"; };
-		CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		CE82DFAB2C27C1BF00937DC7 /* NaverAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverAPIManager.swift; sourceTree = "<group>"; };
 		CE82DFD32C29462700937DC7 /* MOImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOImageManager.swift; sourceTree = "<group>"; };
 		CE82DFD52C2970A600937DC7 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
+		CE82DFD72C297DF100937DC7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		CED1E1482C3D1D14004BFBE1 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		CED1E14A2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		CED1E14C2C3D2502004BFBE1 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,7 +189,7 @@
 				CE0ECB582C1DE8BA0083E256 /* MainView */,
 				CE0ECB432C1CBF8D0083E256 /* Components */,
 				CE0ECB422C1CBF810083E256 /* Onboarding */,
-				CE0ECB392C1CAA6A0083E256 /* MOBases */,
+				CE0ECB392C1CAA6A0083E256 /* Bases */,
 				CE0ECB312C1CA8ED0083E256 /* LaunchScreen */,
 			);
 			path = Views;
@@ -196,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				CE0ECB372C1CAA060083E256 /* BaseViewBuildable.swift */,
-				CE0ECB3C2C1CB2940083E256 /* BaseViewControllerBuildable.swift */,
 				CE0ECB612C1DFB960083E256 /* Reusable.swift */,
 				CE0ECB782C1F36700083E256 /* BaseViewDelegate.swift */,
 				CE82DF5A2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift */,
@@ -205,12 +207,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		CE0ECB392C1CAA6A0083E256 /* MOBases */ = {
+		CE0ECB392C1CAA6A0083E256 /* Bases */ = {
 			isa = PBXGroup;
 			children = (
-				CE0ECB3A2C1CAA8D0083E256 /* MOBaseViewController.swift */,
+				CE0ECB3C2C1CB2940083E256 /* BaseViewController.swift */,
+				CED1E1482C3D1D14004BFBE1 /* BaseView.swift */,
+				CED1E14A2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift */,
+				CED1E14C2C3D2502004BFBE1 /* BaseTableViewCell.swift */,
 			);
-			path = MOBases;
+			path = Bases;
 			sourceTree = "<group>";
 		};
 		CE0ECB422C1CBF810083E256 /* Onboarding */ = {
@@ -460,13 +465,14 @@
 				CE0ECB642C1DFCDD0083E256 /* ProfileSelectionViewCell.swift in Sources */,
 				CE82DF5B2C219FAE00937DC7 /* RoundCornerButtonProtocol.swift in Sources */,
 				CE0ECB602C1DEAA40083E256 /* ProfileSelectionView.swift in Sources */,
-				CE0ECB3D2C1CB2940083E256 /* BaseViewControllerBuildable.swift in Sources */,
+				CE0ECB3D2C1CB2940083E256 /* BaseViewController.swift in Sources */,
 				CE61514D2C1AF69100165CAB /* AppDelegate.swift in Sources */,
 				CE0ECB762C1ECE9F0083E256 /* DetailSearchView.swift in Sources */,
 				CE0ECB5A2C1DE8CA0083E256 /* MainViewController.swift in Sources */,
 				CE0ECB352C1CA8ED0083E256 /* OnboardingViewController.swift in Sources */,
 				CE0ECB712C1EB6E10083E256 /* SearchResultCollectionViewCell.swift in Sources */,
 				CE0ECB6C2C1EA7840083E256 /* SearchResultViewController.swift in Sources */,
+				CED1E14D2C3D2502004BFBE1 /* BaseTableViewCell.swift in Sources */,
 				CE0ECBB52C2000B20083E256 /* SettingHeaderCell.swift in Sources */,
 				CE0ECB842C1F601C0083E256 /* NaverShoppingResponse.swift in Sources */,
 				CE0ECB4B2C1D90FC0083E256 /* ProfileSettingViewController.swift in Sources */,
@@ -474,16 +480,17 @@
 				CE61514F2C1AF69100165CAB /* SceneDelegate.swift in Sources */,
 				CE0ECBB32C1FFF8F0083E256 /* SettingView.swift in Sources */,
 				CE0ECB4D2C1D91660083E256 /* ProfileImageView.swift in Sources */,
+				CED1E1492C3D1D14004BFBE1 /* BaseView.swift in Sources */,
 				CE0ECBBC2C206D030083E256 /* UserDefaults+Extension.swift in Sources */,
 				CE0ECB692C1EA76C0083E256 /* SearchResultView.swift in Sources */,
 				CE0ECB742C1ECE6F0083E256 /* DetailSearchViewController.swift in Sources */,
 				CE0ECB552C1DD1CA0083E256 /* MOTextField.swift in Sources */,
 				CE0ECB512C1DBD910083E256 /* RoundCornerButton.swift in Sources */,
-				CE0ECB3B2C1CAA8D0083E256 /* MOBaseViewController.swift in Sources */,
 				CE0ECB622C1DFB960083E256 /* Reusable.swift in Sources */,
 				CE82DF592C219F9000937DC7 /* Types.swift in Sources */,
 				CE0ECB5C2C1DE94A0083E256 /* MainView.swift in Sources */,
 				CE82DFD62C2970A600937DC7 /* NSObject+Extension.swift in Sources */,
+				CED1E14B2C3D23BD004BFBE1 /* BaseCollectionViewCell.swift in Sources */,
 				CE0ECB2F2C1CA8D40083E256 /* UIColor+Extension.swift in Sources */,
 				CE82DF5F2C21A51900937DC7 /* CommunicatableViewController.swift in Sources */,
 				CE82DFAC2C27C1BF00937DC7 /* NaverAPIManager.swift in Sources */,

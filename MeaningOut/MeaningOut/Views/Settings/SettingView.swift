@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SettingView: UIView, BaseViewBuildable {
+final class SettingView: BaseView {
     private let tableView = UITableView()
     private let settingOptions = SettingOptions.allCases
     private(set) var userData = UserData.dummyUserData() {
@@ -17,8 +17,6 @@ final class SettingView: UIView, BaseViewBuildable {
             tableView.reloadData()
         }
     }
-    
-    internal var delegate: (any BaseViewDelegate)?
     
     init() {
         super.init(frame: .zero)
@@ -32,17 +30,17 @@ final class SettingView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(tableView)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         tableView.snp.makeConstraints {
             $0.edges.equalTo(self.safeAreaLayoutGuide)
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         self.backgroundColor = .white
         
         tableView.delegate = self
@@ -62,17 +60,17 @@ final class SettingView: UIView, BaseViewBuildable {
         )
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? SettingViewControllerState {
-            let userData = UserData(
-                userName: state.userName,
-                profileImage: state.profileImage,
-                signUpDate: state.signUpDate,
-                likedItems: state.likedItems
-            )
-            self.userData = userData
-        }
-    }
+//    internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? SettingViewControllerState {
+//            let userData = UserData(
+//                userName: state.userName,
+//                profileImage: state.profileImage,
+//                signUpDate: state.signUpDate,
+//                likedItems: state.likedItems
+//            )
+//            self.userData = userData
+//        }
+//    }
 }
 
 extension SettingView: UITableViewDelegate, UITableViewDataSource {
@@ -95,7 +93,7 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
                 for: indexPath
             ) as? SettingHeaderCell else { return UITableViewCell() }
             
-            cell.configureData(userData)
+//            cell.configureData(userData)
             
             return cell
         } else {
@@ -120,7 +118,7 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
                 trailingButtonType: .assetImage,
                 trailingText: settingOption.getTrailingText(userData.likedItems.count)
             )
-            cell.configureData(moCellData)
+//            cell.configureData(moCellData)
             
             return cell
         }
@@ -134,24 +132,24 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let section = indexPath.section
-        
-        if section == 0 {
-            delegate?.baseViewAction(.settingViewAction(.headerViewTapped))
-        } else {
-            let row = indexPath.row
-            switch settingOptions[row] {
-            case .liked:
-                delegate?.baseViewAction(.settingViewAction(.likedItemsCellTapped))
-            case .quit:
-                delegate?.baseViewAction(.settingViewAction(.quitCellTapped))
-            default:
-                break
-            }
-        }
-    }
+//    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        
+//        let section = indexPath.section
+//        
+//        if section == 0 {
+//            delegate?.baseViewAction(.settingViewAction(.headerViewTapped))
+//        } else {
+//            let row = indexPath.row
+//            switch settingOptions[row] {
+//            case .liked:
+//                delegate?.baseViewAction(.settingViewAction(.likedItemsCellTapped))
+//            case .quit:
+//                delegate?.baseViewAction(.settingViewAction(.quitCellTapped))
+//            default:
+//                break
+//            }
+//        }
+//    }
 }
 

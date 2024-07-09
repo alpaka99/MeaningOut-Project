@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailSearchViewController: MOBaseViewController, CommunicatableBaseViewController {
+final class DetailSearchViewController: BaseViewController<DetailSearchView> {
     
     private var isLiked = false {
         didSet {
@@ -15,31 +15,31 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         }
     }
     
-    internal struct State: DetailSearchViewControllerState {
+    internal struct State {
         var shoppingItem: ShoppingItem = ShoppingItem.dummyShoppingItem()
         var userData: UserData = UserData.dummyUserData()
     }
     
     internal var state: State = State() {
         didSet {
-            baseView.configureData(state)
+//            baseView.configureData(state)
         }
     }
     
-    convenience required init(
-        _ baseView: any BaseViewBuildable,
+    convenience init(
+        baseView: DetailSearchView,
         shoppingItem: ShoppingItem,
         userData: UserData
     ) {
-        self.init(baseView)
+        self.init(baseView: baseView)
         state.shoppingItem = shoppingItem
         state.userData = userData
-        configureData()
+//        configureData()
         checkItemIsLiked()
         configureNavigationItem()
     }
     
-    private func configureNavigationItem() {
+    override internal func configureNavigationItem() {
         navigationItem.title = state.shoppingItem.title.replacingOccurrences(
             of: ReplaceStringConstants.boldHTMLOpenTag,
             with: String.emptyString
@@ -56,9 +56,9 @@ final class DetailSearchViewController: MOBaseViewController, CommunicatableBase
         )
     }
     
-    override func configureData() {
-        baseView.configureData(state)
-    }
+//    override func configureData() {
+//        baseView.configureData(state)
+//    }
     
     private func checkItemIsLiked() {
         if state.userData.likedItems.contains(where: {$0.productId == state.shoppingItem.productId}) {

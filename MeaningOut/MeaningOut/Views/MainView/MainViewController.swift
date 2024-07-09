@@ -8,8 +8,8 @@
 import UIKit
 
 
-final class MainViewController: MOBaseViewController, CommunicatableBaseViewController {
-    internal struct State: MainViewControllerState {
+final class MainViewController: BaseViewController<MainView> {
+    internal struct State {
         var userData: UserData
         var searchHistory: [String]
     }
@@ -19,8 +19,7 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
         searchHistory: []
     ) {
         didSet {
-            configureUI()
-            configureData(state)
+//            configureData(state)
         }
     }
     
@@ -31,10 +30,14 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
         loadUserData()
     }
     
-    override func configureUI() {
-        baseView.delegate = self
-        
+    override func configureNavigationItem() {
         navigationItem.title = "\(state.userData.userName)" + MainViewConstants.navigationTitleSufix
+    }
+    
+    override func configureDelegate() {
+//        baseView.delegate = self
+        
+        
     }
     
     private func loadUserData() {
@@ -44,7 +47,7 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
     }
 }
 
-extension MainViewController: BaseViewDelegate {
+extension MainViewController {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .mainViewAction(let detailAction):
@@ -67,7 +70,7 @@ extension MainViewController: BaseViewDelegate {
             state.searchHistory.append(keyword)
         }
         
-        let searchResultViewController = SearchResultViewController(SearchResultView())
+        let searchResultViewController = SearchResultViewController(baseView: SearchResultView())
         searchResultViewController.fetchSearchResult(
             keyword,
             sortOptions: .simularity

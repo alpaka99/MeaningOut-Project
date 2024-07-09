@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SearchResultView: UIView, BaseViewBuildable {
+final class SearchResultView: BaseView {
     private let totalResultLabel = UILabel()
     private let sortOptions: [SortOptions] = SortOptions.allCases
     private var selectedButton = SortOptions.simularity
@@ -59,8 +59,6 @@ final class SearchResultView: UIView, BaseViewBuildable {
         likedItems: []
     )
     
-    internal var delegate: BaseViewDelegate?
-    
     init() {
         super.init(frame: .zero)
         
@@ -77,7 +75,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         MOImageManager.shared.removeCachedImage(objectName: getTypeName())
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(totalResultLabel)
         
         configureButtons()
@@ -86,7 +84,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         self.addSubview(resultCollectionView)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         totalResultLabel.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
                 .inset(16)
@@ -105,7 +103,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         self.backgroundColor = .white
         
         totalResultLabel.textColor = MOColors.moOrange.color
@@ -125,14 +123,14 @@ final class SearchResultView: UIView, BaseViewBuildable {
         resultCollectionView.showsVerticalScrollIndicator = false
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? SearchResultViewControllerState {
-            searchResult = state.searchResult
-            let userData = state.userData
-            self.userData = userData
-            configureUI()
-        }
-    }
+//    internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? SearchResultViewControllerState {
+//            searchResult = state.searchResult
+//            let userData = state.userData
+//            self.userData = userData
+//            configureUI()
+//        }
+//    }
     
     private func searchResultChanged() {
         totalResultLabel.text = "\(searchResult.total.formatted())" + SearchResult.totalResultLabelText
@@ -262,20 +260,20 @@ extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource
             print(error.localizedDescription)
         }
         
-        cell.configureData(data)
+//        cell.configureData(data)
         if userData.likedItems.contains(where: { $0.productId == data.productId }) {
             cell.toggleIsLiked()
             cell.setAsLikeItem()
         }
         
-        cell.delegate = self
+//        cell.delegate = self
         
         return cell
     }
     
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = searchResult.items[indexPath.row]
-        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
+//        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
     }
     
 }
@@ -286,14 +284,14 @@ extension SearchResultView: UICollectionViewDataSourcePrefetching {
 //            print(#function, lastItem.row, searchResult.items.count)
 //            print(searchResult.items.count)
             if lastItem.row >= searchResult.items.count - 4 {
-                delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
+//                delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
             }
         }
     }
 }
 
 
-extension SearchResultView: BaseViewDelegate {
+extension SearchResultView {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchCollectionViewCellAction(let detailAction):
@@ -309,11 +307,11 @@ extension SearchResultView: BaseViewDelegate {
     }
     
     private func likeShoppingItem(_ shoppingItem: ShoppingItem) {
-        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
     }
     
     private func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
-        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }
 
@@ -322,7 +320,7 @@ extension SearchResultView: RoundCornerButtonDelegate {
         switch type {
         case .sort(let option):
             configureButtons(option)
-            delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
+//            delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
         default:
             break
         }

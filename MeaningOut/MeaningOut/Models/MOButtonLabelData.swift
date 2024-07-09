@@ -6,7 +6,7 @@
 //
 import UIKit
 
-internal struct MOButtonLabelData: MOButtonLabelState {
+internal struct MOButtonLabelData {
     var leadingIconName: String?
     var leadingText: String?
     var trailingButtonName: String?

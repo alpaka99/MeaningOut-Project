@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuildable {
+final class SearchResultCollectionViewCell: BaseCollectionViewCell {
     private let itemImage = UIImageView()
     private let likeButton = RoundCornerButton(
         type: .image,
@@ -23,8 +23,6 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     private var isLiked = false
     
     private var shoppingItem = ShoppingItem.dummyShoppingItem()
-    
-    internal var delegate: (any BaseViewDelegate)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +44,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         itemImage.image = nil
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         contentView.addSubview(itemImage)
         contentView.addSubview(likeButton)
         contentView.addSubview(mallName)
@@ -54,7 +52,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         contentView.addSubview(price)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         itemImage.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
             $0.width.equalTo(contentView.snp.width)
@@ -88,7 +86,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         itemImage.layer.cornerRadius = 8
         itemImage.clipsToBounds = true
         
@@ -113,33 +111,33 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
         price.font = .systemFont(ofSize: 16, weight: .heavy)
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? ShoppingItem {
-            self.shoppingItem = state
-            
-            mallName.text = state.mallName
-            
-            title.text = state.title.replacingOccurrences(
-                of: ReplaceStringConstants.boldHTMLOpenTag,
-                with: String.emptyString
-            ).replacingOccurrences(
-                of: ReplaceStringConstants.boldHTMLCloseTag,
-                with: String.emptyString
-            )
-            
-            let formattedPrice = Int(state.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
-            price.text = formattedPrice + SearchResultConstants.won
-            
-            isLiked = false
-        }
-    }
+//    override internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? ShoppingItem {
+//            self.shoppingItem = state
+//            
+//            mallName.text = state.mallName
+//            
+//            title.text = state.title.replacingOccurrences(
+//                of: ReplaceStringConstants.boldHTMLOpenTag,
+//                with: String.emptyString
+//            ).replacingOccurrences(
+//                of: ReplaceStringConstants.boldHTMLCloseTag,
+//                with: String.emptyString
+//            )
+//            
+//            let formattedPrice = Int(state.lprice)?.formatted() ?? SearchResultConstants.defaultPrice
+//            price.text = formattedPrice + SearchResultConstants.won
+//            
+//            isLiked = false
+//        }
+//    }
     
     internal func setImage(with image: UIImage) {
         self.itemImage.image = image
     }
     
     private func likeShoppingItem() {
-        delegate?.baseViewAction(.searchCollectionViewCellAction(.likeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchCollectionViewCellAction(.likeShoppingItem(shoppingItem)))
     }
     
     private func changeLikeButtonUI() {
@@ -164,7 +162,7 @@ final class SearchResultCollectionViewCell: UICollectionViewCell, BaseViewBuilda
     }
     
     private func cancelLikeShoppingItem() {
-        delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchCollectionViewCellAction(.cancelLikeShoppingItem(shoppingItem)))
     }
     
     internal func toggleIsLiked() {

@@ -9,13 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
+final class SettingHeaderCell: BaseTableViewCell {
     private let profileImage = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
     private let userNameLabel = UILabel()
     private let signUpDateLabel = UILabel()
     private let trailingIcon = UIImageView()
-    
-    internal var delegate: (any BaseViewDelegate)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(
@@ -31,14 +29,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         contentView.addSubview(profileImage)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(signUpDateLabel)
         contentView.addSubview(trailingIcon)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.width.equalTo(contentView.snp.width)
                 .multipliedBy(0.2)
@@ -70,7 +68,7 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         profileImage.setImage(.randomProfileImage)
         profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
@@ -85,14 +83,14 @@ final class SettingHeaderCell: UITableViewCell, BaseViewBuildable {
         trailingIcon.tintColor = .black
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? UserData {
-            
-            profileImage.setImage(state.profileImage)
-            userNameLabel.text = state.userName
-            DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
-
-            signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
-        }
-    }
+//    internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? UserData {
+//            
+//            profileImage.setImage(state.profileImage)
+//            userNameLabel.text = state.userName
+//            DateHelper.dateFormatter.dateFormat = DateHelper.settingHeaederCellDateFormat
+//
+//            signUpDateLabel.text = DateHelper.dateFormatter.string(from: state.signUpDate)
+//        }
+//    }
 }

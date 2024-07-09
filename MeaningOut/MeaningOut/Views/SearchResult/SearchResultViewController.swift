@@ -9,8 +9,8 @@ import UIKit
 
 import Alamofire
 
-final class SearchResultViewController: MOBaseViewController, CommunicatableBaseViewController {
-    internal struct State: SearchResultViewControllerState {
+final class SearchResultViewController: BaseViewController<SearchResultView> {
+    internal struct State {
         var searchResult: NaverShoppingResponse
         var userData: UserData
         var keyword: String
@@ -24,14 +24,13 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         sortOption: SortOptions.simularity
     ) {
         didSet {
-            configureData(state)
+//            configureData(state)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        baseView.delegate = self
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(fetchData(_:)),
@@ -48,7 +47,6 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
         }
         
         DispatchQueue.main.async {[weak self] in
-//            self?.state.searchResult = decodedData
             self?.state.searchResult.items.append(contentsOf:  decodedData.items)
             self?.state.searchResult.start = decodedData.start
             self?.state.searchResult.total = decodedData.total
@@ -107,7 +105,7 @@ final class SearchResultViewController: MOBaseViewController, CommunicatableBase
 }
 
 
-extension SearchResultViewController: BaseViewDelegate {
+extension SearchResultViewController {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchResultViewAction(let detailAction):
@@ -133,7 +131,7 @@ extension SearchResultViewController: BaseViewDelegate {
     
     private func moveToDetailSearchViewController(_ shoppingItem: ShoppingItem) {
         let detailSearchViewController = DetailSearchViewController(
-            DetailSearchView(),
+            baseView: DetailSearchView(),
             shoppingItem: shoppingItem,
             userData: state.userData
         )

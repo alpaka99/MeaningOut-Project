@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ProfileSettingView: UIView, BaseViewBuildable {
+final class ProfileSettingView: BaseView {
     private let profileImage = ProfileImageView(
         profileImage: ProfileImage.randomProfileImage.rawValue,
         subImage: ImageName.cameraFilled
@@ -20,8 +20,6 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         title: ProfileSettingViewConstants.completeButtonTitle,
         color: MOColors.moOrange.color
     )
-    
-    internal weak var delegate: BaseViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -35,13 +33,13 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(profileImage)
         self.addSubview(textField)
         self.addSubview(completeButton)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         profileImage.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
                 .offset(16)
@@ -67,33 +65,33 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
         
-        profileImage.delegate = self
+//        profileImage.delegate = self
         profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
         
-        textField.delegate = self
+//        textField.delegate = self
         
         completeButton.delegate = self
     }
     
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? ProfileSettingViewControllerState {
-            profileImage.setImage(state.selectedImage)
-            
-            textField.configureData(state)
-            
-            switch state.profileSettingViewType {
-            case .onBoarding:
-                setAsOnBoardingType()
-            case .setting:
-                setAsSettingType()
-            }
-        }
-    }
+//    internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? ProfileSettingViewControllerState {
+//            profileImage.setImage(state.selectedImage)
+//            
+//            textField.configureData(state)
+//            
+//            switch state.profileSettingViewType {
+//            case .onBoarding:
+//                setAsOnBoardingType()
+//            case .setting:
+//                setAsSettingType()
+//            }
+//        }
+//    }
     
     internal func setAsOnBoardingType() {
         textField.setAsOnboardingType()
@@ -110,7 +108,7 @@ final class ProfileSettingView: UIView, BaseViewBuildable {
 }
 
 
-extension ProfileSettingView: BaseViewDelegate {
+extension ProfileSettingView {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .profileImageAction(let action):
@@ -124,7 +122,7 @@ extension ProfileSettingView: BaseViewDelegate {
                 sendTextFieldText(userName)
             case .textFieldTextChanged(let isEnabled):
                 completeButton.isEnabled = isEnabled
-                delegate?.baseViewAction(.profileSettingViewAction(.textFieldTextChanged(isEnabled)))
+//                delegate?.baseViewAction(.profileSettingViewAction(.textFieldTextChanged(isEnabled)))
             }
         default:
             break
@@ -132,12 +130,12 @@ extension ProfileSettingView: BaseViewDelegate {
     }
     
     private func profileImageTapped() {
-        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
+//        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
     
     private func sendTextFieldText(_ userName: String) {
         
-        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
+//        delegate?.baseViewAction(.profileSettingViewAction(.completeButtonTapped(userName)))
     }
 }
 

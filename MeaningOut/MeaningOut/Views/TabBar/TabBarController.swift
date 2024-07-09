@@ -25,13 +25,13 @@ final class TabBarController: UITabBarController {
         
         self.tabBar.tintColor = MOColors.moOrange.color
         
-        let mainViewController = MainViewController(MainView())
+        let mainViewController = MainViewController(baseView: MainView())
         let mainViewNavigationController = UINavigationController(rootViewController: mainViewController)
         mainViewNavigationController.removeBackBarButtonTitle()
         mainViewNavigationController.tabBarItem.image = UIImage(systemName: TabBarItemProperty.mainView.systemName)
         mainViewNavigationController.tabBarItem.title = TabBarItemProperty.mainView.title
         
-        let settingViewController = SettingViewController(SettingView())
+        let settingViewController = SettingViewController(baseView: SettingView())
         let settingViewNavigationController = UINavigationController(rootViewController: settingViewController)
         settingViewNavigationController.removeBackBarButtonTitle()
         settingViewController.tabBarItem.image = UIImage(systemName: TabBarItemProperty.settingView.systemName)

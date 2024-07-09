@@ -7,15 +7,13 @@
 
 import UIKit
 
-final class OnboardingViewController: MOBaseViewController {
+final class OnboardingViewController: BaseViewController<LogoView> {
     
-    override func configureUI() {
-        baseView.delegate = self
-    }
+    
 }
 
 
-extension OnboardingViewController: BaseViewDelegate {
+extension OnboardingViewController {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .logoViewAction(let action):
@@ -29,7 +27,7 @@ extension OnboardingViewController: BaseViewDelegate {
     }
     
     private func moveToProfileSettingView() {
-        let profileSettingViewController = ProfileSettingViewController(ProfileSettingView())
+        let profileSettingViewController = ProfileSettingViewController(baseView: ProfileSettingView())
         navigationController?.pushViewController(profileSettingViewController, animated: true)
     }
 }
