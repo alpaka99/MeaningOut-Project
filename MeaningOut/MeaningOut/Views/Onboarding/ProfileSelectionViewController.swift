@@ -19,12 +19,23 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
     
     var viewModel = ProfileSelectionViewModel()
     
-    convenience init(baseView: ProfileSelectionView, selectedImage: ProfileImage) {
+    convenience init(
+        baseView: ProfileSelectionView,
+        selectedImage: ProfileImage
+    ) {
         self.init(baseView: baseView)
         viewModel.selectedImage.value = selectedImage
+        print(selectedImage)
+        print(viewModel.selectedImage.value)
     }
     
     internal weak var delegate: ProfileSelectionViewControllerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bindData()
+    }
     
     override func configureDelegate() {
         super.configureDelegate()
@@ -41,28 +52,16 @@ final class ProfileSelectionViewController: BaseViewController<ProfileSelectionV
             forCellWithReuseIdentifier: ProfileSelectionViewCell.identifier
         )
     }
+    
+    func bindData() {
+        viewModel.selectedImage.actionBind { [weak self] value in
+            self?.baseView.selectedImageView.setImage(value)
+        }
+    }
 }
 
 
 extension ProfileSelectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-//    internal func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
-//        let flowLayout = UICollectionViewFlowLayout()
-//        
-//        flowLayout.scrollDirection = .vertical
-//        flowLayout.minimumLineSpacing = spacing
-//        flowLayout.minimumInteritemSpacing = spacing
-//        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-//        
-//        let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
-//        let length = lengthOfALine / numberOfRowsInLine
-//        print(length)
-//        
-//        flowLayout.itemSize = CGSize(width: length, height: length)
-//        
-//        return flowLayout
-//    }
-
-    
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.profileImages.count
     }

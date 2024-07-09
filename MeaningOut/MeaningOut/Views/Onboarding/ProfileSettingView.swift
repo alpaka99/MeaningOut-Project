@@ -72,22 +72,6 @@ final class ProfileSettingView: BaseView {
         profileImage.setAsSelectedImage()
     }
     
-    
-//    internal func configureData(_ state: any BaseViewControllerState) {
-//        if let state = state as? ProfileSettingViewControllerState {
-//            profileImage.setImage(state.selectedImage)
-//            
-//            textField.configureData(state)
-//            
-//            switch state.profileSettingViewType {
-//            case .onBoarding:
-//                setAsOnBoardingType()
-//            case .setting:
-//                setAsSettingType()
-//            }
-//        }
-//    }
-    
     internal func setAsOnBoardingType() {
         textField.setAsOnboardingType()
     }

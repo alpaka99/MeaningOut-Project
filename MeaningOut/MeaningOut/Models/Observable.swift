@@ -23,4 +23,9 @@ final class Observable<T> {
     func bind(_ closure: @escaping (T)->Void) {
         self.closure = closure
     }
+    
+    func actionBind(_ closure: @escaping (T)->Void) {
+        closure(value)
+        self.closure = closure
+    }
 }

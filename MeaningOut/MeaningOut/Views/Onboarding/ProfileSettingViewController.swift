@@ -28,7 +28,29 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
             }
         }
         
+        viewModel.inputSelectedImage.actionBind { [weak self] value in
+            self?.baseView.profileImage.setImage(value)
+        }
         
+        viewModel.inputProfileImageTapped.bind { [weak self] _ in
+            guard let selectedImage = self?.viewModel.inputSelectedImage.value else { return }
+            let profileSelectionViewController = ProfileSelectionViewController(
+                baseView: ProfileSelectionView(),
+                selectedImage: selectedImage
+            )
+            profileSelectionViewController.delegate = self
+            
+            self?.navigationController?.pushViewController(
+                profileSelectionViewController,
+                animated: true
+            )
+        }
+        
+        viewModel.inputCompleteButtonTapped.bind { [weak self] _ in
+            if let validatedUserName = self?.viewModel.inputUserName.value {
+                self?.saveUserData(userName: validatedUserName)
+            }
+        }
         
         viewModel.outputValidated.bind { [weak self] value in
             self?.baseView.completeButton.isEnabled = value
@@ -38,8 +60,6 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
         viewModel.outputCheckLabelText.bind { [weak self] value in
             self?.baseView.textField.checkLabel.text = value
         }
-        
-        
     }
     
     override func configureNavigationItem() {
@@ -72,14 +92,12 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     @objc
     private func profileImageTapped() {
-        let vc = ProfileSelectionViewController(baseView: ProfileSelectionView(), selectedImage: .randomProfileImage)
-        
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.inputProfileImageTapped.value = ()
     }
     
     @objc
     func completeButtonTapped() {
-        saveUserData(userName: baseView.textField.textField.text ?? "")
+        viewModel.inputProfileImageTapped.value = ()
     }
     
 //    private func moveToMainView() {
@@ -161,14 +179,12 @@ extension ProfileSettingViewController {
     private func setSaveButtonEnabledState(_ isEnabled: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = isEnabled
     }
-    
-    internal func profileImageSelected(_ image: ProfileImage) {
-        self.viewModel.inputSelectedImage.value = image
-    }
 }
 
 
 
 extension ProfileSettingViewController: ProfileSelectionViewControllerDelegate {
-    
+    internal func profileImageSelected(_ image: ProfileImage) {
+        self.viewModel.inputSelectedImage.value = image
+    }
 }

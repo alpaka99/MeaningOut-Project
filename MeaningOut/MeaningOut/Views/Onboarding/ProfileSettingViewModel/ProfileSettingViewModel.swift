@@ -11,6 +11,8 @@ final class ProfileSettingViewModel {
     var inputSelectedImage = Observable(ProfileImage.randomProfileImage)
     var inputUserName: Observable<String?> = Observable("")
     var inputProfileSettingViewType = Observable(ProfileSettingViewType.onBoarding)
+    var inputProfileImageTapped: Observable<Void?> = Observable(())
+    var inputCompleteButtonTapped: Observable<Void?> = Observable(())
     
     var outputValidated = Observable(false)
     var outputCheckLabelText: Observable<String?> = Observable("")
