@@ -30,10 +30,7 @@ final class NaverAPIManager: NSObject {
         as: T.Type,
         completionHandler: @escaping (T) -> ()
     ) {
-        print(#function, router)
         guard let url = router.urlRequest else { return }
-        
-        
         DispatchQueue.global().async {[weak self] in
             self?.session
                 .dataTask(with: url)

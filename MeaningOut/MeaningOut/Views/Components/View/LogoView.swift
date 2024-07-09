@@ -9,19 +9,16 @@ import UIKit
 
 import SnapKit
 
-final class LogoView: UIView, BaseViewBuildable {
-    
+final class LogoView: BaseView {
     private let type: LogoViewType
     private let logoTitle = UILabel()
     private let logoImage = UIImageView()
     private let userNameLabel = UILabel()
-    private let startButton = RoundCornerButton(
+    private(set) var startButton = RoundCornerButton(
         type: .plain,
         title: LogoViewConstants.startButtonTitle,
         color: MOColors.moOrange.color
     )
-    
-    internal weak var delegate: BaseViewDelegate?
     
     init(type: LogoViewType) {
         self.type = type
@@ -37,14 +34,16 @@ final class LogoView: UIView, BaseViewBuildable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
+        super.configureHierarchy()
         self.addSubview(logoTitle)
         self.addSubview(logoImage)
         self.addSubview(userNameLabel)
         self.addSubview(startButton)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
+        super.configureLayout()
         logoTitle.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
                 .inset(16)
@@ -72,7 +71,8 @@ final class LogoView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
+        super.configureUI()
         self.backgroundColor = MOColors.moWhite.color
         
         logoTitle.font = .systemFont(ofSize: 48, weight: .heavy)
@@ -92,7 +92,6 @@ final class LogoView: UIView, BaseViewBuildable {
         )
         userNameLabel.textColor = MOColors.moOrange.color
         
-        startButton.delegate = self
         startButton.setTitle(
             LogoViewConstants.startButtonTitle,
             for: .normal
@@ -110,14 +109,5 @@ final class LogoView: UIView, BaseViewBuildable {
             self.userNameLabel.isHidden = true
         }
     }
-    
-    internal func configureData(_ state: any BaseViewControllerState) {
-        
-    }
 }
 
-extension LogoView: RoundCornerButtonDelegate {
-    internal func roundCornerButtonTapped(_ type: RoundCornerButtonType) {
-        delegate?.baseViewAction(.logoViewAction(.startButtonTapped))
-    }
-}

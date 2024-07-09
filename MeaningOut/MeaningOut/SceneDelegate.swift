@@ -23,12 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tabBarController = TabBarController(userData: userData)
             window?.rootViewController = tabBarController
         } else {
-            let rootViewController = LaunchScreenViewController(LogoView(type: .launching))
+            let rootViewController = LaunchScreenViewController(baseView: LogoView(type: .launching))
             let navigationController = UINavigationController(rootViewController: rootViewController)
             
             window?.rootViewController = navigationController
         }
-
+        
         window?.makeKeyAndVisible()
     }
 

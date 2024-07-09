@@ -21,7 +21,7 @@ extension NaverShoppingResponse {
     }
 }
 
-struct ShoppingItem: Codable, BaseViewControllerState {
+struct ShoppingItem: Codable {
     let title: String
     let image: String
     let mallName: String

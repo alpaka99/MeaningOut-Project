@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SearchResultView: UIView, BaseViewBuildable {
+final class SearchResultView: BaseView {
     private let totalResultLabel = UILabel()
     private let sortOptions: [SortOptions] = SortOptions.allCases
     private var selectedButton = SortOptions.simularity
@@ -39,11 +39,12 @@ final class SearchResultView: UIView, BaseViewBuildable {
         descendingFilterButton
     ]
     private lazy var horizontalButtonStack = UIStackView(arrangedSubviews: buttons)
-    private lazy var resultCollectionView = UICollectionView(
+    private(set) lazy var resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionView.createFlowLayout(
             numberOfRowsInLine: 2,
-            spacing: 20
+            spacing: 20,
+            heightMultiplier: 2.0
         )
     )
     
@@ -59,8 +60,6 @@ final class SearchResultView: UIView, BaseViewBuildable {
         signUpDate: Date.now,
         likedItems: []
     )
-    
-    internal var delegate: BaseViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -78,7 +77,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         MOImageManager.shared.removeCachedImage(objectName: getTypeName())
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(totalResultLabel)
         
         configureButtons()
@@ -87,7 +86,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         self.addSubview(resultCollectionView)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         totalResultLabel.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(self.safeAreaLayoutGuide)
                 .inset(16)
@@ -106,7 +105,7 @@ final class SearchResultView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         self.backgroundColor = .white
         
         totalResultLabel.textColor = MOColors.moOrange.color
@@ -119,21 +118,18 @@ final class SearchResultView: UIView, BaseViewBuildable {
         horizontalButtonStack.spacing = 8
         horizontalButtonStack.distribution = .fillProportionally
         
-        resultCollectionView.delegate = self
-        resultCollectionView.dataSource = self
-        resultCollectionView.prefetchDataSource = self
-        resultCollectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
         resultCollectionView.showsVerticalScrollIndicator = false
+        
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? SearchResultViewControllerState {
-            searchResult = state.searchResult
-            let userData = state.userData
-            self.userData = userData
-            configureUI()
-        }
-    }
+//    internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? SearchResultViewControllerState {
+//            searchResult = state.searchResult
+//            let userData = state.userData
+//            self.userData = userData
+//            configureUI()
+//        }
+//    }
     
     private func searchResultChanged() {
         totalResultLabel.text = "\(searchResult.total.formatted())" + SearchResult.totalResultLabelText
@@ -148,25 +144,25 @@ final class SearchResultView: UIView, BaseViewBuildable {
                     simularityFilterButton,
                     option: option
                 )
-                simularityFilterButton.delegate = self
+//                simularityFilterButton.delegate = self
             case .date:
                 setInitialButtonState(
                     dateFilterButton,
                     option: option
                 )
-                dateFilterButton.delegate = self
+//                dateFilterButton.delegate = self
             case .ascendingPrice:
                 setInitialButtonState(
                     ascendingFilterButton,
                     option: option
                 )
-                ascendingFilterButton.delegate = self
+//                ascendingFilterButton.delegate = self
             case .descendingPrice:
                 setInitialButtonState(
                     descendingFilterButton,
                     option: option
                 )
-                descendingFilterButton.delegate = self
+//                descendingFilterButton.delegate = self
             }
         }
         
@@ -214,98 +210,65 @@ final class SearchResultView: UIView, BaseViewBuildable {
     }
 }
 
-extension UICollectionView {
-    static func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-        flowLayout.minimumLineSpacing = spacing
-        flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.sectionInset = UIEdgeInsets(
-            top: spacing,
-            left: spacing,
-            bottom: spacing,
-            right: spacing
-        )
-        
-        let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
-        let length = lengthOfALine / numberOfRowsInLine
-        
-        flowLayout.itemSize = CGSize(
-            width: length,
-            height: length * 2.0
-        )
-        
-        return flowLayout
-    }
-}
-
-extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResult.items.count
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SearchResultCollectionViewCell.identifier,
-            for: indexPath
-        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
-        
-        let data = searchResult.items[indexPath.row]
-        
-        do {
-            try MOImageManager.shared.fetchImage(
-                objectName: getTypeName(),
-                urlString: data.image
-            ) { image in
-                cell.setImage(with: image)
-            }
-        } catch NetworkError.urlNotGenerated {
-            print("Check Image URL")
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        cell.configureData(data)
-        
-        let likedItem = LikedItems(
-            title: data.title,
-            mallName: data.mallName,
-            lprice: data.lprice,
-            image: data.image,
-            link: data.link,
-            productId: data.productId
-        )
-        
-        if RealmRepository.shared.readLikedItems(likedItem) != nil {
-            cell.toggleIsLiked()
-            cell.setAsLikeItem()
-        }
-        
-        cell.delegate = self
-        
-        return cell
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = searchResult.items[indexPath.row]
-        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
-    }
-    
-}
-
-extension SearchResultView: UICollectionViewDataSourcePrefetching {
-    internal func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if let lastItem = indexPaths.last {
-            if lastItem.row >= searchResult.items.count - 4 {
-                delegate?.baseViewAction(.searchResultViewAction(.prefetchItems))
-            }
-        }
-    }
-}
+//extension SearchResultView: UICollectionViewDelegate, UICollectionViewDataSource {
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return searchResult.items.count
+//    }
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(
+//            withReuseIdentifier: SearchResultCollectionViewCell.identifier,
+//            for: indexPath
+//        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+//        
+//        let data = searchResult.items[indexPath.row]
+//        
+//        do {
+//            try MOImageManager.shared.fetchImage(
+//                objectName: getTypeName(),
+//                urlString: data.image
+//            ) { image in
+//                cell.setImage(with: image)
+//            }
+//        } catch NetworkError.urlNotGenerated {
+//            print("Check Image URL")
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//        
+//        cell.configureData(data)
+//        
+//        let likedItem = LikedItems(
+//            title: data.title,
+//            mallName: data.mallName,
+//            lprice: data.lprice,
+//            image: data.image,
+//            link: data.link,
+//            productId: data.productId
+//        )
+//        
+//        if RealmRepository.shared.readLikedItems(likedItem) != nil {
+//            cell.toggleIsLiked()
+//            cell.setAsLikeItem()
+//        }
+//        
+//        cell.delegate = self
+//        
+//        return cell
+//    }
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let data = searchResult.items[indexPath.row]
+//        delegate?.baseViewAction(.searchResultViewAction(.resultCellTapped(data)))
+//    }
+//    
+//}
 
 
-extension SearchResultView: BaseViewDelegate {
+
+
+extension SearchResultView {
     internal func baseViewAction(_ type: BaseViewActionType) {
         switch type {
         case .searchCollectionViewCellAction(let detailAction):
@@ -321,11 +284,11 @@ extension SearchResultView: BaseViewDelegate {
     }
     
     private func likeShoppingItem(_ shoppingItem: ShoppingItem) {
-        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchResultViewAction(.likeShoppingItem(shoppingItem)))
     }
     
     private func cancelLikeShoppingItem(_ shoppingItem: ShoppingItem) {
-        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
+//        delegate?.baseViewAction(.searchResultViewAction(.cancelLikeShoppingItem(shoppingItem)))
     }
 }
 
@@ -334,7 +297,7 @@ extension SearchResultView: RoundCornerButtonDelegate {
         switch type {
         case .sort(let option):
             configureButtons(option)
-            delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
+//            delegate?.baseViewAction(.searchResultViewAction(.filterOptionButtonTapped(option)))
         default:
             break
         }

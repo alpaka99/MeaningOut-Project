@@ -8,8 +8,8 @@
 import UIKit
 
 
-final class MainViewController: MOBaseViewController, CommunicatableBaseViewController {
-    internal struct State: MainViewControllerState {
+final class MainViewController: BaseViewController<MainView> {
+    internal struct State {
         var userData: UserData
         var searchHistory: [String]
     }
@@ -19,8 +19,13 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
         searchHistory: []
     ) {
         didSet {
-            configureUI()
-            configureData(state)
+//            configureData(state)
+        }
+    }
+    
+    private var recentSearch: [String] = [] {
+        didSet {
+            changeView()
         }
     }
     
@@ -31,10 +36,26 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
         loadUserData()
     }
     
-    override func configureUI() {
-        baseView.delegate = self
-        
+    override func configureNavigationItem() {
         navigationItem.title = "\(state.userData.userName)" + MainViewConstants.navigationTitleSufix
+    }
+    
+    override func configureDelegate() {
+        baseView.searchBar.delegate = self
+        
+        baseView.tableView.delegate = self
+        baseView.tableView.dataSource = self
+        
+        baseView.tableView.register(
+            UITableViewCell.self,
+            forCellReuseIdentifier: UITableViewCell.identifier
+        )
+        baseView.tableView.register(
+            MOTableViewCell.self,
+            forCellReuseIdentifier: MOTableViewCell.identifier
+        )
+        
+        baseView.headerView.trailingButton.addTarget(self, action: #selector(eraseAllHistoryButtonTapped), for: .touchUpInside)
     }
     
     private func loadUserData() {
@@ -42,32 +63,37 @@ final class MainViewController: MOBaseViewController, CommunicatableBaseViewCont
             state.userData = userData
         }
     }
-}
-
-extension MainViewController: BaseViewDelegate {
-    internal func baseViewAction(_ type: BaseViewActionType) {
-        switch type {
-        case .mainViewAction(let detailAction):
-            switch detailAction {
-            case .searchKeyword(let keyword):
-                searchKeyword(keyword)
-            case .eraseAllHistoryButtonTapped:
-                eraseAllHistoryButtonTapped()
-            case .deleteButtonTapped(let moCellData):
-                deleteButtonTapped(moCellData)
-            }
-        default:
-            break
+    
+    private func changeView() {
+        if recentSearch.isEmpty {
+            showEmptyView()
+        } else {
+            showTableView()
+            baseView.tableView.reloadData()
         }
     }
     
-    
-    private func searchKeyword(_ keyword: String) {
-        if state.searchHistory.contains(keyword) == false {
-            state.searchHistory.append(keyword)
-        }
+    private func showTableView() {
+        baseView.emptyView.alpha = 0
+        baseView.emptyLabel.alpha = 0
         
-        let searchResultViewController = SearchResultViewController(SearchResultView())
+        baseView.tableView.alpha = 1
+        baseView.headerView.alpha = 1
+        baseView.tableView.reloadData()
+    }
+    
+    private func showEmptyView() {
+        baseView.headerView.alpha = 0
+        baseView.tableView.alpha = 0
+        
+        baseView.emptyView.alpha = 1
+        baseView.emptyLabel.alpha = 1
+    }
+}
+
+extension MainViewController {
+    private func searchKeyword(_ keyword: String) {
+        let searchResultViewController = SearchResultViewController(baseView: SearchResultView(), searchText: keyword)
         searchResultViewController.fetchSearchResult(
             keyword,
             sortOptions: .simularity
@@ -79,17 +105,62 @@ extension MainViewController: BaseViewDelegate {
         )
     }
     
+    @objc
     private func eraseAllHistoryButtonTapped() {
         state.searchHistory = []
+        baseView.tableView.reloadData()
     }
     
-    private func deleteButtonTapped(_ moCellData: MOButtonLabelData) {
-        for i in 0..<state.searchHistory.count {
-            let searchHistory = state.searchHistory[i]
-            if searchHistory == moCellData.leadingText {
-                state.searchHistory.remove(at: i)
-                return
+    @objc
+    private func deleteButtonTapped(_ sender: UIButton) {
+        recentSearch.remove(at: sender.tag)
+    }
+}
+
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text, !text.isEmpty {
+            if recentSearch.contains(text) == false {
+                recentSearch.append(text)
             }
+            searchKeyword(text)
         }
+    }
+}
+
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recentSearch.count
+    }
+    
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MOTableViewCell.identifier, for: indexPath) as? MOTableViewCell else { return UITableViewCell() }
+        
+        let data = recentSearch[indexPath.row]
+        let cellData = MOButtonLabelData(
+            leadingIconName: ImageName.clock,
+            leadingText: data,
+            trailingButtonName: ImageName.xmark,
+            trailingButtonType: .systemImage,
+            trailingText: nil
+        )
+        cell.configureData(cellData)
+        
+        cell.trailingButton.tag = indexPath.row
+        cell.trailingButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
+        return cell
+    }
+    
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let keyword = recentSearch[indexPath.row]
+        baseView.searchBar.text = keyword
+
+        tableView.deselectRow(
+            at: indexPath,
+            animated: true
+        )
     }
 }

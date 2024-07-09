@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ProfileImageView: UIView, BaseViewBuildable {
+final class ProfileImageView: BaseView {
     
     private let profileImageView = UIImageView()
     private let subButton = UIImageView()
@@ -18,8 +18,6 @@ final class ProfileImageView: UIView, BaseViewBuildable {
     internal func setSelectedState(as: ProfileImageType) {
         
     }
-    
-    internal weak var delegate: BaseViewDelegate?
     
     init(
         profileImage: String,
@@ -49,12 +47,12 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         roundCorners()
     }
     
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(profileImageView)
         self.addSubview(subButton)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         profileImageView.snp.makeConstraints {
             $0.center.equalTo(self.snp.center)
             $0.height.equalTo(self.snp.height)
@@ -69,7 +67,7 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.borderColor = MOColors.moGray100.color.cgColor
         profileImageView.alpha = 0.5
@@ -79,17 +77,6 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         subButton.contentMode = .scaleAspectFit
         subButton.tintColor = MOColors.moWhite.color
         subButton.backgroundColor = MOColors.moOrange.color
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(profileImageTapped)
-        )
-        tapGestureRecognizer.cancelsTouchesInView = false
-        self.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    internal func configureData(_ state: any BaseViewControllerState) {
-        
     }
     
     // MARK: Async하게 수정
@@ -107,10 +94,5 @@ final class ProfileImageView: UIView, BaseViewBuildable {
         profileImageView.layer.borderWidth = 3
         profileImageView.alpha = 1
         profileImageView.layer.borderColor = MOColors.moOrange.color.cgColor
-    }
-    
-    @objc
-    private func profileImageTapped() {
-        delegate?.baseViewAction(.profileImageAction(.profileImageTapped))
     }
 }

@@ -7,8 +7,14 @@
 
 import UIKit
 
-final class LaunchScreenViewController: MOBaseViewController {
-    override func configureUI() {
+final class LaunchScreenViewController: BaseViewController<LogoView> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+    }
+    
+    func configureUI() {
         self.view.alpha = 0
         
         UIView.animate(
@@ -22,7 +28,7 @@ final class LaunchScreenViewController: MOBaseViewController {
             
             let sceneDelegate = windowScene?.delegate as? SceneDelegate
             
-            let onBoardingViewController = OnboardingViewController(LogoView(type: .onBoarding))
+            let onBoardingViewController = OnboardingViewController(baseView: LogoView(type: .onBoarding))
             let navigationViewController = UINavigationController(rootViewController: onBoardingViewController)
             navigationViewController.removeBackBarButtonTitle()
             

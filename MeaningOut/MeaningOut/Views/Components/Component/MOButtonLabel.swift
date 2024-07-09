@@ -9,8 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MOButtonLabel: UIView, BaseViewBuildable {
-    internal var delegate: (any BaseViewDelegate)?
+final class MOButtonLabel: BaseView {
     
     // dummy moButtonLabelData
     private var moButtonLabelData: MOButtonLabelData = MOButtonLabelData(
@@ -25,9 +24,9 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         }
     }
     
-    private let leadingIcon = UIImageView()
+    private(set) var leadingIcon = UIImageView()
     private let leadingText = UILabel()
-    private let trailingButton = RoundCornerButton(
+    private(set) var trailingButton = RoundCornerButton(
         type: .plain,
         title: MOButtonLabelConstants.eraseAllTitle,
         color: .clear
@@ -73,14 +72,14 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
     }
     
 
-    internal func configureHierarchy() {
+    override internal func configureHierarchy() {
         self.addSubview(leadingIcon)
         self.addSubview(leadingText)
         self.addSubview(trailingButton)
         self.addSubview(trailingText)
     }
     
-    internal func configureLayout() {
+    override internal func configureLayout() {
         leadingIcon.snp.makeConstraints {
             $0.leading.verticalEdges.equalTo(self)
                 .inset(8)
@@ -104,7 +103,7 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         }
     }
     
-    internal func configureUI() {
+    override internal func configureUI() {
         if let leadingIconName = moButtonLabelData.leadingIconName {
             leadingIcon.image = UIImage(systemName: leadingIconName)
         }
@@ -122,11 +121,11 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
         trailingText.text = moButtonLabelData.trailingText
     }
     
-    internal func configureData(_ state: any BaseViewControllerState) {
-        if let state = state as? MOButtonLabelData {
-            self.moButtonLabelData = state
-        }
-    }
+//    override internal func configureData(_ state: any BaseViewControllerState) {
+//        if let state = state as? MOButtonLabelData {
+//            self.moButtonLabelData = state
+//        }
+//    }
     
     internal func setTrailingButtonColor(with color: UIColor) {
         trailingButton.tintColor = color
@@ -134,6 +133,6 @@ final class MOButtonLabel: UIView, BaseViewBuildable {
     
     @objc
     private func eraseAllButtonTapped() {
-        delegate?.baseViewAction(.moButtonLabelAction(.eraseAllHistoryButtonTapped))
+//        delegate?.baseViewAction(.moButtonLabelAction(.eraseAllHistoryButtonTapped))
     }
 }
