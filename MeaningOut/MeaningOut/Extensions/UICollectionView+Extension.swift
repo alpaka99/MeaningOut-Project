@@ -8,8 +8,9 @@
 import UIKit
 
 extension UICollectionView {
-    static func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
+    static func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat, heightMultiplier: CGFloat) -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
+        
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = spacing
         flowLayout.minimumInteritemSpacing = spacing
@@ -25,7 +26,7 @@ extension UICollectionView {
         
         flowLayout.itemSize = CGSize(
             width: length,
-            height: length * 2.0
+            height: length * heightMultiplier
         )
         
         return flowLayout

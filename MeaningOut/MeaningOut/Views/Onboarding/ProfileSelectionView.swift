@@ -10,20 +10,14 @@ import UIKit
 import SnapKit
 
 final class ProfileSelectionView: BaseView {
-    private let selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
-    private lazy var profileCollectionView = UICollectionView(
+    private(set) var selectedImageView: ProfileImageView = ProfileImageView(profileImage: ProfileImage.randomProfileImage.rawValue)
+    private(set) lazy var profileCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: createFlowLayout(
+        collectionViewLayout: UICollectionView.createFlowLayout(
             numberOfRowsInLine: 4,
-            spacing: 20
+            spacing: 20,
+            heightMultiplier: 1
         ))
-    
-    private let profileImages = ProfileImage.allCases
-    private var selectedImage: ProfileImage = ProfileImage.randomProfileImage {
-        didSet {
-            selectedImageView.setImage(selectedImage)
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,18 +59,6 @@ final class ProfileSelectionView: BaseView {
         
         selectedImageView.setSelectedState(as: .selected)
         selectedImageView.setAsSelectedImage()
-        
-        profileCollectionView.delegate = self
-        profileCollectionView.dataSource = self
-        
-        profileCollectionView.register(
-            UICollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionViewCell.identifier
-        )
-        profileCollectionView.register(
-            ProfileSelectionViewCell.self,
-            forCellWithReuseIdentifier: ProfileSelectionViewCell.identifier
-        )
     }
     
 //    override internal func configureData(_ state: any BaseViewControllerState) {
@@ -87,48 +69,48 @@ final class ProfileSelectionView: BaseView {
 //    }
 }
 
-extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
-    internal func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-        flowLayout.minimumLineSpacing = spacing
-        flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        
-        let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
-        let length = lengthOfALine / numberOfRowsInLine
-        
-        flowLayout.itemSize = CGSize(width: length, height: length)
-        
-        return flowLayout
-    }
-
-    
-    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return profileImages.count
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProfileSelectionViewCell.identifier,
-            for: indexPath
-        ) as? ProfileSelectionViewCell else { return UICollectionViewCell() }
-        
-        let data = profileImages[indexPath.row]
-        cell.configureData(data.rawValue)
-        if data == selectedImage {
-            cell.profileImage.setSelectedState(as: .selected)
-            cell.profileImage.setAsSelectedImage()
-        }
-        return cell
-    }
-    
-    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedImage = profileImages[indexPath.row]
-        selectedImageView.setImage(selectedImage)
-        
-        collectionView.reloadData()
-        
-//        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
-    }
-}
+//extension ProfileSelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
+//    internal func createFlowLayout(numberOfRowsInLine: CGFloat, spacing: CGFloat) -> UICollectionViewFlowLayout {
+//        let flowLayout = UICollectionViewFlowLayout()
+//        flowLayout.scrollDirection = .vertical
+//        flowLayout.minimumLineSpacing = spacing
+//        flowLayout.minimumInteritemSpacing = spacing
+//        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+//        
+//        let lengthOfALine = ScreenSize.width - (spacing * CGFloat(2 + numberOfRowsInLine - 1))
+//        let length = lengthOfALine / numberOfRowsInLine
+//        
+//        flowLayout.itemSize = CGSize(width: length, height: length)
+//        
+//        return flowLayout
+//    }
+//
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return profileImages.count
+//    }
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(
+//            withReuseIdentifier: ProfileSelectionViewCell.identifier,
+//            for: indexPath
+//        ) as? ProfileSelectionViewCell else { return UICollectionViewCell() }
+//        
+//        let data = profileImages[indexPath.row]
+//        cell.configureData(data.rawValue)
+//        if data == selectedImage {
+//            cell.profileImage.setSelectedState(as: .selected)
+//            cell.profileImage.setAsSelectedImage()
+//        }
+//        return cell
+//    }
+//    
+//    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        selectedImage = profileImages[indexPath.row]
+//        selectedImageView.setImage(selectedImage)
+//        
+//        collectionView.reloadData()
+//        
+////        delegate?.baseViewAction(.profileSelectionAction(.profileImageCellTapped(selectedImage)))
+//    }
+//}

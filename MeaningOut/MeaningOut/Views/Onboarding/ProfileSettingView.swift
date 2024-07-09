@@ -68,13 +68,8 @@ final class ProfileSettingView: BaseView {
     override internal func configureUI() {
         self.backgroundColor = MOColors.moWhite.color
         
-//        profileImage.delegate = self
         profileImage.setSelectedState(as: .selected)
         profileImage.setAsSelectedImage()
-        
-//        textField.delegate = self
-        
-//        completeButton.delegate = self
     }
     
     

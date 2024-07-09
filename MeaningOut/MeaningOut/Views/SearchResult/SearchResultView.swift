@@ -43,7 +43,8 @@ final class SearchResultView: BaseView {
         frame: .zero,
         collectionViewLayout: UICollectionView.createFlowLayout(
             numberOfRowsInLine: 2,
-            spacing: 20
+            spacing: 20,
+            heightMultiplier: 2.0
         )
     )
     
