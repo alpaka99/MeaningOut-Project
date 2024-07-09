@@ -18,7 +18,7 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     }
     
     func bindData() {
-        viewModel.profileSettingViewType.bind { [weak self] value in
+        viewModel.inputProfileSettingViewType.bind { [weak self] value in
             switch value {
             case .onBoarding:
                 self?.navigationItem.title = ProfileSettingViewConstants.onBoardingTitle
@@ -27,6 +27,19 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
                 self?.navigationItem.title = ProfileSettingViewConstants.settingTitle
             }
         }
+        
+        
+        
+        viewModel.outputValidated.bind { [weak self] value in
+            self?.baseView.completeButton.isEnabled = value
+            self?.baseView.completeButton.setBackgroundColor(with: value ? MOColors.moOrange.color : MOColors.moGray200.color)
+        }
+        
+        viewModel.outputCheckLabelText.bind { [weak self] value in
+            self?.baseView.textField.checkLabel.text = value
+        }
+        
+        
     }
     
     override func configureNavigationItem() {
@@ -85,8 +98,7 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     
     @objc
     private func inputChanged(_ sender: UITextField) {
-        viewModel.userName.value = sender.text
-        print(viewModel.userName.value)
+        viewModel.inputUserName.value = sender.text
     }
     
 //    @discardableResult
@@ -127,7 +139,7 @@ extension ProfileSettingViewController {
     private func saveUserData(userName: String) {
         let userData = UserData(
             userName: userName, 
-            profileImage: viewModel.selectedImage.value,
+            profileImage: viewModel.inputSelectedImage.value,
             signUpDate: Date.now,
             likedItems: []
         )
@@ -138,7 +150,7 @@ extension ProfileSettingViewController {
     private func updateUserData(userName: String) {
         let userData = UserData(
             userName: userName,
-            profileImage: viewModel.selectedImage.value,
+            profileImage: viewModel.inputSelectedImage.value,
             signUpDate: Date.now,
             likedItems: []
         )
@@ -151,7 +163,7 @@ extension ProfileSettingViewController {
     }
     
     internal func profileImageSelected(_ image: ProfileImage) {
-        self.viewModel.selectedImage.value = image
+        self.viewModel.inputSelectedImage.value = image
     }
 }
 
