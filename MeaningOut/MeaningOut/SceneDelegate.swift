@@ -19,20 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         
-//        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
-//            let tabBarController = TabBarController(userData: userData)
-//            window?.rootViewController = tabBarController
-//        } else {
-//            let rootViewController = LaunchScreenViewController(baseView: LogoView(type: .launching))
-//            let navigationController = UINavigationController(rootViewController: rootViewController)
-//            
-//            window?.rootViewController = navigationController
-//        }
+        if let userData = UserDefaults.standard.loadData(of: UserData.self) {
+            let tabBarController = TabBarController(userData: userData)
+            window?.rootViewController = tabBarController
+        } else {
+            let rootViewController = LaunchScreenViewController(baseView: LogoView(type: .launching))
+            let navigationController = UINavigationController(rootViewController: rootViewController)
+            
+            window?.rootViewController = navigationController
+        }
         
-        let rootViewController = ProfileSettingViewController(baseView: ProfileSettingView())
-        let navigationController = UINavigationController(rootViewController: rootViewController)
-        
-        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 
